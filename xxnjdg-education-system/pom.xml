@@ -10,6 +10,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>xxnjdg-education-system</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>xxnjdg-education-system-service</module>
+        <module>xxnjdg-education-system-feign</module>
+    </modules>
 
 
 </project>

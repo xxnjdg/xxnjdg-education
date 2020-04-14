@@ -1,0 +1,35 @@
+server:
+  port: 16883
+spring:
+  application:
+    name: xxnjdg-gateway-service
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true # 开启从注册中心动态创建路由的功能，利用微服务名称j进行路由
+      routes:
+        - id: course_route # 路由的id
+          uri: lb://xxnjdg-course-service
+          predicates:
+            - Path=/course/** # 断言，路径相匹配的进行路由
+        - id: system_route # 路由的id
+          uri: lb://xxnjdg-system-service
+          predicates:
+            - Path=/system/** # 断言，路径相匹配的进行路由
+        - id: user_route # 路由的id
+          uri: lb://xxnjdg-user-service
+          predicates:
+            - Path=/user/** # 断言，路径相匹配的进行路由
+# eureka 配置
+info:
+  eureka:
+    host: localhost
+    port: 16881
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      # eureka
+      defaultZone: http://${info.eureka.host}:${info.eureka.port}/eureka
