@@ -1,0 +1,19 @@
+server:
+  port: 16881
+spring:
+  application:
+    name: xxnjdg-eureka-service
+# eureka 配置
+info:
+  eureka:
+    host: localhost
+    port: 16881
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: http://${info.eureka.host}:${info.eureka.port}/eureka
+

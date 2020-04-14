@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: xxnjdg-config-service
+  cloud:
+    config:
+      server:
+        git:
+          # 本地仓库
+          uri: file://home/djr/my_dir/backend/xxnjdg-education-git
+server:
+  port: 16882
+# eureka 配置
+info:
+  eureka:
+    host: localhost
+    port: 16881
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      # eureka
+      defaultZone: http://${info.eureka.host}:${info.eureka.port}/eureka
+
