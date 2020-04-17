@@ -1,30 +1,16 @@
 package io.xxnjdg.notp.course.mapper;
 
-import io.xxnjdg.notp.course.model.CourseChapterAudit;
-import io.xxnjdg.notp.course.model.CourseChapterAuditExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
+import io.xxnjdg.notp.course.object.persistent.CourseChapterAudit;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
-public interface CourseChapterAuditMapper {
-    long countByExample(CourseChapterAuditExample example);
+/**
+ * <p>
+ * 章节信息-审核 Mapper 接口
+ * </p>
+ *
+ * @author xxnjdg
+ * @since 2020-04-17
+ */
+public interface CourseChapterAuditMapper extends BaseMapper<CourseChapterAudit> {
 
-    int deleteByExample(CourseChapterAuditExample example);
-
-    int deleteByPrimaryKey(Long id);
-
-    int insert(CourseChapterAudit record);
-
-    int insertSelective(CourseChapterAudit record);
-
-    List<CourseChapterAudit> selectByExample(CourseChapterAuditExample example);
-
-    CourseChapterAudit selectByPrimaryKey(Long id);
-
-    int updateByExampleSelective(@Param("record") CourseChapterAudit record, @Param("example") CourseChapterAuditExample example);
-
-    int updateByExample(@Param("record") CourseChapterAudit record, @Param("example") CourseChapterAuditExample example);
-
-    int updateByPrimaryKeySelective(CourseChapterAudit record);
-
-    int updateByPrimaryKey(CourseChapterAudit record);
 }

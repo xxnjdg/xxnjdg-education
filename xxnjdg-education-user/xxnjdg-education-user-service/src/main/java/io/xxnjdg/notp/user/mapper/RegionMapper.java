@@ -1,30 +1,16 @@
 package io.xxnjdg.notp.user.mapper;
 
-import io.xxnjdg.notp.user.model.Region;
-import io.xxnjdg.notp.user.model.RegionExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
+import io.xxnjdg.notp.user.entity.Region;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
-public interface RegionMapper {
-    long countByExample(RegionExample example);
+/**
+ * <p>
+ * 行政区域表 Mapper 接口
+ * </p>
+ *
+ * @author xxnjdg
+ * @since 2020-04-16
+ */
+public interface RegionMapper extends BaseMapper<Region> {
 
-    int deleteByExample(RegionExample example);
-
-    int deleteByPrimaryKey(Long id);
-
-    int insert(Region record);
-
-    int insertSelective(Region record);
-
-    List<Region> selectByExample(RegionExample example);
-
-    Region selectByPrimaryKey(Long id);
-
-    int updateByExampleSelective(@Param("record") Region record, @Param("example") RegionExample example);
-
-    int updateByExample(@Param("record") Region record, @Param("example") RegionExample example);
-
-    int updateByPrimaryKeySelective(Region record);
-
-    int updateByPrimaryKey(Region record);
 }

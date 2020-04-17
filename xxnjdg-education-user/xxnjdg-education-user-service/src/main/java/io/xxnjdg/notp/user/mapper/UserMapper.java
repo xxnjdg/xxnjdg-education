@@ -1,30 +1,16 @@
 package io.xxnjdg.notp.user.mapper;
 
-import io.xxnjdg.notp.user.model.User;
-import io.xxnjdg.notp.user.model.UserExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
+import io.xxnjdg.notp.user.entity.User;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
-public interface UserMapper {
-    long countByExample(UserExample example);
+/**
+ * <p>
+ * 用户基本信息 Mapper 接口
+ * </p>
+ *
+ * @author xxnjdg
+ * @since 2020-04-16
+ */
+public interface UserMapper extends BaseMapper<User> {
 
-    int deleteByExample(UserExample example);
-
-    int deleteByPrimaryKey(Long id);
-
-    int insert(User record);
-
-    int insertSelective(User record);
-
-    List<User> selectByExample(UserExample example);
-
-    User selectByPrimaryKey(Long id);
-
-    int updateByExampleSelective(@Param("record") User record, @Param("example") UserExample example);
-
-    int updateByExample(@Param("record") User record, @Param("example") UserExample example);
-
-    int updateByPrimaryKeySelective(User record);
-
-    int updateByPrimaryKey(User record);
 }

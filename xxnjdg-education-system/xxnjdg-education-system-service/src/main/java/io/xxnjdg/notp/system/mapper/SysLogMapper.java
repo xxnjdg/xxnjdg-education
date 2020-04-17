@@ -1,30 +1,16 @@
 package io.xxnjdg.notp.system.mapper;
 
-import io.xxnjdg.notp.system.model.SysLog;
-import io.xxnjdg.notp.system.model.SysLogExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
+import io.xxnjdg.notp.system.object.persistent.SysLog;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
-public interface SysLogMapper {
-    long countByExample(SysLogExample example);
+/**
+ * <p>
+ * 后台操作日志表 Mapper 接口
+ * </p>
+ *
+ * @author xxnjdg
+ * @since 2020-04-16
+ */
+public interface SysLogMapper extends BaseMapper<SysLog> {
 
-    int deleteByExample(SysLogExample example);
-
-    int deleteByPrimaryKey(Long id);
-
-    int insert(SysLog record);
-
-    int insertSelective(SysLog record);
-
-    List<SysLog> selectByExample(SysLogExample example);
-
-    SysLog selectByPrimaryKey(Long id);
-
-    int updateByExampleSelective(@Param("record") SysLog record, @Param("example") SysLogExample example);
-
-    int updateByExample(@Param("record") SysLog record, @Param("example") SysLogExample example);
-
-    int updateByPrimaryKeySelective(SysLog record);
-
-    int updateByPrimaryKey(SysLog record);
 }

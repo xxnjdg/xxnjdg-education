@@ -1,10 +1,15 @@
 package io.xxnjdg.notp.utils.constant;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 /**
  * @author xxnjdg
  * @version 1.0
  * @date 20-4-14 下午3:03
  */
+@AllArgsConstructor
+@Getter
 public enum HttpStatus {
 
     /**
@@ -22,19 +27,5 @@ public enum HttpStatus {
 
     private int status;
     private String statusText;
-
-    HttpStatus(int status, String statusText) {
-        this.status = status;
-        this.statusText = statusText;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public String getStatusText() {
-        return statusText;
-    }
-
 
 }

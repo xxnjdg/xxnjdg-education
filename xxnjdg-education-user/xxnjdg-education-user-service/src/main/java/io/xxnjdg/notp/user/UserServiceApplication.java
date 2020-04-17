@@ -1,8 +1,10 @@
 package io.xxnjdg.notp.user;
 
+import io.xxnjdg.notp.utils.config.GeneralSwaggerConfig;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Import;
 
 /**
  * @author xxnjdg
@@ -11,6 +13,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @SpringBootApplication
 @MapperScan(basePackages = {"io.xxnjdg.notp.user.mapper"})
+@Import(GeneralSwaggerConfig.class)
 public class UserServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(UserServiceApplication.class);

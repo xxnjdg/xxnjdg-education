@@ -1,30 +1,16 @@
 package io.xxnjdg.notp.course.mapper;
 
-import io.xxnjdg.notp.course.model.CourseAudit;
-import io.xxnjdg.notp.course.model.CourseAuditExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
+import io.xxnjdg.notp.course.object.persistent.CourseAudit;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
-public interface CourseAuditMapper {
-    long countByExample(CourseAuditExample example);
+/**
+ * <p>
+ * 课程信息-审核 Mapper 接口
+ * </p>
+ *
+ * @author xxnjdg
+ * @since 2020-04-17
+ */
+public interface CourseAuditMapper extends BaseMapper<CourseAudit> {
 
-    int deleteByExample(CourseAuditExample example);
-
-    int deleteByPrimaryKey(Long id);
-
-    int insert(CourseAudit record);
-
-    int insertSelective(CourseAudit record);
-
-    List<CourseAudit> selectByExample(CourseAuditExample example);
-
-    CourseAudit selectByPrimaryKey(Long id);
-
-    int updateByExampleSelective(@Param("record") CourseAudit record, @Param("example") CourseAuditExample example);
-
-    int updateByExample(@Param("record") CourseAudit record, @Param("example") CourseAuditExample example);
-
-    int updateByPrimaryKeySelective(CourseAudit record);
-
-    int updateByPrimaryKey(CourseAudit record);
 }

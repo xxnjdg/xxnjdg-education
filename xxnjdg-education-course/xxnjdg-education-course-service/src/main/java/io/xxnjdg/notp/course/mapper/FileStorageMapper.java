@@ -1,30 +1,16 @@
 package io.xxnjdg.notp.course.mapper;
 
-import io.xxnjdg.notp.course.model.FileStorage;
-import io.xxnjdg.notp.course.model.FileStorageExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
+import io.xxnjdg.notp.course.object.persistent.FileStorage;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
-public interface FileStorageMapper {
-    long countByExample(FileStorageExample example);
+/**
+ * <p>
+ * 文件存储表 Mapper 接口
+ * </p>
+ *
+ * @author xxnjdg
+ * @since 2020-04-17
+ */
+public interface FileStorageMapper extends BaseMapper<FileStorage> {
 
-    int deleteByExample(FileStorageExample example);
-
-    int deleteByPrimaryKey(Long id);
-
-    int insert(FileStorage record);
-
-    int insertSelective(FileStorage record);
-
-    List<FileStorage> selectByExample(FileStorageExample example);
-
-    FileStorage selectByPrimaryKey(Long id);
-
-    int updateByExampleSelective(@Param("record") FileStorage record, @Param("example") FileStorageExample example);
-
-    int updateByExample(@Param("record") FileStorage record, @Param("example") FileStorageExample example);
-
-    int updateByPrimaryKeySelective(FileStorage record);
-
-    int updateByPrimaryKey(FileStorage record);
 }

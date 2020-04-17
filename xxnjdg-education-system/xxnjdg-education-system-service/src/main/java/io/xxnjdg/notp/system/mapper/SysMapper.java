@@ -1,30 +1,16 @@
 package io.xxnjdg.notp.system.mapper;
 
-import io.xxnjdg.notp.system.model.Sys;
-import io.xxnjdg.notp.system.model.SysExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
+import io.xxnjdg.notp.system.object.persistent.Sys;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
-public interface SysMapper {
-    long countByExample(SysExample example);
+/**
+ * <p>
+ * 系统配置表 Mapper 接口
+ * </p>
+ *
+ * @author xxnjdg
+ * @since 2020-04-16
+ */
+public interface SysMapper extends BaseMapper<Sys> {
 
-    int deleteByExample(SysExample example);
-
-    int deleteByPrimaryKey(Long id);
-
-    int insert(Sys record);
-
-    int insertSelective(Sys record);
-
-    List<Sys> selectByExample(SysExample example);
-
-    Sys selectByPrimaryKey(Long id);
-
-    int updateByExampleSelective(@Param("record") Sys record, @Param("example") SysExample example);
-
-    int updateByExample(@Param("record") Sys record, @Param("example") SysExample example);
-
-    int updateByPrimaryKeySelective(Sys record);
-
-    int updateByPrimaryKey(Sys record);
 }

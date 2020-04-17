@@ -10,17 +10,23 @@ spring:
           enabled: true # 开启从注册中心动态创建路由的功能，利用微服务名称j进行路由
       routes:
         - id: course_route # 路由的id
-          uri: lb://xxnjdg-course-service
+          uri: lb://XXNJDG-COURSE-SERVICE
           predicates:
             - Path=/course/** # 断言，路径相匹配的进行路由
         - id: system_route # 路由的id
-          uri: lb://xxnjdg-system-service
+          uri: lb://XXNJDG-SYSTEM-SERVICE
           predicates:
             - Path=/system/** # 断言，路径相匹配的进行路由
         - id: user_route # 路由的id
-          uri: lb://xxnjdg-user-service
+          uri: lb://XXNJDG-USER-SERVICE
           predicates:
             - Path=/user/** # 断言，路径相匹配的进行路由
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
 # eureka 配置
 info:
   eureka:

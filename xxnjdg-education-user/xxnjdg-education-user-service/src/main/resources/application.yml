@@ -34,3 +34,10 @@ eureka:
     service-url:
       # eureka
       defaultZone: http://${info.eureka.host}:${info.eureka.port}/eureka
+mybatis-plus:
+  mapper-locations: classpath:mybatis/*.xml
+test:
+  mybatis:
+    plus:
+      outputDir: /home/djr/my_dir/backend/project/xxnjdg-education/xxnjdg-education-user/xxnjdg-education-user-service/src/main/java
+      packageParent: io.xxnjdg.notp.user

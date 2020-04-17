@@ -1,30 +1,16 @@
 package io.xxnjdg.notp.system.mapper;
 
-import io.xxnjdg.notp.system.model.MsgUser;
-import io.xxnjdg.notp.system.model.MsgUserExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
+import io.xxnjdg.notp.system.object.persistent.MsgUser;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
-public interface MsgUserMapper {
-    long countByExample(MsgUserExample example);
+/**
+ * <p>
+ * 站内信用户记录表 Mapper 接口
+ * </p>
+ *
+ * @author xxnjdg
+ * @since 2020-04-16
+ */
+public interface MsgUserMapper extends BaseMapper<MsgUser> {
 
-    int deleteByExample(MsgUserExample example);
-
-    int deleteByPrimaryKey(Long id);
-
-    int insert(MsgUser record);
-
-    int insertSelective(MsgUser record);
-
-    List<MsgUser> selectByExample(MsgUserExample example);
-
-    MsgUser selectByPrimaryKey(Long id);
-
-    int updateByExampleSelective(@Param("record") MsgUser record, @Param("example") MsgUserExample example);
-
-    int updateByExample(@Param("record") MsgUser record, @Param("example") MsgUserExample example);
-
-    int updateByPrimaryKeySelective(MsgUser record);
-
-    int updateByPrimaryKey(MsgUser record);
 }

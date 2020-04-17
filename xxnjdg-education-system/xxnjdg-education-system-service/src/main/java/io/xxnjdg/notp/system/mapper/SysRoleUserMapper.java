@@ -1,30 +1,16 @@
 package io.xxnjdg.notp.system.mapper;
 
-import io.xxnjdg.notp.system.model.SysRoleUser;
-import io.xxnjdg.notp.system.model.SysRoleUserExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
+import io.xxnjdg.notp.system.object.persistent.SysRoleUser;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
-public interface SysRoleUserMapper {
-    long countByExample(SysRoleUserExample example);
+/**
+ * <p>
+ * 角色用户关联表 Mapper 接口
+ * </p>
+ *
+ * @author xxnjdg
+ * @since 2020-04-16
+ */
+public interface SysRoleUserMapper extends BaseMapper<SysRoleUser> {
 
-    int deleteByExample(SysRoleUserExample example);
-
-    int deleteByPrimaryKey(Long id);
-
-    int insert(SysRoleUser record);
-
-    int insertSelective(SysRoleUser record);
-
-    List<SysRoleUser> selectByExample(SysRoleUserExample example);
-
-    SysRoleUser selectByPrimaryKey(Long id);
-
-    int updateByExampleSelective(@Param("record") SysRoleUser record, @Param("example") SysRoleUserExample example);
-
-    int updateByExample(@Param("record") SysRoleUser record, @Param("example") SysRoleUserExample example);
-
-    int updateByPrimaryKeySelective(SysRoleUser record);
-
-    int updateByPrimaryKey(SysRoleUser record);
 }

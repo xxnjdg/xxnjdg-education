@@ -1,30 +1,16 @@
 package io.xxnjdg.notp.system.mapper;
 
-import io.xxnjdg.notp.system.model.SysMenuRole;
-import io.xxnjdg.notp.system.model.SysMenuRoleExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
+import io.xxnjdg.notp.system.object.persistent.SysMenuRole;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
-public interface SysMenuRoleMapper {
-    long countByExample(SysMenuRoleExample example);
+/**
+ * <p>
+ * 菜单角色关联表 Mapper 接口
+ * </p>
+ *
+ * @author xxnjdg
+ * @since 2020-04-16
+ */
+public interface SysMenuRoleMapper extends BaseMapper<SysMenuRole> {
 
-    int deleteByExample(SysMenuRoleExample example);
-
-    int deleteByPrimaryKey(Long id);
-
-    int insert(SysMenuRole record);
-
-    int insertSelective(SysMenuRole record);
-
-    List<SysMenuRole> selectByExample(SysMenuRoleExample example);
-
-    SysMenuRole selectByPrimaryKey(Long id);
-
-    int updateByExampleSelective(@Param("record") SysMenuRole record, @Param("example") SysMenuRoleExample example);
-
-    int updateByExample(@Param("record") SysMenuRole record, @Param("example") SysMenuRoleExample example);
-
-    int updateByPrimaryKeySelective(SysMenuRole record);
-
-    int updateByPrimaryKey(SysMenuRole record);
 }

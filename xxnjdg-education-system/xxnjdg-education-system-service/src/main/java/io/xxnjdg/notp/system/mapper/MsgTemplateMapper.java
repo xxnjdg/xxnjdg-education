@@ -1,30 +1,16 @@
 package io.xxnjdg.notp.system.mapper;
 
-import io.xxnjdg.notp.system.model.MsgTemplate;
-import io.xxnjdg.notp.system.model.MsgTemplateExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
+import io.xxnjdg.notp.system.object.persistent.MsgTemplate;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
-public interface MsgTemplateMapper {
-    long countByExample(MsgTemplateExample example);
+/**
+ * <p>
+ * 消息模板 Mapper 接口
+ * </p>
+ *
+ * @author xxnjdg
+ * @since 2020-04-16
+ */
+public interface MsgTemplateMapper extends BaseMapper<MsgTemplate> {
 
-    int deleteByExample(MsgTemplateExample example);
-
-    int deleteByPrimaryKey(Long id);
-
-    int insert(MsgTemplate record);
-
-    int insertSelective(MsgTemplate record);
-
-    List<MsgTemplate> selectByExample(MsgTemplateExample example);
-
-    MsgTemplate selectByPrimaryKey(Long id);
-
-    int updateByExampleSelective(@Param("record") MsgTemplate record, @Param("example") MsgTemplateExample example);
-
-    int updateByExample(@Param("record") MsgTemplate record, @Param("example") MsgTemplateExample example);
-
-    int updateByPrimaryKeySelective(MsgTemplate record);
-
-    int updateByPrimaryKey(MsgTemplate record);
 }

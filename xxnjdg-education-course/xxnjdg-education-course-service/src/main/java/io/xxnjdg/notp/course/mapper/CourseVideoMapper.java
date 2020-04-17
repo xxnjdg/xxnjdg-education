@@ -1,30 +1,16 @@
 package io.xxnjdg.notp.course.mapper;
 
-import io.xxnjdg.notp.course.model.CourseVideo;
-import io.xxnjdg.notp.course.model.CourseVideoExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
+import io.xxnjdg.notp.course.object.persistent.CourseVideo;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
-public interface CourseVideoMapper {
-    long countByExample(CourseVideoExample example);
+/**
+ * <p>
+ * 课程视频信息 Mapper 接口
+ * </p>
+ *
+ * @author xxnjdg
+ * @since 2020-04-17
+ */
+public interface CourseVideoMapper extends BaseMapper<CourseVideo> {
 
-    int deleteByExample(CourseVideoExample example);
-
-    int deleteByPrimaryKey(Long id);
-
-    int insert(CourseVideo record);
-
-    int insertSelective(CourseVideo record);
-
-    List<CourseVideo> selectByExample(CourseVideoExample example);
-
-    CourseVideo selectByPrimaryKey(Long id);
-
-    int updateByExampleSelective(@Param("record") CourseVideo record, @Param("example") CourseVideoExample example);
-
-    int updateByExample(@Param("record") CourseVideo record, @Param("example") CourseVideoExample example);
-
-    int updateByPrimaryKeySelective(CourseVideo record);
-
-    int updateByPrimaryKey(CourseVideo record);
 }

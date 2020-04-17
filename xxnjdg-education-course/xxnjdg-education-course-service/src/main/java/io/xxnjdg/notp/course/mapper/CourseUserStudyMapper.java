@@ -1,30 +1,16 @@
 package io.xxnjdg.notp.course.mapper;
 
-import io.xxnjdg.notp.course.model.CourseUserStudy;
-import io.xxnjdg.notp.course.model.CourseUserStudyExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
+import io.xxnjdg.notp.course.object.persistent.CourseUserStudy;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
-public interface CourseUserStudyMapper {
-    long countByExample(CourseUserStudyExample example);
+/**
+ * <p>
+ * 课程用户关联表 Mapper 接口
+ * </p>
+ *
+ * @author xxnjdg
+ * @since 2020-04-17
+ */
+public interface CourseUserStudyMapper extends BaseMapper<CourseUserStudy> {
 
-    int deleteByExample(CourseUserStudyExample example);
-
-    int deleteByPrimaryKey(Long id);
-
-    int insert(CourseUserStudy record);
-
-    int insertSelective(CourseUserStudy record);
-
-    List<CourseUserStudy> selectByExample(CourseUserStudyExample example);
-
-    CourseUserStudy selectByPrimaryKey(Long id);
-
-    int updateByExampleSelective(@Param("record") CourseUserStudy record, @Param("example") CourseUserStudyExample example);
-
-    int updateByExample(@Param("record") CourseUserStudy record, @Param("example") CourseUserStudyExample example);
-
-    int updateByPrimaryKeySelective(CourseUserStudy record);
-
-    int updateByPrimaryKey(CourseUserStudy record);
 }

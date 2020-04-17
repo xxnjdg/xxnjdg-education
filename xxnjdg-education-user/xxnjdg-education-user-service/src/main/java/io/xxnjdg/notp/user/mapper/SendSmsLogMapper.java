@@ -1,30 +1,16 @@
 package io.xxnjdg.notp.user.mapper;
 
-import io.xxnjdg.notp.user.model.SendSmsLog;
-import io.xxnjdg.notp.user.model.SendSmsLogExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
+import io.xxnjdg.notp.user.entity.SendSmsLog;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
-public interface SendSmsLogMapper {
-    long countByExample(SendSmsLogExample example);
+/**
+ * <p>
+ * 用户发送短信日志 Mapper 接口
+ * </p>
+ *
+ * @author xxnjdg
+ * @since 2020-04-16
+ */
+public interface SendSmsLogMapper extends BaseMapper<SendSmsLog> {
 
-    int deleteByExample(SendSmsLogExample example);
-
-    int deleteByPrimaryKey(Long id);
-
-    int insert(SendSmsLog record);
-
-    int insertSelective(SendSmsLog record);
-
-    List<SendSmsLog> selectByExample(SendSmsLogExample example);
-
-    SendSmsLog selectByPrimaryKey(Long id);
-
-    int updateByExampleSelective(@Param("record") SendSmsLog record, @Param("example") SendSmsLogExample example);
-
-    int updateByExample(@Param("record") SendSmsLog record, @Param("example") SendSmsLogExample example);
-
-    int updateByPrimaryKeySelective(SendSmsLog record);
-
-    int updateByPrimaryKey(SendSmsLog record);
 }

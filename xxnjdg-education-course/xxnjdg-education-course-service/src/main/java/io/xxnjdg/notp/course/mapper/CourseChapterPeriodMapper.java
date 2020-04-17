@@ -1,30 +1,16 @@
 package io.xxnjdg.notp.course.mapper;
 
-import io.xxnjdg.notp.course.model.CourseChapterPeriod;
-import io.xxnjdg.notp.course.model.CourseChapterPeriodExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
+import io.xxnjdg.notp.course.object.persistent.CourseChapterPeriod;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
-public interface CourseChapterPeriodMapper {
-    long countByExample(CourseChapterPeriodExample example);
+/**
+ * <p>
+ * 课时信息 Mapper 接口
+ * </p>
+ *
+ * @author xxnjdg
+ * @since 2020-04-17
+ */
+public interface CourseChapterPeriodMapper extends BaseMapper<CourseChapterPeriod> {
 
-    int deleteByExample(CourseChapterPeriodExample example);
-
-    int deleteByPrimaryKey(Long id);
-
-    int insert(CourseChapterPeriod record);
-
-    int insertSelective(CourseChapterPeriod record);
-
-    List<CourseChapterPeriod> selectByExample(CourseChapterPeriodExample example);
-
-    CourseChapterPeriod selectByPrimaryKey(Long id);
-
-    int updateByExampleSelective(@Param("record") CourseChapterPeriod record, @Param("example") CourseChapterPeriodExample example);
-
-    int updateByExample(@Param("record") CourseChapterPeriod record, @Param("example") CourseChapterPeriodExample example);
-
-    int updateByPrimaryKeySelective(CourseChapterPeriod record);
-
-    int updateByPrimaryKey(CourseChapterPeriod record);
 }

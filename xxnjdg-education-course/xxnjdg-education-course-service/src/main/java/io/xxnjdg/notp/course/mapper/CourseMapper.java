@@ -1,30 +1,16 @@
 package io.xxnjdg.notp.course.mapper;
 
-import io.xxnjdg.notp.course.model.Course;
-import io.xxnjdg.notp.course.model.CourseExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
+import io.xxnjdg.notp.course.object.persistent.Course;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
-public interface CourseMapper {
-    long countByExample(CourseExample example);
+/**
+ * <p>
+ * 课程信息 Mapper 接口
+ * </p>
+ *
+ * @author xxnjdg
+ * @since 2020-04-17
+ */
+public interface CourseMapper extends BaseMapper<Course> {
 
-    int deleteByExample(CourseExample example);
-
-    int deleteByPrimaryKey(Long id);
-
-    int insert(Course record);
-
-    int insertSelective(Course record);
-
-    List<Course> selectByExample(CourseExample example);
-
-    Course selectByPrimaryKey(Long id);
-
-    int updateByExampleSelective(@Param("record") Course record, @Param("example") CourseExample example);
-
-    int updateByExample(@Param("record") Course record, @Param("example") CourseExample example);
-
-    int updateByPrimaryKeySelective(Course record);
-
-    int updateByPrimaryKey(Course record);
 }

@@ -1,30 +1,16 @@
 package io.xxnjdg.notp.system.mapper;
 
-import io.xxnjdg.notp.system.model.SysMenu;
-import io.xxnjdg.notp.system.model.SysMenuExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
+import io.xxnjdg.notp.system.object.persistent.SysMenu;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
-public interface SysMenuMapper {
-    long countByExample(SysMenuExample example);
+/**
+ * <p>
+ * 菜单信息 Mapper 接口
+ * </p>
+ *
+ * @author xxnjdg
+ * @since 2020-04-16
+ */
+public interface SysMenuMapper extends BaseMapper<SysMenu> {
 
-    int deleteByExample(SysMenuExample example);
-
-    int deleteByPrimaryKey(Long id);
-
-    int insert(SysMenu record);
-
-    int insertSelective(SysMenu record);
-
-    List<SysMenu> selectByExample(SysMenuExample example);
-
-    SysMenu selectByPrimaryKey(Long id);
-
-    int updateByExampleSelective(@Param("record") SysMenu record, @Param("example") SysMenuExample example);
-
-    int updateByExample(@Param("record") SysMenu record, @Param("example") SysMenuExample example);
-
-    int updateByPrimaryKeySelective(SysMenu record);
-
-    int updateByPrimaryKey(SysMenu record);
 }

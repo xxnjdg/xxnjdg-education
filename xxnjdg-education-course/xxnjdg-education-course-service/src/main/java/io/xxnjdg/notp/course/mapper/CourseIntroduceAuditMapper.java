@@ -1,36 +1,16 @@
 package io.xxnjdg.notp.course.mapper;
 
-import io.xxnjdg.notp.course.model.CourseIntroduceAudit;
-import io.xxnjdg.notp.course.model.CourseIntroduceAuditExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
+import io.xxnjdg.notp.course.object.persistent.CourseIntroduceAudit;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
-public interface CourseIntroduceAuditMapper {
-    long countByExample(CourseIntroduceAuditExample example);
+/**
+ * <p>
+ * 课程介绍信息-审核 Mapper 接口
+ * </p>
+ *
+ * @author xxnjdg
+ * @since 2020-04-17
+ */
+public interface CourseIntroduceAuditMapper extends BaseMapper<CourseIntroduceAudit> {
 
-    int deleteByExample(CourseIntroduceAuditExample example);
-
-    int deleteByPrimaryKey(Long id);
-
-    int insert(CourseIntroduceAudit record);
-
-    int insertSelective(CourseIntroduceAudit record);
-
-    List<CourseIntroduceAudit> selectByExampleWithBLOBs(CourseIntroduceAuditExample example);
-
-    List<CourseIntroduceAudit> selectByExample(CourseIntroduceAuditExample example);
-
-    CourseIntroduceAudit selectByPrimaryKey(Long id);
-
-    int updateByExampleSelective(@Param("record") CourseIntroduceAudit record, @Param("example") CourseIntroduceAuditExample example);
-
-    int updateByExampleWithBLOBs(@Param("record") CourseIntroduceAudit record, @Param("example") CourseIntroduceAuditExample example);
-
-    int updateByExample(@Param("record") CourseIntroduceAudit record, @Param("example") CourseIntroduceAuditExample example);
-
-    int updateByPrimaryKeySelective(CourseIntroduceAudit record);
-
-    int updateByPrimaryKeyWithBLOBs(CourseIntroduceAudit record);
-
-    int updateByPrimaryKey(CourseIntroduceAudit record);
 }

@@ -31,6 +31,8 @@
         <springfox.swagger1.version>1.5.21</springfox.swagger1.version>
         <hutool.all.version>5.2.5</hutool.all.version>
         <druid.spring.boot.starter.version>1.1.21</druid.spring.boot.starter.version>
+        <mybatisplus.version>3.3.0</mybatisplus.version>
+        <velocity.engine.core.version>2.1</velocity.engine.core.version>
     </properties>
 
     <dependencyManagement>
@@ -61,14 +63,14 @@
                 <scope>import</scope>
             </dependency>
 
-            <!-- 分页工具-->
+            <!-- mybatis 分页工具-->
             <dependency>
                 <groupId>com.github.pagehelper</groupId>
                 <artifactId>pagehelper-spring-boot-starter</artifactId>
                 <version>${pagehelper.spring.boot.starter.version}</version>
             </dependency>
 
-            <!-- java程序api依赖 -->
+            <!-- mybatis 代码生成器 -->
             <dependency>
                 <groupId>org.mybatis.generator</groupId>
                 <artifactId>mybatis-generator-core</artifactId>
@@ -107,7 +109,7 @@
                 <version>${springfox.swagger2.version}</version>
             </dependency>
 
-            <!--            糊涂工具包-->
+            <!--   糊涂工具包-->
             <dependency>
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
@@ -119,6 +121,27 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid-spring-boot-starter</artifactId>
                 <version>${druid.spring.boot.starter.version}</version>
+            </dependency>
+
+            <!-- mybatis plus 代码生成器  -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-generator</artifactId>
+                <version>${mybatisplus.version}</version>
+            </dependency>
+
+            <!-- mybatis plus 代码生成器模板  -->
+            <dependency>
+                <groupId>org.apache.velocity</groupId>
+                <artifactId>velocity-engine-core</artifactId>
+                <version>${velocity.engine.core.version}</version>
+            </dependency>
+
+            <!-- mybatis plus 启动器  -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatisplus.version}</version>
             </dependency>
 
         </dependencies>

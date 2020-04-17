@@ -1,30 +1,16 @@
 package io.xxnjdg.notp.user.mapper;
 
-import io.xxnjdg.notp.user.model.Lecturer;
-import io.xxnjdg.notp.user.model.LecturerExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
+import io.xxnjdg.notp.user.entity.Lecturer;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
-public interface LecturerMapper {
-    long countByExample(LecturerExample example);
+/**
+ * <p>
+ * 讲师信息 Mapper 接口
+ * </p>
+ *
+ * @author xxnjdg
+ * @since 2020-04-16
+ */
+public interface LecturerMapper extends BaseMapper<Lecturer> {
 
-    int deleteByExample(LecturerExample example);
-
-    int deleteByPrimaryKey(Long id);
-
-    int insert(Lecturer record);
-
-    int insertSelective(Lecturer record);
-
-    List<Lecturer> selectByExample(LecturerExample example);
-
-    Lecturer selectByPrimaryKey(Long id);
-
-    int updateByExampleSelective(@Param("record") Lecturer record, @Param("example") LecturerExample example);
-
-    int updateByExample(@Param("record") Lecturer record, @Param("example") LecturerExample example);
-
-    int updateByPrimaryKeySelective(Lecturer record);
-
-    int updateByPrimaryKey(Lecturer record);
 }

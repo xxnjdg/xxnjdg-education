@@ -1,30 +1,25 @@
 package io.xxnjdg.notp.system.mapper;
 
-import io.xxnjdg.notp.system.model.WebsiteNav;
-import io.xxnjdg.notp.system.model.WebsiteNavExample;
+import io.xxnjdg.notp.system.object.domain.WebsiteNavLevelDo;
+import io.xxnjdg.notp.system.object.persistent.WebsiteNav;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
-public interface WebsiteNavMapper {
-    long countByExample(WebsiteNavExample example);
+/**
+ * <p>
+ * 站点导航 Mapper 接口
+ * </p>
+ *
+ * @author xxnjdg
+ * @since 2020-04-16
+ */
+public interface WebsiteNavMapper extends BaseMapper<WebsiteNav> {
 
-    int deleteByExample(WebsiteNavExample example);
+    /**
+     * 返回
+     * @return List<WebsiteNavLevelVo>
+     */
+    List<WebsiteNavLevelDo> getWebsiteNavLevelListByStatusId();
 
-    int deleteByPrimaryKey(Long id);
-
-    int insert(WebsiteNav record);
-
-    int insertSelective(WebsiteNav record);
-
-    List<WebsiteNav> selectByExample(WebsiteNavExample example);
-
-    WebsiteNav selectByPrimaryKey(Long id);
-
-    int updateByExampleSelective(@Param("record") WebsiteNav record, @Param("example") WebsiteNavExample example);
-
-    int updateByExample(@Param("record") WebsiteNav record, @Param("example") WebsiteNavExample example);
-
-    int updateByPrimaryKeySelective(WebsiteNav record);
-
-    int updateByPrimaryKey(WebsiteNav record);
 }

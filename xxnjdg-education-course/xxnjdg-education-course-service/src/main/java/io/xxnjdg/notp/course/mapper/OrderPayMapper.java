@@ -1,30 +1,16 @@
 package io.xxnjdg.notp.course.mapper;
 
-import io.xxnjdg.notp.course.model.OrderPay;
-import io.xxnjdg.notp.course.model.OrderPayExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
+import io.xxnjdg.notp.course.object.persistent.OrderPay;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
-public interface OrderPayMapper {
-    long countByExample(OrderPayExample example);
+/**
+ * <p>
+ * 订单支付信息表 Mapper 接口
+ * </p>
+ *
+ * @author xxnjdg
+ * @since 2020-04-17
+ */
+public interface OrderPayMapper extends BaseMapper<OrderPay> {
 
-    int deleteByExample(OrderPayExample example);
-
-    int deleteByPrimaryKey(Long id);
-
-    int insert(OrderPay record);
-
-    int insertSelective(OrderPay record);
-
-    List<OrderPay> selectByExample(OrderPayExample example);
-
-    OrderPay selectByPrimaryKey(Long id);
-
-    int updateByExampleSelective(@Param("record") OrderPay record, @Param("example") OrderPayExample example);
-
-    int updateByExample(@Param("record") OrderPay record, @Param("example") OrderPayExample example);
-
-    int updateByPrimaryKeySelective(OrderPay record);
-
-    int updateByPrimaryKey(OrderPay record);
 }

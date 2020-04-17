@@ -1,30 +1,16 @@
 package io.xxnjdg.notp.course.mapper;
 
-import io.xxnjdg.notp.course.model.OrderInfo;
-import io.xxnjdg.notp.course.model.OrderInfoExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
+import io.xxnjdg.notp.course.object.persistent.OrderInfo;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
-public interface OrderInfoMapper {
-    long countByExample(OrderInfoExample example);
+/**
+ * <p>
+ * 订单信息表 Mapper 接口
+ * </p>
+ *
+ * @author xxnjdg
+ * @since 2020-04-17
+ */
+public interface OrderInfoMapper extends BaseMapper<OrderInfo> {
 
-    int deleteByExample(OrderInfoExample example);
-
-    int deleteByPrimaryKey(Long id);
-
-    int insert(OrderInfo record);
-
-    int insertSelective(OrderInfo record);
-
-    List<OrderInfo> selectByExample(OrderInfoExample example);
-
-    OrderInfo selectByPrimaryKey(Long id);
-
-    int updateByExampleSelective(@Param("record") OrderInfo record, @Param("example") OrderInfoExample example);
-
-    int updateByExample(@Param("record") OrderInfo record, @Param("example") OrderInfoExample example);
-
-    int updateByPrimaryKeySelective(OrderInfo record);
-
-    int updateByPrimaryKey(OrderInfo record);
 }

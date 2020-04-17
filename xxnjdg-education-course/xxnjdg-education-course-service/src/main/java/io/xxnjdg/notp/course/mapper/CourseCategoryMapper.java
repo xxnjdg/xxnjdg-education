@@ -1,30 +1,16 @@
 package io.xxnjdg.notp.course.mapper;
 
-import io.xxnjdg.notp.course.model.CourseCategory;
-import io.xxnjdg.notp.course.model.CourseCategoryExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
+import io.xxnjdg.notp.course.object.persistent.CourseCategory;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
-public interface CourseCategoryMapper {
-    long countByExample(CourseCategoryExample example);
+/**
+ * <p>
+ * 课程分类 Mapper 接口
+ * </p>
+ *
+ * @author xxnjdg
+ * @since 2020-04-17
+ */
+public interface CourseCategoryMapper extends BaseMapper<CourseCategory> {
 
-    int deleteByExample(CourseCategoryExample example);
-
-    int deleteByPrimaryKey(Long id);
-
-    int insert(CourseCategory record);
-
-    int insertSelective(CourseCategory record);
-
-    List<CourseCategory> selectByExample(CourseCategoryExample example);
-
-    CourseCategory selectByPrimaryKey(Long id);
-
-    int updateByExampleSelective(@Param("record") CourseCategory record, @Param("example") CourseCategoryExample example);
-
-    int updateByExample(@Param("record") CourseCategory record, @Param("example") CourseCategoryExample example);
-
-    int updateByPrimaryKeySelective(CourseCategory record);
-
-    int updateByPrimaryKey(CourseCategory record);
 }

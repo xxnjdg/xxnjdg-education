@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.xxnjdg.notp.course.mapper.CourseChapterMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="io.xxnjdg.notp.course.object.persistent.CourseChapter">
+        <id column="id" property="id" />
+        <result column="gmt_create" property="gmtCreate" />
+        <result column="gmt_modified" property="gmtModified" />
+        <result column="status_id" property="statusId" />
+        <result column="sort" property="sort" />
+        <result column="course_id" property="courseId" />
+        <result column="chapter_name" property="chapterName" />
+        <result column="chapter_desc" property="chapterDesc" />
+        <result column="is_free" property="isFree" />
+        <result column="chapter_original" property="chapterOriginal" />
+        <result column="chapter_discount" property="chapterDiscount" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, gmt_create, gmt_modified, status_id, sort, course_id, chapter_name, chapter_desc, is_free, chapter_original, chapter_discount
+    </sql>
+
+</mapper>

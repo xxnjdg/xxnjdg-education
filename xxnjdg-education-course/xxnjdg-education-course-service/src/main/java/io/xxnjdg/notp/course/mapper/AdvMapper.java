@@ -1,30 +1,16 @@
 package io.xxnjdg.notp.course.mapper;
 
-import io.xxnjdg.notp.course.model.Adv;
-import io.xxnjdg.notp.course.model.AdvExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
+import io.xxnjdg.notp.course.object.persistent.Adv;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
-public interface AdvMapper {
-    long countByExample(AdvExample example);
+/**
+ * <p>
+ * 广告信息 Mapper 接口
+ * </p>
+ *
+ * @author xxnjdg
+ * @since 2020-04-17
+ */
+public interface AdvMapper extends BaseMapper<Adv> {
 
-    int deleteByExample(AdvExample example);
-
-    int deleteByPrimaryKey(Long id);
-
-    int insert(Adv record);
-
-    int insertSelective(Adv record);
-
-    List<Adv> selectByExample(AdvExample example);
-
-    Adv selectByPrimaryKey(Long id);
-
-    int updateByExampleSelective(@Param("record") Adv record, @Param("example") AdvExample example);
-
-    int updateByExample(@Param("record") Adv record, @Param("example") AdvExample example);
-
-    int updateByPrimaryKeySelective(Adv record);
-
-    int updateByPrimaryKey(Adv record);
 }
