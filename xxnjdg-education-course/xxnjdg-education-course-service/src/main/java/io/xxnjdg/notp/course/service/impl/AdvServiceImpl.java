@@ -5,10 +5,10 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import io.xxnjdg.notp.course.object.data.transfer.AdvDto;
+import io.xxnjdg.notp.course.object.data.transfer.AdvDTO;
 import io.xxnjdg.notp.course.object.persistent.Adv;
 import io.xxnjdg.notp.course.mapper.AdvMapper;
-import io.xxnjdg.notp.course.object.view.AdvVo;
+import io.xxnjdg.notp.course.object.view.AdvVO;
 import io.xxnjdg.notp.course.service.AdvService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.xxnjdg.notp.utils.constant.ItemStatus;
@@ -29,7 +29,7 @@ import java.util.List;
 public class AdvServiceImpl extends ServiceImpl<AdvMapper, Adv> implements AdvService {
 
     @Override
-    public List<AdvVo> postAdvList(AdvDto advDto) {
+    public List<AdvVO> postAdvList(AdvDTO advDto) {
 
         LambdaQueryWrapper<Adv> advLambdaQueryWrapper = new QueryWrapper<Adv>().lambda()
                 .eq(Adv::getPlatShow, advDto.getPlatShow())
@@ -44,9 +44,9 @@ public class AdvServiceImpl extends ServiceImpl<AdvMapper, Adv> implements AdvSe
         }
 
         //po -> vo
-        List<AdvVo> advVos = new ArrayList<>();
+        List<AdvVO> advVos = new ArrayList<>();
         list.forEach(adv -> {
-            AdvVo advVo = new AdvVo();
+            AdvVO advVo = new AdvVO();
             BeanUtil.copyProperties(adv,advVo);
             advVos.add(advVo);
         });

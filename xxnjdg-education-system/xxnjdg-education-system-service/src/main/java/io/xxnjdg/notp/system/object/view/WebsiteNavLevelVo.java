@@ -1,5 +1,7 @@
 package io.xxnjdg.notp.system.object.view;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -20,6 +22,7 @@ public class WebsiteNavLevelVo implements Serializable {
     /**
      * 主键
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
     /**

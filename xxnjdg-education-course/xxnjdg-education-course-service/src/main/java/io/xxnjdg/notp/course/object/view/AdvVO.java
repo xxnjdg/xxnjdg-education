@@ -10,7 +10,7 @@ import java.io.Serializable;
  * @date 20-4-17 上午11:18
  */
 @Data
-public class AdvVo implements Serializable {
+public class AdvVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

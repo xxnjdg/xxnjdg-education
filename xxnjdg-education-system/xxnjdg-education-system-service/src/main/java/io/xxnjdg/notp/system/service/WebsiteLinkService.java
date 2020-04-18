@@ -2,6 +2,9 @@ package io.xxnjdg.notp.system.service;
 
 import io.xxnjdg.notp.system.object.persistent.WebsiteLink;
 import com.baomidou.mybatisplus.extension.service.IService;
+import io.xxnjdg.notp.system.object.view.WebsiteLinkVO;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface WebsiteLinkService extends IService<WebsiteLink> {
 
+    /**
+     *  ss
+     * @return
+     */
+    List<WebsiteLinkVO> postWebsiteLinkList();
 }

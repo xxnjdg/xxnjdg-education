@@ -1,7 +1,11 @@
 package io.xxnjdg.notp.course.service;
 
+import io.xxnjdg.notp.course.object.data.transfer.ZoneDTO;
 import io.xxnjdg.notp.course.object.persistent.Zone;
 import com.baomidou.mybatisplus.extension.service.IService;
+import io.xxnjdg.notp.course.object.view.ZoneVO;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +17,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ZoneService extends IService<Zone> {
 
+    List<ZoneVO> postZoneCourseList(ZoneDTO zoneDTO);
 }

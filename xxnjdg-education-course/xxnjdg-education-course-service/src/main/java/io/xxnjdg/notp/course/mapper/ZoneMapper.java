@@ -1,7 +1,11 @@
 package io.xxnjdg.notp.course.mapper;
 
+import io.xxnjdg.notp.course.object.data.transfer.ZoneDTO;
 import io.xxnjdg.notp.course.object.persistent.Zone;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import io.xxnjdg.notp.course.object.view.ZoneVO;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +17,10 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface ZoneMapper extends BaseMapper<Zone> {
 
+    /**
+     * d
+     * @param zoneDTO
+     * @return
+     */
+    List<ZoneVO> postZoneCourseList(ZoneDTO zoneDTO);
 }

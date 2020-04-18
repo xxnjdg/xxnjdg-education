@@ -10,6 +10,7 @@ import io.xxnjdg.notp.system.service.WebsiteNavService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.xxnjdg.notp.utils.constant.ItemStatus;
 import io.xxnjdg.notp.utils.constant.ParentId;
+import io.xxnjdg.notp.utils.custom.utils.ListToTreeUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -41,30 +42,16 @@ public class WebsiteNavServiceImpl extends ServiceImpl<WebsiteNavMapper, Website
 
         //po -> vo
         ArrayList<WebsiteNavLevelVo> websiteNavLevelVos = new ArrayList<>();
-        websiteNavs.forEach(websiteNav -> {
-            WebsiteNavLevelVo websiteNavLevelVo = new WebsiteNavLevelVo();
-            BeanUtil.copyProperties(websiteNav,websiteNavLevelVo);
-            websiteNavLevelVos.add(websiteNavLevelVo);
-        });
+        websiteNavs.forEach(websiteNav -> { websiteNavLevelVos.add(BeanUtil.copyProperties(websiteNav,WebsiteNavLevelVo.class)); });
 
-        // 找到父节点
-        List<WebsiteNavLevelVo> parentList = websiteNavLevelVos.stream()
-                .filter(websiteNavLevelVo -> ParentId.ZERO_PARENT_ID.getStatus().equals(websiteNavLevelVo.getParentId()))
-                .collect(Collectors.toList());
+        List<WebsiteNavLevelVo> tree = null;
+        try {
+            //构造树结构
+            tree = ListToTreeUtil.getTree(websiteNavLevelVos, ParentId.ZERO_PARENT_ID.getStatus());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-
-        // 设置父节点孩子
-        parentList.forEach(websiteNavLevelVo -> {
-                    websiteNavLevelVos.forEach(websiteNavLevelVo1 -> {
-                        if(websiteNavLevelVo.getId().equals(websiteNavLevelVo1.getParentId())){
-                            if(websiteNavLevelVo.getChildren() == null){
-                                websiteNavLevelVo.setChildren(new ArrayList<>());
-                            }
-                            websiteNavLevelVo.getChildren().add(websiteNavLevelVo1);
-                        }
-                    });
-                });
-
-        return parentList;
+        return tree;
     }
 }

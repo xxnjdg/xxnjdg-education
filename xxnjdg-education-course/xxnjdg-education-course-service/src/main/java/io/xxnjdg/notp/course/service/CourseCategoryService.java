@@ -2,7 +2,7 @@ package io.xxnjdg.notp.course.service;
 
 import io.xxnjdg.notp.course.object.persistent.CourseCategory;
 import com.baomidou.mybatisplus.extension.service.IService;
-import io.xxnjdg.notp.course.object.view.CourseCategoryLevelVo;
+import io.xxnjdg.notp.course.object.view.CourseCategoryLevelVO;
 
 import java.util.List;
 
@@ -20,5 +20,5 @@ public interface CourseCategoryService extends IService<CourseCategory> {
      * d
      * @return s
      */
-    List<CourseCategoryLevelVo> postCourseCategoryList();
+    List<CourseCategoryLevelVO> postCourseCategoryList();
 }

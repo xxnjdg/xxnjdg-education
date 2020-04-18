@@ -16,6 +16,8 @@ import java.util.Collections;
  * @author xxnjdg
  * @version 1.0
  * @date 20-4-14 下午2:54
+ *
+ * 全局 Swagger2 配置
  */
 @Configuration
 @EnableSwagger2

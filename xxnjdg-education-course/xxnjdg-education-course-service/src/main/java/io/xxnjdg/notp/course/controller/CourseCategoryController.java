@@ -1,13 +1,11 @@
 package io.xxnjdg.notp.course.controller;
 
 
-import cn.hutool.core.collection.CollUtil;
-import io.xxnjdg.notp.course.object.view.CourseCategoryLevelVo;
+import io.xxnjdg.notp.course.object.view.CourseCategoryLevelVO;
 import io.xxnjdg.notp.course.service.CourseCategoryService;
 import io.xxnjdg.notp.utils.response.ResponseResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,7 +27,7 @@ public class CourseCategoryController {
 
     @PostMapping("/course/api/course/category/list")
     public ResponseResult postCourseCategoryList(){
-        List<CourseCategoryLevelVo> courseCategoryLevelVos = courseCategoryService.postCourseCategoryList();
+        List<CourseCategoryLevelVO> courseCategoryLevelVos = courseCategoryService.postCourseCategoryList();
         return ResponseResult.success(courseCategoryLevelVos);
     }
 

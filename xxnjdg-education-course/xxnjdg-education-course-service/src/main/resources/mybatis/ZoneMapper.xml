@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.xxnjdg.notp.course.mapper.ZoneMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="io.xxnjdg.notp.course.object.persistent.Zone">
+        <id column="id" property="id" />
+        <result column="gmt_create" property="gmtCreate" />
+        <result column="gmt_modified" property="gmtModified" />
+        <result column="status_id" property="statusId" />
+        <result column="sort" property="sort" />
+        <result column="zone_name" property="zoneName" />
+        <result column="zone_desc" property="zoneDesc" />
+        <result column="zone_location" property="zoneLocation" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, gmt_create, gmt_modified, status_id, sort, zone_name, zone_desc, zone_location
+    </sql>
+
+    <resultMap id="ZoneVO" type="io.xxnjdg.notp.course.object.view.ZoneVO">
+        <id column="zid" property="id" />
+        <result column="zname" property="zoneName" />
+        <result column="zdesc" property="zoneDesc" />
+
+        <collection property="zoneCourseList" ofType="io.xxnjdg.notp.course.object.view.ZoneCourseVO">
+            <id column="id" property="id" />
+            <result column="lecturer_user_no" property="lecturerUserNo" />
+            <result column="course_name" property="courseName" />
+            <result column="course_logo" property="courseLogo" />
+            <result column="is_free" property="isFree" />
+            <result column="course_original" property="courseOriginal" />
+            <result column="course_discount" property="courseDiscount" />
+        </collection>
+    </resultMap>
+
+    <select id="postZoneCourseList" resultMap="ZoneVO" >
+        select zone.id zid, zone.zone_name zname ,zone.zone_desc zdesc,course.* from zone join zone_course on zone.id = zone_course.zone_id join course on zone_course.course_id = course.id where zone.zone_location = #{zoneLocation} and zone.status_id = 1 and course.status_id = 1 and zone_course.status_id = 1 order by zone.sort desc,zone_course.sort desc
+    </select>
+
+</mapper>

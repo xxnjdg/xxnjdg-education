@@ -16,13 +16,13 @@ public enum ItemStatus {
     /**
      * 启动
      */
-    ENABLE("1","启动"),
+    ENABLE(1,"启动"),
     /**
      * 关闭
      */
-    DISABLED("0","系统内部错误");
+    DISABLED(0,"系统内部错误");
 
-    private String status;
+    private Integer status;
     private String statusText;
 
 }

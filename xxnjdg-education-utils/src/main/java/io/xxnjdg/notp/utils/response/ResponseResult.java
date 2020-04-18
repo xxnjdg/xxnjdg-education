@@ -60,7 +60,11 @@ public class ResponseResult extends HashMap<String,Object> {
      * @return 返回结果
      */
     public static ResponseResult customResult(HttpStatus httpStatus,Object data){
-        return new ResponseResult(httpStatus.getStatus(), httpStatus.getStatusText(), data);
+        return customResult(httpStatus.getStatus(), httpStatus.getStatusText(), data);
+    }
+
+    public static ResponseResult customResult(int status, String statusText ,Object data){
+        return new ResponseResult(status, statusText, data);
     }
 
     /**
@@ -98,7 +102,27 @@ public class ResponseResult extends HashMap<String,Object> {
      */
     public static ResponseResult error(HttpStatus httpStatus,Object data)
     {
-        return customResult(HttpStatus.ERROR,data);
+        return customResult(httpStatus,data);
     }
 
+    /**
+     * 失败
+     * @param message
+     * @return
+     */
+    public static ResponseResult error(String message)
+    {
+        return customResult(HttpStatus.ERROR.getStatus(),message,"");
+    }
+
+
+    /**
+     * 失败
+     * @param httpStatus
+     * @return
+     */
+    public static ResponseResult error(HttpStatus httpStatus)
+    {
+        return error(httpStatus,null);
+    }
 }

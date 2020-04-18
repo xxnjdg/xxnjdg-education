@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.xxnjdg.notp.course.object.persistent.CourseCategory;
 import io.xxnjdg.notp.course.mapper.CourseCategoryMapper;
-import io.xxnjdg.notp.course.object.view.CourseCategoryLevelVo;
+import io.xxnjdg.notp.course.object.view.CourseCategoryLevelVO;
 import io.xxnjdg.notp.course.service.CourseCategoryService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.xxnjdg.notp.utils.constant.ItemStatus;
@@ -28,24 +28,27 @@ import java.util.*;
 public class CourseCategoryServiceImpl extends ServiceImpl<CourseCategoryMapper, CourseCategory> implements CourseCategoryService {
 
     @Override
-    public List<CourseCategoryLevelVo> postCourseCategoryList() {
+    public List<CourseCategoryLevelVO> postCourseCategoryList() {
 
         LambdaQueryWrapper<CourseCategory> queryWrapper =
                 new QueryWrapper<CourseCategory>().lambda().eq(CourseCategory::getStatusId, ItemStatus.ENABLE.getStatus());
 
+        //全局扫描
         List<CourseCategory> list = this.list(queryWrapper);
 
         if (CollUtil.isEmpty(list)){
             return null;
         }
 
-        ArrayList<CourseCategoryLevelVo> courseCategoryLevelVos = new ArrayList<>();
+        ArrayList<CourseCategoryLevelVO> courseCategoryLevelVos = new ArrayList<>();
 
-        list.forEach(courseCategory -> courseCategoryLevelVos.add(BeanUtil.copyProperties(courseCategory,CourseCategoryLevelVo.class)));
+        //po -> vo
+        list.forEach(courseCategory -> courseCategoryLevelVos.add(BeanUtil.copyProperties(courseCategory, CourseCategoryLevelVO.class)));
 
-        List<CourseCategoryLevelVo> tree = null;
+        List<CourseCategoryLevelVO> tree = null;
 
         try {
+            // list -> sort tree
             tree = ListToTreeUtil.getTree(courseCategoryLevelVos,ParentId.ZERO_PARENT_ID.getStatus());
         } catch (Exception e) {
             e.printStackTrace();

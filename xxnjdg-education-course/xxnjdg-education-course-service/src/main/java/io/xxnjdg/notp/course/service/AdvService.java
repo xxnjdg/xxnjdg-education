@@ -1,9 +1,9 @@
 package io.xxnjdg.notp.course.service;
 
-import io.xxnjdg.notp.course.object.data.transfer.AdvDto;
+import io.xxnjdg.notp.course.object.data.transfer.AdvDTO;
 import io.xxnjdg.notp.course.object.persistent.Adv;
 import com.baomidou.mybatisplus.extension.service.IService;
-import io.xxnjdg.notp.course.object.view.AdvVo;
+import io.xxnjdg.notp.course.object.view.AdvVO;
 
 import java.util.List;
 
@@ -22,5 +22,5 @@ public interface AdvService extends IService<Adv> {
      * @param advDto
      * @return
      */
-    List<AdvVo> postAdvList(AdvDto advDto);
+    List<AdvVO> postAdvList(AdvDTO advDto);
 }

@@ -1,6 +1,7 @@
 package io.xxnjdg.notp.system;
 
 import io.xxnjdg.notp.utils.config.GeneralSwaggerConfig;
+import io.xxnjdg.notp.utils.config.HandlerException;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,7 +16,7 @@ import org.springframework.context.annotation.Import;
  */
 @SpringBootApplication
 @MapperScan(basePackages = {"io.xxnjdg.notp.system.mapper"})
-@Import(GeneralSwaggerConfig.class)
+@Import({GeneralSwaggerConfig.class,HandlerException.class})
 @EnableFeignClients
 @EnableEurekaClient
 public class SystemServiceApplication {

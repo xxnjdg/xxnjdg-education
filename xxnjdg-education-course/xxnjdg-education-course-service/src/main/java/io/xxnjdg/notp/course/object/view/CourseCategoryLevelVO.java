@@ -12,7 +12,7 @@ import java.util.List;
  * @date 20-4-17 下午2:08
  */
 @Data
-public class CourseCategoryLevelVo {
+public class CourseCategoryLevelVO {
 
     private static final long serialVersionUID = 1L;
 
