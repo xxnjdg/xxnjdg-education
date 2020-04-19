@@ -1,4 +1,4 @@
-package io.xxnjdg.notp.user.entity;
+package io.xxnjdg.notp.user.object.persistent;
 
 import java.math.BigDecimal;
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -11,16 +11,16 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 讲师信息
+ * 讲师账户信息表
  * </p>
  *
  * @author xxnjdg
- * @since 2020-04-16
+ * @since 2020-04-20
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class Lecturer implements Serializable {
+public class LecturerExt implements Serializable {
 
     private static final long serialVersionUID=1L;
 
@@ -56,39 +56,54 @@ public class Lecturer implements Serializable {
     private Long lecturerUserNo;
 
     /**
-     * 讲师名称
+     * 总收入
      */
-    private String lecturerName;
+    private BigDecimal totalIncome;
 
     /**
-     * 讲师手机
+     * 已提金额
      */
-    private String lecturerMobile;
+    private BigDecimal historyMoney;
 
     /**
-     * 讲师邮箱
+     * 可提余额
      */
-    private String lecturerEmail;
+    private BigDecimal enableBalances;
 
     /**
-     * 职位
+     * 冻结金额
      */
-    private String position;
+    private BigDecimal freezeBalances;
 
     /**
-     * 头像
+     * sign
      */
-    private String headImgUrl;
+    private String sign;
 
     /**
-     * 简介
+     * 银行卡号
      */
-    private String introduce;
+    private String bankCardNo;
 
     /**
-     * 讲师分成比例
+     * 银行名称
      */
-    private BigDecimal lecturerProportion;
+    private String bankName;
+
+    /**
+     * 银行支行名称
+     */
+    private String bankBranchName;
+
+    /**
+     * 银行开户名
+     */
+    private String bankUserName;
+
+    /**
+     * 银行身份证号
+     */
+    private String bankIdCardNo;
 
 
 }

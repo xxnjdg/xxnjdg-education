@@ -1,4 +1,4 @@
-package io.xxnjdg.notp.user.entity;
+package io.xxnjdg.notp.user.object.persistent;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.time.LocalDateTime;
@@ -10,16 +10,16 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 平台信息
+ * 用户错误登录日志
  * </p>
  *
  * @author xxnjdg
- * @since 2020-04-16
+ * @since 2020-04-20
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class Platform implements Serializable {
+public class UserLogLogin implements Serializable {
 
     private static final long serialVersionUID=1L;
 
@@ -35,19 +35,9 @@ public class Platform implements Serializable {
     private LocalDateTime gmtCreate;
 
     /**
-     * 修改时间
+     * 用户编号
      */
-    private LocalDateTime gmtModified;
-
-    /**
-     * 状态(1:正常，0:禁用)
-     */
-    private Integer statusId;
-
-    /**
-     * 排序
-     */
-    private Integer sort;
+    private Long userNo;
 
     /**
      * 客户端ID
@@ -55,19 +45,14 @@ public class Platform implements Serializable {
     private String clientId;
 
     /**
-     * 客户端密匙
+     * 登录状态(1成功，0失败)
      */
-    private String clientSecret;
+    private Integer loginStatus;
 
     /**
-     * 客户端名称
+     * 登录IP
      */
-    private String clientName;
-
-    /**
-     * 备注
-     */
-    private String remark;
+    private String loginIp;
 
 
 }

@@ -12,9 +12,12 @@ import io.xxnjdg.notp.course.object.view.AdvVO;
 import io.xxnjdg.notp.course.service.AdvService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.xxnjdg.notp.utils.constant.ItemStatus;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -27,6 +30,8 @@ import java.util.List;
  */
 @Service
 public class AdvServiceImpl extends ServiceImpl<AdvMapper, Adv> implements AdvService {
+
+//    private Logger logger = LoggerFactory.getLogger(AdvServiceImpl.class);
 
     @Override
     public List<AdvVO> postAdvList(AdvDTO advDto) {
@@ -50,7 +55,6 @@ public class AdvServiceImpl extends ServiceImpl<AdvMapper, Adv> implements AdvSe
             BeanUtil.copyProperties(adv,advVo);
             advVos.add(advVo);
         });
-
 
         return advVos;
     }

@@ -12,6 +12,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.xxnjdg.notp.utils.constant.ItemStatus;
 import io.xxnjdg.notp.utils.constant.ParentId;
 import io.xxnjdg.notp.utils.custom.utils.ListToTreeUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -26,6 +28,8 @@ import java.util.*;
  */
 @Service
 public class CourseCategoryServiceImpl extends ServiceImpl<CourseCategoryMapper, CourseCategory> implements CourseCategoryService {
+
+    private Logger logger = LoggerFactory.getLogger(CourseCategoryServiceImpl.class);
 
     @Override
     public List<CourseCategoryLevelVO> postCourseCategoryList() {
@@ -53,6 +57,8 @@ public class CourseCategoryServiceImpl extends ServiceImpl<CourseCategoryMapper,
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        logger.info(tree.toString());
 
         return tree;
     }

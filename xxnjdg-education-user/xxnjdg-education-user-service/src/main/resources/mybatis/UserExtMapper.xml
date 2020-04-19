@@ -3,7 +3,7 @@
 <mapper namespace="io.xxnjdg.notp.user.mapper.UserExtMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="io.xxnjdg.notp.user.entity.UserExt">
+    <resultMap id="BaseResultMap" type="io.xxnjdg.notp.user.object.persistent.UserExt">
         <id column="id" property="id" />
         <result column="gmt_create" property="gmtCreate" />
         <result column="gmt_modified" property="gmtModified" />

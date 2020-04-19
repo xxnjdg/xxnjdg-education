@@ -1,6 +1,6 @@
 package io.xxnjdg.notp.user.service.impl;
 
-import io.xxnjdg.notp.user.entity.LecturerExt;
+import io.xxnjdg.notp.user.object.persistent.LecturerExt;
 import io.xxnjdg.notp.user.mapper.LecturerExtMapper;
 import io.xxnjdg.notp.user.service.LecturerExtService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author xxnjdg
- * @since 2020-04-16
+ * @since 2020-04-20
  */
 @Service
 public class LecturerExtServiceImpl extends ServiceImpl<LecturerExtMapper, LecturerExt> implements LecturerExtService {

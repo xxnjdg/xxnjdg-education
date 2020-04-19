@@ -32,7 +32,7 @@ public class WebsiteLinkServiceImpl extends ServiceImpl<WebsiteLinkMapper, Websi
         LambdaQueryWrapper<WebsiteLink> websiteLinkLambdaQueryWrapper =
                 new QueryWrapper<WebsiteLink>().lambda()
                         .eq(WebsiteLink::getStatusId, ItemStatus.ENABLE.getStatus())
-                        .orderByAsc(WebsiteLink::getSort);
+                        .orderByDesc(WebsiteLink::getSort);
 
         List<WebsiteLink> list = this.list(websiteLinkLambdaQueryWrapper);
 

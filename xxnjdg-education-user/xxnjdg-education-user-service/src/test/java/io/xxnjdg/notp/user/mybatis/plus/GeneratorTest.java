@@ -87,7 +87,8 @@ public class GeneratorTest {
         //4. 包名策略配置
         PackageConfig pkConfig = new PackageConfig();
         pkConfig.setParent(packageParent)
-                .setXml("mybatis");
+                .setXml("mybatis")
+                .setEntity("object.persistent");
 
         //5. 整合配置
         AutoGenerator ag = new AutoGenerator();

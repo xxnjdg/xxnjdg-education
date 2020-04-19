@@ -1,4 +1,4 @@
-package io.xxnjdg.notp.user.entity;
+package io.xxnjdg.notp.user.object.persistent;
 
 import java.math.BigDecimal;
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author xxnjdg
- * @since 2020-04-16
+ * @since 2020-04-20
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

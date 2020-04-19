@@ -1,6 +1,6 @@
 package io.xxnjdg.notp.user.mapper;
 
-import io.xxnjdg.notp.user.entity.Region;
+import io.xxnjdg.notp.user.object.persistent.Region;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author xxnjdg
- * @since 2020-04-16
+ * @since 2020-04-20
  */
 public interface RegionMapper extends BaseMapper<Region> {
 

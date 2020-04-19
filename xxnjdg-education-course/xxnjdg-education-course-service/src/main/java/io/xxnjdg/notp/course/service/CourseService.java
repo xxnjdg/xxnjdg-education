@@ -1,7 +1,10 @@
 package io.xxnjdg.notp.course.service;
 
+import io.xxnjdg.notp.course.object.data.transfer.CourseListDTO;
 import io.xxnjdg.notp.course.object.persistent.Course;
 import com.baomidou.mybatisplus.extension.service.IService;
+import io.xxnjdg.notp.course.object.view.CourseListVO;
+import io.xxnjdg.notp.utils.response.PageResult;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface CourseService extends IService<Course> {
 
+    PageResult<CourseListVO> postCourseListByPage(CourseListDTO courseListDTO);
 }

@@ -3,7 +3,7 @@
 <mapper namespace="io.xxnjdg.notp.user.mapper.SendSmsLogMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="io.xxnjdg.notp.user.entity.SendSmsLog">
+    <resultMap id="BaseResultMap" type="io.xxnjdg.notp.user.object.persistent.SendSmsLog">
         <id column="id" property="id" />
         <result column="gmt_create" property="gmtCreate" />
         <result column="template" property="template" />

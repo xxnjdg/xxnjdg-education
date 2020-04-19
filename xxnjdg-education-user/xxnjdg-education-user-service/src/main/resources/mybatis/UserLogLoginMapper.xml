@@ -3,7 +3,7 @@
 <mapper namespace="io.xxnjdg.notp.user.mapper.UserLogLoginMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="io.xxnjdg.notp.user.entity.UserLogLogin">
+    <resultMap id="BaseResultMap" type="io.xxnjdg.notp.user.object.persistent.UserLogLogin">
         <id column="id" property="id" />
         <result column="gmt_create" property="gmtCreate" />
         <result column="user_no" property="userNo" />

@@ -1,6 +1,6 @@
 package io.xxnjdg.notp.user.service;
 
-import io.xxnjdg.notp.user.entity.UserLogLogin;
+import io.xxnjdg.notp.user.object.persistent.UserLogLogin;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author xxnjdg
- * @since 2020-04-16
+ * @since 2020-04-20
  */
 public interface UserLogLoginService extends IService<UserLogLogin> {
 

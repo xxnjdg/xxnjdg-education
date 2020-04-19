@@ -3,7 +3,7 @@
 <mapper namespace="io.xxnjdg.notp.user.mapper.RegionMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="io.xxnjdg.notp.user.entity.Region">
+    <resultMap id="BaseResultMap" type="io.xxnjdg.notp.user.object.persistent.Region">
         <id column="id" property="id" />
         <result column="parent_id" property="parentId" />
         <result column="level" property="level" />

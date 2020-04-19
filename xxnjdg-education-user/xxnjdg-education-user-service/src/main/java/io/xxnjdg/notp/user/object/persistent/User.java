@@ -1,4 +1,4 @@
-package io.xxnjdg.notp.user.entity;
+package io.xxnjdg.notp.user.object.persistent;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.time.LocalDateTime;
@@ -10,16 +10,16 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 用户发送短信日志
+ * 用户基本信息
  * </p>
  *
  * @author xxnjdg
- * @since 2020-04-16
+ * @since 2020-04-20
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class SendSmsLog implements Serializable {
+public class User implements Serializable {
 
     private static final long serialVersionUID=1L;
 
@@ -35,9 +35,19 @@ public class SendSmsLog implements Serializable {
     private LocalDateTime gmtCreate;
 
     /**
-     * 短信模板
+     * 修改时间
      */
-    private String template;
+    private LocalDateTime gmtModified;
+
+    /**
+     * 状态(1:正常，0:禁用)
+     */
+    private Integer statusId;
+
+    /**
+     * 用户编号
+     */
+    private Long userNo;
 
     /**
      * 手机号码
@@ -45,14 +55,19 @@ public class SendSmsLog implements Serializable {
     private String mobile;
 
     /**
-     * 验证码
+     * 密码盐
      */
-    private String smsCode;
+    private String mobileSalt;
 
     /**
-     * 是否发送成功(1发送成功，0:发送失败)
+     * 登录密码
      */
-    private Integer isSuccess;
+    private String mobilePsw;
+
+    /**
+     * 用户来源(client_id)
+     */
+    private String userSource;
 
 
 }

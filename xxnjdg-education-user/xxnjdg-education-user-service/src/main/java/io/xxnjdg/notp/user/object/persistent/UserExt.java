@@ -1,4 +1,4 @@
-package io.xxnjdg.notp.user.entity;
+package io.xxnjdg.notp.user.object.persistent;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.time.LocalDateTime;
@@ -10,16 +10,16 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 用户修改日志
+ * 用户教育信息
  * </p>
  *
  * @author xxnjdg
- * @since 2020-04-16
+ * @since 2020-04-20
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class UserLogModified implements Serializable {
+public class UserExt implements Serializable {
 
     private static final long serialVersionUID=1L;
 
@@ -35,19 +35,49 @@ public class UserLogModified implements Serializable {
     private LocalDateTime gmtCreate;
 
     /**
+     * 修改时间
+     */
+    private LocalDateTime gmtModified;
+
+    /**
+     * 状态(1:正常，0:禁用)
+     */
+    private Integer statusId;
+
+    /**
      * 用户编号
      */
     private Long userNo;
 
     /**
-     * 原手机号
+     * 用户类型(1用户，2讲师)
      */
-    private String mobileOld;
+    private Integer userType;
 
     /**
-     * 新手机
+     * 用户手机
      */
-    private String mobileNew;
+    private String mobile;
+
+    /**
+     * 性别(1男，2女，3保密)
+     */
+    private Integer sex;
+
+    /**
+     * 年龄
+     */
+    private Integer age;
+
+    /**
+     * 昵称
+     */
+    private String nickname;
+
+    /**
+     * 头像地址
+     */
+    private String headImgUrl;
 
     /**
      * 备注
