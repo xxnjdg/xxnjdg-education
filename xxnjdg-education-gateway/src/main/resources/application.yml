@@ -27,6 +27,8 @@ spring:
             allowedOrigins: "*"
             allowedMethods: "*"
             allowedHeaders: "*"
+      default-filters:
+        - name: Auth
 # eureka 配置
 info:
   eureka:

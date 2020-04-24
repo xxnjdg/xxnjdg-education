@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
@@ -12,8 +13,9 @@ import java.math.BigDecimal;
  * @date 20-4-18 下午6:31
  */
 @Data
-public class ZoneCourseVO {
+public class ZoneCourseVO implements Serializable {
 
+    private static final long serialVersionUID = 2262135392938369752L;
     /**
      * 课程主键
      */

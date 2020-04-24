@@ -1,9 +1,12 @@
 package io.xxnjdg.notp.utils.response;
 
 import io.xxnjdg.notp.utils.constant.HttpStatus;
+import io.xxnjdg.notp.utils.interfaces.BaseResponse;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
@@ -13,54 +16,28 @@ import java.util.HashMap;
  */
 @Data
 @NoArgsConstructor
-public class ResponseResult extends HashMap<String,Object> {
+@AllArgsConstructor
+public class ResponseResult<T> implements Serializable {
+
+    private static final long serialVersionUID = 7927983260804314646L;
 
     /** 状态码 */
-    public static final String STATUS = "status";
+    private Integer status;
 
     /** 返回内容 */
-    public static final String STATUS_TEXT = "statusText";
+    private String statusText;
 
     /** 数据对象 */
-    public static final String DATA = "data";
-
-    /**
-     *
-     * @param code 状态码
-     * @param msg 返回内容
-     */
-    public ResponseResult(int code, String msg)
-    {
-        super.put(STATUS, code);
-        super.put(STATUS_TEXT, msg);
-    }
-
-
-    /**
-     * 初始化一个新创建的 AjaxResult 对象
-     *
-     * @param code 状态码
-     * @param msg 返回内容
-     * @param data 数据对象
-     */
-    public ResponseResult(int code, String msg, Object data)
-    {
-        super.put(STATUS, code);
-        super.put(STATUS_TEXT, msg);
-        if (data != null)
-        {
-            super.put(DATA, data);
-        }
-    }
+    private T data;
 
     /**
      * 自定义返回结果
-     * @param httpStatus 状态
+     * @param baseResponse 状态
      * @param data 数据
      * @return 返回结果
      */
-    public static ResponseResult customResult(HttpStatus httpStatus,Object data){
-        return customResult(httpStatus.getStatus(), httpStatus.getStatusText(), data);
+    public static ResponseResult customResult(BaseResponse baseResponse, Object data){
+        return customResult(baseResponse.status(), baseResponse.statusText(), data);
     }
 
     public static ResponseResult customResult(int status, String statusText ,Object data){
@@ -100,9 +77,9 @@ public class ResponseResult extends HashMap<String,Object> {
      * @param data 参数
      * @return 返回结果
      */
-    public static ResponseResult error(HttpStatus httpStatus,Object data)
+    public static ResponseResult error(BaseResponse baseResponse,Object data)
     {
-        return customResult(httpStatus,data);
+        return customResult(baseResponse,data);
     }
 
     /**
@@ -118,11 +95,11 @@ public class ResponseResult extends HashMap<String,Object> {
 
     /**
      * 失败
-     * @param httpStatus
+     * @param baseResponse
      * @return
      */
-    public static ResponseResult error(HttpStatus httpStatus)
+    public static ResponseResult error(BaseResponse baseResponse)
     {
-        return error(httpStatus,null);
+        return error(baseResponse,null);
     }
 }

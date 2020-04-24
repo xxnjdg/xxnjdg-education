@@ -17,8 +17,7 @@ import java.util.List;
 @Accessors(chain = true)
 public class WebsiteNavLevelVo implements Serializable {
 
-    private static final long serialVersionUID=1L;
-
+    private static final long serialVersionUID = -5938753028501847872L;
     /**
      * 主键
      */

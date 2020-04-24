@@ -2,7 +2,10 @@ package io.xxnjdg.notp.user.controller;
 
 
 import io.xxnjdg.notp.user.object.data.transfer.UserLoginPasswordDTO;
+import io.xxnjdg.notp.user.object.view.UserLoginVO;
+import io.xxnjdg.notp.user.service.UserService;
 import io.xxnjdg.notp.utils.response.ResponseResult;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,10 +24,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class UserController {
 
+    @Autowired
+    private UserService userService;
 
     @PostMapping("/user/api/user/login/password")
     public ResponseResult postUserLoginByPassword(@RequestBody @Validated UserLoginPasswordDTO userLoginPasswordDTO){
-        return ResponseResult.success();
+        UserLoginVO userLoginVO = userService.postUserLoginByPassword(userLoginPasswordDTO);
+        return ResponseResult.success(userLoginVO);
     }
 
 

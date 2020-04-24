@@ -1,7 +1,7 @@
 package io.xxnjdg.notp.course;
 
 import io.xxnjdg.notp.utils.config.GeneralSwaggerConfig;
-import io.xxnjdg.notp.utils.config.HandlerException;
+import io.xxnjdg.notp.utils.exception.HandlerException;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -12,4 +12,8 @@ public interface ValidationMessage {
      */
     String PARAMETER_ERROR = "参数错误";
 
+    /**
+     * 参数为空
+     */
+    String PARAMETER_NULL = "参数为空";
 }

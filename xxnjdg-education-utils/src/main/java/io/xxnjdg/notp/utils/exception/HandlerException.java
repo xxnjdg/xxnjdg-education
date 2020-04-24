@@ -1,4 +1,4 @@
-package io.xxnjdg.notp.utils.config;
+package io.xxnjdg.notp.utils.exception;
 
 import io.xxnjdg.notp.utils.constant.HttpStatus;
 import io.xxnjdg.notp.utils.response.ResponseResult;
@@ -24,6 +24,15 @@ public class HandlerException {
 
     private Logger logger = LoggerFactory.getLogger(HandlerException.class);
 
+    /**
+     * 自定义异常
+     * @param baseException 自定义异常
+     * @return ResponseResult
+     */
+    @ExceptionHandler(BaseException.class)
+    public ResponseResult customException(BaseException baseException){
+        return ResponseResult.error(baseException.getBaseResponse());
+    }
 
     /**
      * 方法参数校验

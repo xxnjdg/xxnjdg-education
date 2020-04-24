@@ -13,8 +13,8 @@ import java.io.Serializable;
  */
 @Data
 public class ZoneDTO implements Serializable {
-    private static final long serialVersionUID = 1L;
 
+    private static final long serialVersionUID = -1085078662673158628L;
     /**
      * 位置0电脑端，1微信端)
      */

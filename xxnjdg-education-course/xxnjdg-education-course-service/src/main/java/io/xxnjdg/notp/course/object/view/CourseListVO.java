@@ -15,6 +15,7 @@ import java.math.BigDecimal;
 @Data
 public class CourseListVO implements Serializable {
 
+    private static final long serialVersionUID = 4633846467932225814L;
     /**
      * 主键
      */

@@ -17,6 +17,7 @@ import java.io.Serializable;
 @Data
 public class CourseListDTO implements Serializable {
 
+    private static final long serialVersionUID = 3992860195407584040L;
     /**
      * 当前页
      */

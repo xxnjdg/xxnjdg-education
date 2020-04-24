@@ -14,8 +14,7 @@ import java.io.Serializable;
 @Data
 public class AdvVO implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
+    private static final long serialVersionUID = -4851376715168406998L;
     /**
      * 主键
      */

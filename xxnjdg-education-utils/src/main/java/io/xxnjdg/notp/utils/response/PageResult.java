@@ -17,6 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 public class PageResult<T extends Serializable> implements Serializable {
 
+    private static final long serialVersionUID = -6774238104393246872L;
     /**
      * 当前列表
      */

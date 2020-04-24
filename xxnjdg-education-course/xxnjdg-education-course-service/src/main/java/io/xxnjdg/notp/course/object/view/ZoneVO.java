@@ -16,7 +16,8 @@ import java.util.List;
 @Data
 public class ZoneVO implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+
+    private static final long serialVersionUID = 686526492775775134L;
 
     /**
      * 专区编号

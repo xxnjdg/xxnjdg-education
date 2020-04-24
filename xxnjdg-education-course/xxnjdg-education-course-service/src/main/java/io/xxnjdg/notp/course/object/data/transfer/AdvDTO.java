@@ -4,6 +4,7 @@ import lombok.Data;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * @author xxnjdg
@@ -11,8 +12,9 @@ import javax.validation.constraints.NotNull;
  * @date 20-4-17 上午11:24
  */
 @Data
-public class AdvDTO {
+public class AdvDTO implements Serializable {
 
+    private static final long serialVersionUID = 2820902288866479591L;
     /**
      * 位置(0电脑端，1微信端)
      */

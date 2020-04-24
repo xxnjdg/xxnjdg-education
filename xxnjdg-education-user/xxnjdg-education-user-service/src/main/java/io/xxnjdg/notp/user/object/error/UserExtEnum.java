@@ -1,4 +1,4 @@
-package io.xxnjdg.notp.utils.constant;
+package io.xxnjdg.notp.user.object.error;
 
 import io.xxnjdg.notp.utils.interfaces.BaseResponse;
 import lombok.AllArgsConstructor;
@@ -7,24 +7,15 @@ import lombok.Getter;
 /**
  * @author xxnjdg
  * @version 1.0
- * @date 20-4-14 下午3:03
+ * @date 20-4-24 下午5:50
  */
 @AllArgsConstructor
 @Getter
-public enum HttpStatus implements BaseResponse {
-
+public enum UserExtEnum implements BaseResponse {
     /**
-     * 操作成功
+     * 错误请求
      */
-    SUCCESS(200,"操作成功"),
-    /**
-     * 资源，服务未找到
-     */
-    NOT_FOUND(404,"服务未找到"),
-    /**
-     * 系统内部错误
-     */
-    ERROR(500,"系统内部错误");
+    USER_EXT_ERROR(400, "用户信息获取失败");
 
     private Integer status;
     private String statusText;

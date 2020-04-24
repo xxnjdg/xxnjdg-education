@@ -15,8 +15,7 @@ import java.util.Date;
 @Data
 public class WebsiteVo implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
+    private static final long serialVersionUID = -4612844713829316185L;
     /**
      * 主键
      */
