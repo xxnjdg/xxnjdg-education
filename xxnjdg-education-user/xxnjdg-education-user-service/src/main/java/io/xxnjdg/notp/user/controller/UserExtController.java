@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.constraints.Pattern;
+
 
 /**
  * <p>
@@ -24,14 +26,15 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2020-04-20
  */
 @RestController
+@Validated
 public class UserExtController {
 
     @Autowired
     private UserExtService userExtService;
 
     @PostMapping("/user/auth/user/ext/view")
-    public ResponseResult postUserExt(@RequestHeader @Validated UserExtDTO userExtDTO) {
-        UserExtVO userExtVO = userExtService.postUserExt(userExtDTO);
+    public ResponseResult postUserExt(@RequestHeader("userNo") @Pattern(regexp = "^[\\d]{1,20}$",message = "参数错误") String userNo ) {
+        UserExtVO userExtVO = userExtService.postUserExt(userNo);
         return ResponseResult.success(userExtVO);
     }
 

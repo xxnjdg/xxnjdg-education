@@ -36,12 +36,12 @@ public class ResponseResult<T> implements Serializable {
      * @param data 数据
      * @return 返回结果
      */
-    public static ResponseResult customResult(BaseResponse baseResponse, Object data){
+    public static <T> ResponseResult<T> customResult(BaseResponse baseResponse, T data){
         return customResult(baseResponse.status(), baseResponse.statusText(), data);
     }
 
-    public static ResponseResult customResult(int status, String statusText ,Object data){
-        return new ResponseResult(status, statusText, data);
+    public static <T> ResponseResult<T> customResult(int status, String statusText ,T data){
+        return new ResponseResult<>(status, statusText, data);
     }
 
     /**
@@ -58,7 +58,7 @@ public class ResponseResult<T> implements Serializable {
      * @param data 参数
      * @return 返回结果
      */
-    public static ResponseResult success(Object data)
+    public static <T> ResponseResult<T> success(T data)
     {
         return customResult(HttpStatus.SUCCESS,data);
     }
@@ -77,7 +77,7 @@ public class ResponseResult<T> implements Serializable {
      * @param data 参数
      * @return 返回结果
      */
-    public static ResponseResult error(BaseResponse baseResponse,Object data)
+    public static <T> ResponseResult<T> error(BaseResponse baseResponse,T data)
     {
         return customResult(baseResponse,data);
     }

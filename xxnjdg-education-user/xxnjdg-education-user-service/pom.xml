@@ -13,6 +13,13 @@
 
     <dependencies>
 
+        <!-- system feign 接口-->
+        <dependency>
+            <groupId>io.xxnjdg.notp</groupId>
+            <artifactId>xxnjdg-education-system-feign</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
         <!-- web 启动器 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

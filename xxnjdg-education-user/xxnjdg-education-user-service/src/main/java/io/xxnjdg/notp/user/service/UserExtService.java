@@ -17,8 +17,8 @@ public interface UserExtService extends IService<UserExt> {
 
     /**
      * ss
-     * @param userExtDTO userExtDTO
+     * @param userNo userExtDTO
      * @return UserExtVO
      */
-    UserExtVO postUserExt(UserExtDTO userExtDTO);
+    UserExtVO postUserExt(String userNo);
 }

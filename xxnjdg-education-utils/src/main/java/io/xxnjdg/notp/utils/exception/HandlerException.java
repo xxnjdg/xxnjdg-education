@@ -58,7 +58,14 @@ public class HandlerException {
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseResult handleConstraintViolationException(ConstraintViolationException e) {
         logger.error(e.getMessage(), e);
-        return ResponseResult.error();
+
+        String message = e.getMessage();
+        String[] split = e.getMessage().split(": ");
+        if (split.length == 2){
+            message = split[1];
+        }
+
+        return ResponseResult.error(message);
     }
 
     /**

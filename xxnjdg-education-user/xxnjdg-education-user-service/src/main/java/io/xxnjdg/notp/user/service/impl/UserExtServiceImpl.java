@@ -26,11 +26,11 @@ import org.springframework.stereotype.Service;
 public class UserExtServiceImpl extends ServiceImpl<UserExtMapper, UserExt> implements UserExtService {
 
     @Override
-    public UserExtVO postUserExt(UserExtDTO userExtDTO) {
+    public UserExtVO postUserExt(String userNo) {
 
         LambdaQueryWrapper<UserExt> queryWrapper = new QueryWrapper<UserExt>().lambda()
                 .eq(UserExt::getStatusId, RowStatus.ENABLE)
-                .eq(UserExt::getUserNo, userExtDTO.getUserNo());
+                .eq(UserExt::getUserNo, Long.valueOf(userNo));
 
         UserExt userExt = this.getOne(queryWrapper);
         if (userExt == null){
