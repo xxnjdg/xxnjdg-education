@@ -1,6 +1,7 @@
 package io.xxnjdg.notp.user.service;
 
 import io.xxnjdg.notp.user.object.data.transfer.UserLoginPasswordDTO;
+import io.xxnjdg.notp.user.object.data.transfer.UserRegisterDTO;
 import io.xxnjdg.notp.user.object.persistent.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 import io.xxnjdg.notp.user.object.view.UserLoginVO;
@@ -16,9 +17,16 @@ import io.xxnjdg.notp.user.object.view.UserLoginVO;
 public interface UserService extends IService<User> {
 
     /**
-     * xx
+     * 密码登陆
      * @param userLoginPasswordDTO
      * @return
      */
     UserLoginVO postUserLoginByPassword(UserLoginPasswordDTO userLoginPasswordDTO);
+
+    /**
+     * 用户注册
+     * @param userRegisterDTO
+     * @return
+     */
+    UserLoginVO postUserRegister(UserRegisterDTO userRegisterDTO);
 }

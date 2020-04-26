@@ -2,6 +2,7 @@ package io.xxnjdg.notp.utils.custom.utils;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
 import com.aliyuncs.CommonRequest;
 import com.aliyuncs.CommonResponse;
 import com.aliyuncs.DefaultAcsClient;
@@ -31,6 +32,8 @@ public class AliyunUtil {
         CommonRequest request = new CommonRequest();
         request.setMethod(MethodType.POST);
         request.setDomain("dysmsapi.aliyuncs.com");
+        request.setVersion("2017-05-25");
+        request.setAction("SendSms");
         request.putQueryParameter("RegionId", "cn-hangzhou");
         request.putQueryParameter("PhoneNumbers", mobile);
         request.putQueryParameter("SignName", aliyunObj.getSignName());
@@ -39,7 +42,16 @@ public class AliyunUtil {
         try {
             CommonResponse response = client.getCommonResponse(request);
             String data = response.getData();
-            return StrUtil.isNotBlank(data) && ObjectUtil.equal("OK", data);
+            if (StrUtil.isBlank(data)){
+                return false;
+            }
+            logger.info("sms返回码 "+data);
+            String ok = JSONUtil.parseObj(data).get("Code").toString();
+            if (StrUtil.isBlank(ok)){
+                return false;
+            }
+            logger.info(ok);
+            return ObjectUtil.equal("OK", ok);
         } catch (Exception e) {
             logger.error(e.getMessage());
             return false;

@@ -22,11 +22,18 @@ spring:
         enabled: true # 是否开启 StatViewServlet
         login-username: yudaoyuanma # 账号
         login-password: javaniubi # 密码
+  # redis 单点配置
+  redis:
+    host: 192.168.100.100 # host
+    timeout: 1500 # 超时时间
 # eureka 配置
 info:
   eureka:
     host: localhost
     port: 16881
+  snowFlakeId:
+    workerId: 6
+    dataCenterId: 6
 eureka:
   client:
     register-with-eureka: true

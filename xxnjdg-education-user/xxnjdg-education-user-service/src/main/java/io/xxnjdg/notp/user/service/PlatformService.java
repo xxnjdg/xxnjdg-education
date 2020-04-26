@@ -13,4 +13,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface PlatformService extends IService<Platform> {
 
+    /**
+     * 通过 clientId 查找 platform
+     * @param clientId
+     * @return
+     */
+    Platform getPlatformByClientId(String clientId);
 }

@@ -11,5 +11,20 @@
 
     <artifactId>xxnjdg-education-user-feign</artifactId>
 
+    <dependencies>
+        <!--openfeign-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+
+        <!-- 工具包 -->
+        <dependency>
+            <groupId>io.xxnjdg.notp</groupId>
+            <artifactId>xxnjdg-education-utils</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
 
 </project>

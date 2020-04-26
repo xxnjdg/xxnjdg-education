@@ -2,6 +2,7 @@ package io.xxnjdg.notp.user.controller;
 
 
 import io.xxnjdg.notp.user.object.data.transfer.UserLoginPasswordDTO;
+import io.xxnjdg.notp.user.object.data.transfer.UserRegisterDTO;
 import io.xxnjdg.notp.user.object.view.UserLoginVO;
 import io.xxnjdg.notp.user.service.UserService;
 import io.xxnjdg.notp.utils.response.ResponseResult;
@@ -28,8 +29,14 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/user/api/user/login/password")
-    public ResponseResult postUserLoginByPassword(@RequestBody @Validated UserLoginPasswordDTO userLoginPasswordDTO){
+    public ResponseResult<UserLoginVO> postUserLoginByPassword(@RequestBody @Validated UserLoginPasswordDTO userLoginPasswordDTO){
         UserLoginVO userLoginVO = userService.postUserLoginByPassword(userLoginPasswordDTO);
+        return ResponseResult.success(userLoginVO);
+    }
+
+    @PostMapping("/user/api/user/register")
+    public ResponseResult<UserLoginVO> postUserRegister(@RequestBody @Validated UserRegisterDTO userRegisterDTO){
+        UserLoginVO userLoginVO = userService.postUserRegister(userRegisterDTO);
         return ResponseResult.success(userLoginVO);
     }
 
