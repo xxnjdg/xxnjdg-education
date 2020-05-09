@@ -15,7 +15,12 @@ public enum UserExtEnum implements BaseResponse {
     /**
      * 错误请求
      */
-    USER_EXT_ERROR(400, "用户信息获取失败");
+    USER_EXT_ERROR(400, "用户信息获取失败"),
+
+    /**
+     * 用户信息更新失败
+     */
+    USER_EXT_UPDATE_ERROR(400, "用户信息更新失败");
 
     private Integer status;
     private String statusText;

@@ -1,12 +1,14 @@
 package io.xxnjdg.notp.user.service.impl;
 
-import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import io.xxnjdg.notp.user.object.data.transfer.UserExtDTO;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import io.xxnjdg.notp.user.object.business.UserExtBO;
+import io.xxnjdg.notp.user.object.convert.UserExtMapper;
+import io.xxnjdg.notp.user.object.data.transfer.UpdateUserExtDTO;
 import io.xxnjdg.notp.user.object.error.UserExtEnum;
 import io.xxnjdg.notp.user.object.persistent.UserExt;
-import io.xxnjdg.notp.user.mapper.UserExtMapper;
 import io.xxnjdg.notp.user.object.view.UserExtVO;
 import io.xxnjdg.notp.user.service.UserExtService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -23,10 +25,10 @@ import org.springframework.stereotype.Service;
  * @since 2020-04-20
  */
 @Service
-public class UserExtServiceImpl extends ServiceImpl<UserExtMapper, UserExt> implements UserExtService {
+public class UserExtServiceImpl extends ServiceImpl<io.xxnjdg.notp.user.mapper.UserExtMapper, UserExt> implements UserExtService {
 
     @Override
-    public UserExtVO postUserExt(String userNo) {
+    public UserExtBO getUserExtByUserNo(String userNo) {
 
         LambdaQueryWrapper<UserExt> queryWrapper = new QueryWrapper<UserExt>().lambda()
                 .eq(UserExt::getStatusId, RowStatus.ENABLE)
@@ -37,6 +39,27 @@ public class UserExtServiceImpl extends ServiceImpl<UserExtMapper, UserExt> impl
             throw new BaseException(UserExtEnum.USER_EXT_ERROR);
         }
 
-        return BeanUtil.copyProperties(userExt,UserExtVO.class);
+        return UserExtMapper.INSTANCE.convertD2B(userExt);
+    }
+
+    @Override
+    public UserExtBO updateUserExt(UpdateUserExtDTO updateUserExtDTO) {
+
+        LambdaUpdateWrapper<UserExt> updateWrapper = new UpdateWrapper<UserExt>()
+                .lambda()
+                .eq(UserExt::getUserNo, new Long(updateUserExtDTO.getUserNo()))
+                .eq(UserExt::getStatusId,RowStatus.ENABLE)
+                .set(UserExt::getAge, new Integer(updateUserExtDTO.getAge()))
+                .set(UserExt::getSex, new Integer(updateUserExtDTO.getSex()))
+                .set(UserExt::getNickname, updateUserExtDTO.getNickname())
+                .set(UserExt::getHeadImgUrl, updateUserExtDTO.getHeadImgUrl());
+
+        boolean update = this.update(updateWrapper);
+
+        if (!update){
+            throw new BaseException(UserExtEnum.USER_EXT_UPDATE_ERROR);
+        }
+
+        return this.getUserExtByUserNo(updateUserExtDTO.getUserNo());
     }
 }

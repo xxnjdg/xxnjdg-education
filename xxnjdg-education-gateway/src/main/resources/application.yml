@@ -3,6 +3,10 @@ server:
 spring:
   application:
     name: xxnjdg-gateway-service
+  # redis 单点配置
+  redis:
+    host: 192.168.100.102 # host
+    timeout: 1500 # 超时时间
   cloud:
     gateway:
       discovery:

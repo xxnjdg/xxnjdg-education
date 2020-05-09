@@ -19,4 +19,18 @@ public class BaseException extends RuntimeException  {
      * 返回消息
      */
     private BaseResponse baseResponse;
+
+    public BaseException(Integer status,String statusText){
+        baseResponse = new BaseResponse() {
+            @Override
+            public Integer status() {
+                return status;
+            }
+
+            @Override
+            public String statusText() {
+                return statusText;
+            }
+        };
+    }
 }

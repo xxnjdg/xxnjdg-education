@@ -2,6 +2,7 @@ package io.xxnjdg.notp.user.mapper;
 
 import io.xxnjdg.notp.user.object.persistent.Lecturer;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import io.xxnjdg.notp.user.object.view.LecturerVO;
 
 /**
  * <p>
@@ -13,4 +14,10 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface LecturerMapper extends BaseMapper<Lecturer> {
 
+    /**
+     * s
+     * @param lecturerUserNo lecturerUserNo
+     * @return LecturerVO
+     */
+    LecturerVO getLecturerByLecturerUserNo(Long lecturerUserNo);
 }

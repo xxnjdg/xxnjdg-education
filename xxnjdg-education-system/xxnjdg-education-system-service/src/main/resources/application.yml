@@ -5,7 +5,7 @@ spring:
     name: xxnjdg-system-service
   # datasource 数据源配置内容，对应 DataSourceProperties 配置属性类
   datasource:
-    url: jdbc:mysql://192.168.100.100:3306/xxnjdg_system?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+    url: jdbc:mysql://192.168.100.102:3306/xxnjdg_system?useSSL=false&useUnicode=true&characterEncoding=UTF-8
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root # 数据库账号
     password: 123 # 数据库密码

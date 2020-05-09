@@ -1,6 +1,9 @@
 package io.xxnjdg.notp.user.controller;
 
 
+import io.xxnjdg.notp.user.object.business.UserExtBO;
+import io.xxnjdg.notp.user.object.convert.UserExtMapper;
+import io.xxnjdg.notp.user.object.data.transfer.UpdateUserExtDTO;
 import io.xxnjdg.notp.user.object.data.transfer.UserExtDTO;
 import io.xxnjdg.notp.user.object.view.UserExtVO;
 import io.xxnjdg.notp.user.service.UserExtService;
@@ -33,10 +36,17 @@ public class UserExtController {
     private UserExtService userExtService;
 
     @PostMapping("/user/auth/user/ext/view")
-    public ResponseResult postUserExt(@RequestHeader("userNo") @Pattern(regexp = "^[\\d]{1,20}$",message = "参数错误") String userNo ) {
-        UserExtVO userExtVO = userExtService.postUserExt(userNo);
+    public ResponseResult getUserExtByUserNo(@RequestHeader("userNo") @Pattern(regexp = "^[\\d]{1,20}$",message = "参数错误") String userNo ) {
+        UserExtBO userExtBO = userExtService.getUserExtByUserNo(userNo);
+        UserExtVO userExtVO = UserExtMapper.INSTANCE.convertB2V(userExtBO);
         return ResponseResult.success(userExtVO);
     }
 
+    @PostMapping("/user/auth/user/ext/update")
+    public ResponseResult updateUserExt(@RequestBody @Validated UpdateUserExtDTO updateUserExtDTO) {
+        UserExtBO userExtBO = userExtService.updateUserExt(updateUserExtDTO);
+        UserExtVO userExtVO = UserExtMapper.INSTANCE.convertB2V(userExtBO);
+        return ResponseResult.success(userExtVO);
+    }
 }
 

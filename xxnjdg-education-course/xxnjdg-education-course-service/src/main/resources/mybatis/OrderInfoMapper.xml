@@ -31,9 +31,34 @@
         <result column="pay_time" property="payTime" />
     </resultMap>
 
+    <resultMap id="orderInfoListByPageResultMap" type="io.xxnjdg.notp.course.object.view.OrderInfoListVO">
+        <result column="gmt_create" property="gmtCreate" />
+        <result column="user_no" property="userNo" />
+        <result column="order_no" property="orderNo" />
+        <result column="course_id" property="courseId" />
+        <result column="course_logo" property="courseLogo" />
+        <result column="course_name" property="courseName" />
+        <result column="price_paid" property="pricePaid" />
+        <result column="pay_type" property="payType" />
+        <result column="order_status" property="orderStatus" />
+    </resultMap>
+
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id, gmt_create, gmt_modified, lecturer_user_no, lecturer_name, user_no, mobile, register_time, order_no, course_id, course_name, price_payable, price_discount, price_paid, platform_profit, lecturer_profit, trade_type, pay_type, channel_type, order_status, is_show_lecturer, is_show_user, remark_cus, remark, pay_time
     </sql>
+
+    <select id="orderInfoListByPageCount" resultType="integer" >
+        select count(id) from order_info  where order_info.user_no = #{userNo} and  <if test="orderStatus == null">order_info.order_status > 0</if> <if test="orderStatus != null">order_info.order_status = #{orderStatus}</if>  and order_info.is_show_user = 1;
+    </select>
+
+    <select id="orderInfoListByPage" resultMap="orderInfoListByPageResultMap" >
+        select course_logo,order1.* from course join
+        (select order_info.* from order_info
+        where order_info.user_no = #{userNo} and <if test="orderStatus == null">order_info.order_status > 0</if> <if test="orderStatus != null">order_info.order_status = #{orderStatus}</if> and order_info.is_show_user = 1 and
+        (select id from order_info where order_info.user_no = #{userNo} and <if test="orderStatus == null">order_info.order_status > 0</if> <if test="orderStatus != null">order_info.order_status = #{orderStatus}</if> and order_info.is_show_user = 1
+        order by id desc limit #{offset},1) >= id limit #{size}) order1
+        on course.id = order1.course_id;
+    </select>
 
 </mapper>

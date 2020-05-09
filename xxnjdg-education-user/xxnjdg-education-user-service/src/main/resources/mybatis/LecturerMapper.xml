@@ -24,4 +24,47 @@
         id, gmt_create, gmt_modified, status_id, sort, lecturer_user_no, lecturer_name, lecturer_mobile, lecturer_email, position, head_img_url, introduce, lecturer_proportion
     </sql>
 
+    <resultMap id="getLecturerByLecturerUserNoResultMap" type="io.xxnjdg.notp.user.object.view.LecturerVO">
+        <id column="lid" property="id" />
+        <result column="lid" property="lecturerUserNo" />
+        <result column="lsid" property="statusId" />
+        <result column="lecturer_name" property="lecturerName" />
+        <result column="lecturer_mobile" property="lecturerMobile" />
+        <result column="lecturer_email" property="lecturerEmail" />
+        <result column="position" property="position" />
+        <result column="head_img_url" property="headImgUrl" />
+        <result column="introduce" property="introduce" />
+        <result column="lecturer_proportion" property="lecturerProportion" />
+
+        <association property="lecturerExtVO" resultMap="getLecturerExtByLecturerUserNoResultMap"></association>
+    </resultMap>
+
+    <resultMap id="getLecturerExtByLecturerUserNoResultMap" type="io.xxnjdg.notp.user.object.view.LecturerExtVO">
+        <id column="leid" property="id" />
+        <result column="lelun" property="lecturerUserNo" />
+        <result column="lesid" property="statusId" />
+        <result column="total_income" property="totalIncome" />
+        <result column="history_money" property="historyMoney" />
+        <result column="enable_balances" property="enableBalances" />
+        <result column="freeze_balances" property="freezeBalances" />
+        <result column="sign" property="sign" />
+        <result column="bank_card_no" property="bankCardNo" />
+        <result column="bank_name" property="bankName" />
+        <result column="bank_branch_name" property="bankBranchName" />
+        <result column="bank_user_name" property="bankUserName" />
+        <result column="bank_id_card_no" property="bankIdCardNo" />
+    </resultMap>
+
+    <sql id="getLecturerByLecturerUserNoSql">
+        lecturer.id lid, lecturer.lecturer_user_no lluo, lecturer.status_id lsid,  lecturer_name, lecturer_mobile, lecturer_email, position, head_img_url, introduce, lecturer_proportion
+    </sql>
+
+    <sql id="getLecturerExtByLecturerUserNoSql" >
+        lecturer_ext.id leid, lecturer_ext.lecturer_user_no lelun,lecturer_ext.status_id lesid, total_income, history_money, enable_balances, freeze_balances, sign, bank_card_no, bank_name, bank_branch_name, bank_user_name, bank_id_card_no
+    </sql>
+
+    <select id="getLecturerByLecturerUserNo" resultMap="getLecturerByLecturerUserNoResultMap">
+        select <include refid="getLecturerByLecturerUserNoSql"></include>,<include refid="getLecturerExtByLecturerUserNoSql"></include> from lecturer join lecturer_ext on lecturer.lecturer_user_no = lecturer_ext.lecturer_user_no where lecturer.lecturer_user_no = #{lecturerUserNo} and lecturer.status_id = 1 and lecturer_ext.status_id = 1
+    </select>
+
 </mapper>

@@ -20,11 +20,11 @@ public class globalFilter implements GlobalFilter, Ordered {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 
-        log.info("my log        "+ServerWebExchangeUtils.GATEWAY_REQUEST_URL_ATTR);
-        log.info("my log        "+ServerWebExchangeUtils.GATEWAY_ORIGINAL_REQUEST_URL_ATTR);
-        log.info("my log        "+ServerWebExchangeUtils.GATEWAY_SCHEME_PREFIX_ATTR);
-        log.info("my log        "+ServerWebExchangeUtils.CLIENT_RESPONSE_ATTR);
-        log.info("my log        "+ServerWebExchangeUtils.GATEWAY_ROUTE_ATTR);
+//        log.info("my log        "+ServerWebExchangeUtils.GATEWAY_REQUEST_URL_ATTR);
+//        log.info("my log        "+ServerWebExchangeUtils.GATEWAY_ORIGINAL_REQUEST_URL_ATTR);
+//        log.info("my log        "+ServerWebExchangeUtils.GATEWAY_SCHEME_PREFIX_ATTR);
+//        log.info("my log        "+ServerWebExchangeUtils.CLIENT_RESPONSE_ATTR);
+//        log.info("my log        "+ServerWebExchangeUtils.GATEWAY_ROUTE_ATTR);
 
         return chain.filter(exchange);
     }

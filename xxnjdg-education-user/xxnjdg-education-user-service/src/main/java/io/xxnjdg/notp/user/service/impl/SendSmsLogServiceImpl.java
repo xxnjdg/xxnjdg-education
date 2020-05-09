@@ -32,6 +32,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
@@ -93,7 +94,7 @@ public class SendSmsLogServiceImpl extends ServiceImpl<SendSmsLogMapper, SendSms
             //设置状态 1 成功
             sendSmsLog.setIsSuccess(1);
             //设置验证码到 redis
-            stringRedisTemplate.opsForValue().set(RedisPrefixField.VERIFY_PREFIX+sendCodeDTO.getMobile(),code);
+            stringRedisTemplate.opsForValue().set(RedisPrefixField.VERIFY_PREFIX+sendCodeDTO.getMobile(),code,5, TimeUnit.MINUTES);
             //插入表
             if(!this.save(sendSmsLog)){
                 throw new BaseException(SendSmsLogEnum.SEND_SMS_ERROR);

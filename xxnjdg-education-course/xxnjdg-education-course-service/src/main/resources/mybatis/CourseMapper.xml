@@ -31,4 +31,26 @@
         id, gmt_create, gmt_modified, status_id, sort, lecturer_user_no, category_id1, category_id2, category_id3, course_name, course_logo, introduce_id, is_free, course_original, course_discount, is_putaway, course_sort, count_buy, count_study, period_total
     </sql>
 
+    <resultMap id="queryCourseAndCourseIntroduceByCourseIdResultMap" type="io.xxnjdg.notp.course.object.view.CourseDetailVO">
+        <id column="cid" property="id" />
+        <result column="lecturer_user_no" property="lecturerUserNo" />
+        <result column="is_free" property="isFree" />
+        <result column="count_buy" property="countBuy" />
+        <result column="count_study" property="countStudy" />
+        <result column="period_total" property="periodTotal" />
+        <result column="course_name" property="courseName" />
+        <result column="course_logo" property="courseLogo" />
+        <result column="course_original" property="courseOriginal" />
+        <result column="course_discount" property="courseDiscount" />
+        <result column="cintroduce" property="introduce" />
+    </resultMap>
+
+    <sql id="queryCourseAndCourseIntroduceByCourseIdList">
+        course.id cid , lecturer_user_no, category_id1, category_id2, category_id3, course_name, course_logo, introduce_id, is_free, course_original, course_discount, is_putaway, course_sort, count_buy, count_study, period_total
+    </sql>
+
+    <select id="queryCourseAndCourseIntroduceByCourseId" resultMap="queryCourseAndCourseIntroduceByCourseIdResultMap" >
+        select <include refid="queryCourseAndCourseIntroduceByCourseIdList"></include> ,course_introduce.introduce cintroduce from course join course_introduce on course.introduce_id = course_introduce.id where status_id = 1 and is_putaway = 1 and  course.id = #{courseId}
+    </select>
+
 </mapper>

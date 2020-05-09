@@ -1,5 +1,7 @@
 package io.xxnjdg.notp.user.service;
 
+import io.xxnjdg.notp.user.object.business.UserExtBO;
+import io.xxnjdg.notp.user.object.data.transfer.UpdateUserExtDTO;
 import io.xxnjdg.notp.user.object.data.transfer.UserExtDTO;
 import io.xxnjdg.notp.user.object.persistent.UserExt;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -20,5 +22,12 @@ public interface UserExtService extends IService<UserExt> {
      * @param userNo userExtDTO
      * @return UserExtVO
      */
-    UserExtVO postUserExt(String userNo);
+    UserExtBO getUserExtByUserNo(String userNo);
+
+    /**
+     * 更新 UserExt 表
+     * @param updateUserExtDTO updateUserExtDTO
+     * @return UserExtBO
+     */
+    UserExtBO updateUserExt(UpdateUserExtDTO updateUserExtDTO);
 }

@@ -5,7 +5,7 @@ spring:
     name: xxnjdg-course-service
   # datasource 数据源配置内容，对应 DataSourceProperties 配置属性类
   datasource:
-    url: jdbc:mysql://192.168.100.100:3306/xxnjdg_course?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+    url: jdbc:mysql://192.168.100.102:3306/xxnjdg_course?useSSL=false&useUnicode=true&characterEncoding=UTF-8
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root # 数据库账号
     password: 123 # 数据库密码
@@ -22,6 +22,8 @@ spring:
         enabled: true # 是否开启 StatViewServlet
         login-username: yudaoyuanma # 账号
         login-password: javaniubi # 密码
+  redis:
+    host: 192.168.100.102
 # eureka 配置
 info:
   eureka:

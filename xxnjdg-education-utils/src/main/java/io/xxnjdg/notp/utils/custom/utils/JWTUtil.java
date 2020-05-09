@@ -18,9 +18,9 @@ public class JWTUtil {
     public static final String USER_NO = "userNo";
 
     /**
-     * 30
+     * 一天
      */
-    public static final Long DATE = 30 * 60 * 1000L;
+    public static final Long DATE = 24 * 60 * 60 * 1000L;
 
     public static String create(Long userNo,Long date){
         return JWT.create()

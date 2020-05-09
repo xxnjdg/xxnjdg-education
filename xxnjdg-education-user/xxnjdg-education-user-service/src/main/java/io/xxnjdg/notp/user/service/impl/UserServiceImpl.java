@@ -34,6 +34,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
@@ -88,11 +89,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             throw new BaseException(UserEnum.USER_OR_PASSWORD_ERROR);
         }
 
+        String jwt = JWTUtil.create(user.getUserNo(), JWTUtil.DATE);
+        stringRedisTemplate.opsForValue().set(user.getUserNo().toString(),jwt,30, TimeUnit.MINUTES);
+
         //创建 jwt 并返回
         return new UserLoginVO(
                 user.getUserNo(),
                 user.getMobile(),
-                JWTUtil.create(user.getUserNo(),JWTUtil.DATE)
+                jwt
         );
     }
 

@@ -2,6 +2,7 @@ package io.xxnjdg.notp.course.mapper;
 
 import io.xxnjdg.notp.course.object.persistent.Course;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import io.xxnjdg.notp.course.object.view.CourseDetailVO;
 
 /**
  * <p>
@@ -13,4 +14,11 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface CourseMapper extends BaseMapper<Course> {
 
+
+    /**
+     * s
+     * @param courseId courseId
+     * @return CourseDetailVO
+     */
+    CourseDetailVO queryCourseAndCourseIntroduceByCourseId(Long courseId);
 }

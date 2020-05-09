@@ -19,10 +19,23 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
+        <dependency>
+            <groupId>io.xxnjdg.notp</groupId>
+            <artifactId>xxnjdg-education-user-feign</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+
         <!-- web 启动器 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- redis-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
 
         <!--eureka client-->
@@ -82,6 +95,17 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
         </dependency>
 
+
     </dependencies>
+
+    <build>
+        <plugins>
+            <!-- 提供给 mapstruct 使用 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

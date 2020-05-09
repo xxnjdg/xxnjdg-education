@@ -16,4 +16,9 @@ public interface ValidationMessage {
      * 参数为空
      */
     String PARAMETER_NULL = "参数为空";
+
+    /**
+     * 参数太长
+     */
+    String PARAMETER_TOO_LONG = "参数太长";
 }
