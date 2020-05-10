@@ -40,6 +40,11 @@ public class UserController {
         return ResponseResult.success(userLoginVO);
     }
 
+    @PostMapping("/user/api/user/update/password")
+    public ResponseResult<Boolean> updateUserPassword(@RequestBody @Validated UserRegisterDTO userRegisterDTO){
+        Boolean aBoolean = userService.updateUserPassword(userRegisterDTO);
+        return ResponseResult.success(aBoolean);
+    }
 
 }
 

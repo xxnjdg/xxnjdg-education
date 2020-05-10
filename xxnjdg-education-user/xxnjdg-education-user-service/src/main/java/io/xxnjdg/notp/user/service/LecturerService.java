@@ -2,6 +2,7 @@ package io.xxnjdg.notp.user.service;
 
 import io.xxnjdg.notp.user.object.business.LecturerBO;
 import io.xxnjdg.notp.user.object.data.transfer.LecturerUserNoDTO;
+import io.xxnjdg.notp.user.object.data.transfer.UpdateLecturerDTO;
 import io.xxnjdg.notp.user.object.persistent.Lecturer;
 import com.baomidou.mybatisplus.extension.service.IService;
 import io.xxnjdg.notp.user.object.view.LecturerUserNoVO;
@@ -31,4 +32,11 @@ public interface LecturerService extends IService<Lecturer> {
      * @return
      */
     LecturerBO getLecturerAndExtByLecturerUserNo(LecturerUserNoDTO lecturerUserNoDTO);
+
+    /**
+     * 更新 Lecturer
+     * @param updateLecturerDTO
+     * @return
+     */
+    Boolean updateLecturer(UpdateLecturerDTO updateLecturerDTO);
 }

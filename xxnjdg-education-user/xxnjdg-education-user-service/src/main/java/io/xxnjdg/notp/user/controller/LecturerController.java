@@ -5,6 +5,7 @@ import io.xxnjdg.notp.user.apis.LecturerControllerApi;
 import io.xxnjdg.notp.user.object.business.LecturerBO;
 import io.xxnjdg.notp.user.object.convert.LecturerBOToVO;
 import io.xxnjdg.notp.user.object.data.transfer.LecturerUserNoDTO;
+import io.xxnjdg.notp.user.object.data.transfer.UpdateLecturerDTO;
 import io.xxnjdg.notp.user.object.view.LecturerUserNoVO;
 import io.xxnjdg.notp.user.object.view.LecturerVO;
 import io.xxnjdg.notp.user.service.LecturerService;
@@ -47,5 +48,12 @@ public class LecturerController implements LecturerControllerApi {
         LecturerUserNoVO lecturerUserNoVO = LecturerBOToVO.INSTANCE.convert(lecturerBO);
         return ResponseResult.success(lecturerUserNoVO);
     }
+
+    @PostMapping("/user/auth/lecturer/audit/update")
+    public ResponseResult updateLecturer(@RequestBody @Validated UpdateLecturerDTO updateLecturerDTO){
+        Boolean aBoolean = lecturerService.updateLecturer(updateLecturerDTO);
+        return ResponseResult.success(aBoolean);
+    }
+
 }
 

@@ -29,4 +29,11 @@ public interface UserService extends IService<User> {
      * @return
      */
     UserLoginVO postUserRegister(UserRegisterDTO userRegisterDTO);
+
+    /**
+     * 用户密码修改
+     * @param userRegisterDTO userRegisterDTO
+     * @return Boolean
+     */
+    Boolean updateUserPassword(UserRegisterDTO userRegisterDTO);
 }

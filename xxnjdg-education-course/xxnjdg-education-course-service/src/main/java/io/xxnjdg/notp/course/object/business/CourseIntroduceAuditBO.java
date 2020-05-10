@@ -1,32 +1,26 @@
-package io.xxnjdg.notp.course.object.persistent;
+package io.xxnjdg.notp.course.object.business;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import java.time.LocalDateTime;
-import com.baomidou.mybatisplus.annotation.TableId;
-import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
+import java.time.LocalDateTime;
+
 /**
- * <p>
- * 课程介绍信息-审核
- * </p>
- *
  * @author xxnjdg
- * @since 2020-04-17
+ * @version 1.0
+ * @date 20-5-10 下午1:30
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class CourseIntroduceAudit implements Serializable {
+public class CourseIntroduceAuditBO implements Serializable {
 
-    private static final long serialVersionUID=1L;
-
+    private static final long serialVersionUID = -5580233874403519505L;
     /**
      * 主键
      */
-    @TableId(value = "id", type = IdType.INPUT)
     private Long id;
 
     /**
@@ -43,6 +37,4 @@ public class CourseIntroduceAudit implements Serializable {
      * 课程简介
      */
     private String introduce;
-
-
 }

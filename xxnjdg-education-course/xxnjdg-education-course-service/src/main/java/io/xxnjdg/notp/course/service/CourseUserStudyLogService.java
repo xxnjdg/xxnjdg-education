@@ -1,7 +1,10 @@
 package io.xxnjdg.notp.course.service;
 
+import io.xxnjdg.notp.course.object.business.CourseUserStudyLogBO;
+import io.xxnjdg.notp.course.object.data.transfer.ListCourseUserStudyLogDTO;
 import io.xxnjdg.notp.course.object.persistent.CourseUserStudyLog;
 import com.baomidou.mybatisplus.extension.service.IService;
+import io.xxnjdg.notp.utils.response.PageResult;
 
 /**
  * <p>
@@ -13,4 +16,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface CourseUserStudyLogService extends IService<CourseUserStudyLog> {
 
+    /**
+     * 分页查询CourseUserStudyLog列表
+     * @param listCourseUserStudyLogDTO listCourseUserStudyLogDTO
+     * @return CourseUserStudyLogBO
+     */
+    PageResult<CourseUserStudyLogBO> listCourseUserStudyLogByPage(ListCourseUserStudyLogDTO listCourseUserStudyLogDTO);
 }

@@ -25,6 +25,18 @@ public enum  UserRegisterEnum implements BaseResponse {
      */
     INSERT_ERROR(400,"系统错误,稍后再试"),
     /**
+     * 手机号没有注册
+     */
+    USER_NO_REGISTER_ERROR(400,"手机号没有注册"),
+    /**
+     * 密码相同
+     */
+    USER_PASSWORD_EQUAL_ERROR(400,"密码相同"),
+    /**
+     * 密码更新失败
+     */
+    USER_PASSWORD_INSERT_ERROR(400,"密码更新失败"),
+    /**
      * 手机号以注册
      */
     REGISTER_ERROR(400,"手机号以注册");

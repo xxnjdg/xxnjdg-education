@@ -1,4 +1,4 @@
-package io.xxnjdg.notp.user.object.error;
+package io.xxnjdg.notp.course.object.error;
 
 import io.xxnjdg.notp.utils.interfaces.BaseResponse;
 import lombok.AllArgsConstructor;
@@ -7,20 +7,21 @@ import lombok.Getter;
 /**
  * @author xxnjdg
  * @version 1.0
- * @date 20-4-29 上午4:08
+ * @date 20-5-10 下午2:10
  */
 @Getter
 @AllArgsConstructor
-public enum  LecturerEnum implements BaseResponse {
-    /**
-     * 讲师不存在，请联系管理员
-     */
-    LECTURER_NULL(400,"讲师不存在，请联系管理员"),
+public enum CourseAuditEnum implements BaseResponse {
 
     /**
-     * 讲师信息更新不成功，请联系管理员
+     * 课程查询异常，请联系管理员
      */
-    LECTURER_UPDATE_ERROR(400,"讲师信息更新不成功，请联系管理员");
+    GET_ERROR(400, "课程查询异常，请联系管理员"),
+
+    /**
+     * 课程异常，请联系管理员
+     */
+    INSERT_ERROR(400, "课程异常，请联系管理员");
 
     private Integer status;
     private String statusText;

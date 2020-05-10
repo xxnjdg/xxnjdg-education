@@ -3,9 +3,12 @@ package io.xxnjdg.notp.user.service.impl;
 import cn.hutool.core.lang.Snowflake;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.digest.DigestUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import io.xxnjdg.notp.user.config.SnowFlakeId;
 import io.xxnjdg.notp.user.object.data.transfer.UserLoginPasswordDTO;
 import io.xxnjdg.notp.user.object.data.transfer.UserRegisterDTO;
@@ -103,27 +106,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     @Transactional
     public UserLoginVO postUserRegister(UserRegisterDTO userRegisterDTO) {
-
-        //判断密码是否相同
-        if (!ObjectUtil.equal(userRegisterDTO.getPassword(),userRegisterDTO.getRepassword())){
-            throw new BaseException(UserRegisterEnum.PASSWORD_REPEAT_ERROR);
-        }
-
-        //获取验证码
-        String code = stringRedisTemplate.opsForValue().get(RedisPrefixField.VERIFY_PREFIX + userRegisterDTO.getMobile());
-
-        //验证码为空
-        if (code == null){
-            throw new BaseException(UserRegisterEnum.CODE_ERROR);
-        }
-
-        //验证码不正确
-        if (!ObjectUtil.equal(code,userRegisterDTO.getCode())){
-            throw new BaseException(UserRegisterEnum.CODE_ERROR);
-        }
-
-        //判断平台是否存在
-        platformService.getPlatformByClientId(userRegisterDTO.getClientId());
+        check(userRegisterDTO);
 
         //查询手机号是否注册
         LambdaQueryWrapper<User> userLambdaQueryWrapper = new QueryWrapper<User>().lambda()
@@ -183,5 +166,74 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 user.getMobile(),
                 JWTUtil.create(user.getUserNo(),JWTUtil.DATE)
         );
+    }
+
+    private void check(UserRegisterDTO userRegisterDTO) {
+        //判断密码是否相同
+        if (!ObjectUtil.equal(userRegisterDTO.getPassword(),userRegisterDTO.getRepassword())){
+            throw new BaseException(UserRegisterEnum.PASSWORD_REPEAT_ERROR);
+        }
+
+        //获取验证码
+        String code = stringRedisTemplate.opsForValue().get(RedisPrefixField.VERIFY_PREFIX + userRegisterDTO.getMobile());
+
+        //验证码为空
+        if (code == null){
+            throw new BaseException(UserRegisterEnum.CODE_ERROR);
+        }
+
+        //验证码不正确
+        if (!ObjectUtil.equal(code,userRegisterDTO.getCode())){
+            throw new BaseException(UserRegisterEnum.CODE_ERROR);
+        }
+
+        //判断平台是否存在
+        platformService.getPlatformByClientId(userRegisterDTO.getClientId());
+    }
+
+    @Override
+    public Boolean updateUserPassword(UserRegisterDTO userRegisterDTO) {
+        check(userRegisterDTO);
+
+        //查询手机号是否注册
+        LambdaQueryWrapper<User> userLambdaQueryWrapper = new QueryWrapper<User>().lambda()
+                .eq(User::getMobile, userRegisterDTO.getMobile());
+
+        User one = this.getOne(userLambdaQueryWrapper);
+
+        if (one == null){
+            throw new BaseException(UserRegisterEnum.USER_NO_REGISTER_ERROR);
+        }
+
+        //判断元密码和心密码是否一致
+        String oldMobileSalt = one.getMobileSalt();
+
+        //生成密码
+        String mobilePsw = DigestUtil.sha1Hex(oldMobileSalt + userRegisterDTO.getPassword());
+
+        if (StrUtil.equals(mobilePsw,one.getMobilePsw())){
+            throw new BaseException(UserRegisterEnum.USER_PASSWORD_EQUAL_ERROR);
+        }
+
+        //生成密码盐
+        String mobileSalt = IdUtil.simpleUUID();
+
+        //生成密码
+        mobilePsw = DigestUtil.sha1Hex(mobileSalt + userRegisterDTO.getPassword());
+
+        LambdaUpdateWrapper<User> wrapper = new UpdateWrapper<User>()
+                .lambda()
+                .eq(User::getMobile, userRegisterDTO.getMobile())
+                .set(User::getMobilePsw, mobilePsw)
+                .set(User::getMobileSalt, mobileSalt)
+                .set(User::getGmtModified, LocalDateTime.now());
+
+        boolean update = this.update(wrapper);
+
+        if (!update){
+            throw new BaseException(UserRegisterEnum.USER_PASSWORD_INSERT_ERROR);
+        }
+
+        return true;
     }
 }

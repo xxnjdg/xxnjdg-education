@@ -28,5 +28,11 @@
     <sql id="Base_Column_List">
         id, gmt_create, gmt_modified, status_id, sort, audit_status, audit_opinion, lecturer_user_no, category_id1, category_id2, category_id3, course_name, course_logo, introduce_id, is_free, course_original, course_discount, is_putaway
     </sql>
+    <select id="listCourseAuditByPage" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"></include> from course_audit
+        where lecturer_user_no = #{lecturerUserNo} and <if test="auditStatus == null">audit_status >= 0</if> <if test="auditStatus != null">audit_status = #{auditStatus}</if> and status_id = 1 and
+        (select id from course_audit where lecturer_user_no = #{lecturerUserNo} and <if test="auditStatus == null">audit_status >= 0</if> <if test="auditStatus != null">audit_status = #{auditStatus}</if> and status_id = 1
+        order by id desc limit #{offset},1) >= id order by id desc limit #{size}
+    </select>
 
 </mapper>

@@ -29,6 +29,9 @@ info:
   eureka:
     host: localhost
     port: 16881
+  snowFlakeId:
+    workerId: 4
+    dataCenterId: 4
 eureka:
   client:
     register-with-eureka: true

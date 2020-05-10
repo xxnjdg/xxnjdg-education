@@ -4,20 +4,25 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="io.xxnjdg.notp.course.object.persistent.CourseUserStudyLog">
-        <id column="id" property="id" />
-        <result column="gmt_create" property="gmtCreate" />
-        <result column="course_id" property="courseId" />
-        <result column="course_name" property="courseName" />
-        <result column="chapter_id" property="chapterId" />
-        <result column="chapter_name" property="chapterName" />
-        <result column="period_id" property="periodId" />
-        <result column="period_name" property="periodName" />
-        <result column="user_no" property="userNo" />
+        <id column="id" property="id"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="course_id" property="courseId"/>
+        <result column="course_name" property="courseName"/>
+        <result column="chapter_id" property="chapterId"/>
+        <result column="chapter_name" property="chapterName"/>
+        <result column="period_id" property="periodId"/>
+        <result column="period_name" property="periodName"/>
+        <result column="user_no" property="userNo"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id, gmt_create, course_id, course_name, chapter_id, chapter_name, period_id, period_name, user_no
     </sql>
+    <select id="listCourseUserStudyLogByPage" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"></include> from course_user_study_log where user_no = #{userNo} and
+        (select id from course_user_study_log where user_no = #{userNo} order by id desc limit #{offset},1) >= id limit
+        #{size}
+    </select>
 
 </mapper>

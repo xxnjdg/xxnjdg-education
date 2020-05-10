@@ -1,33 +1,26 @@
-package io.xxnjdg.notp.course.object.persistent;
+package io.xxnjdg.notp.course.object.business;
 
-import java.math.BigDecimal;
-import com.baomidou.mybatisplus.annotation.IdType;
-import java.time.LocalDateTime;
-import com.baomidou.mybatisplus.annotation.TableId;
-import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
 /**
- * <p>
- * 课程信息-审核
- * </p>
- *
  * @author xxnjdg
- * @since 2020-04-17
+ * @version 1.0
+ * @date 20-5-9 下午8:59
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class CourseAudit implements Serializable {
-
-    private static final long serialVersionUID=1L;
-
+public class CourseAuditBO implements Serializable {
+    private static final long serialVersionUID = 4240690143858393154L;
     /**
      * 主键
      */
-    @TableId(value = "id", type = IdType.INPUT)
     private Long id;
 
     /**
@@ -114,6 +107,9 @@ public class CourseAudit implements Serializable {
      * 是否上架(1:上架，0:下架)
      */
     private Integer isPutaway;
-
+    /**
+     * 是否可删除（1:可删除，0:不可删除）
+     */
+    private Integer isDelete;
 
 }
