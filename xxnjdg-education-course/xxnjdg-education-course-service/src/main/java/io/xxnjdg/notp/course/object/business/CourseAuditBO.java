@@ -112,4 +112,8 @@ public class CourseAuditBO implements Serializable {
      */
     private Integer isDelete;
 
+    /**
+     * 课程介绍
+     */
+    private String introduce;
 }

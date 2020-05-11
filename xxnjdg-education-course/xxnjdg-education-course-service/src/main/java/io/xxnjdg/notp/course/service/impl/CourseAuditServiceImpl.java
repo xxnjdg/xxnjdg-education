@@ -10,9 +10,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import io.xxnjdg.notp.course.object.business.CourseAuditBO;
 import io.xxnjdg.notp.course.object.business.CourseIntroduceAuditBO;
 import io.xxnjdg.notp.course.object.convert.CourseAuditMapStruct;
-import io.xxnjdg.notp.course.object.data.transfer.CourseAuditDTO;
-import io.xxnjdg.notp.course.object.data.transfer.InsertCourseAuditDTO;
-import io.xxnjdg.notp.course.object.data.transfer.ListCourseAuditBTO;
+import io.xxnjdg.notp.course.object.data.transfer.*;
 import io.xxnjdg.notp.course.object.error.CourseAuditEnum;
 import io.xxnjdg.notp.course.object.persistent.CourseAudit;
 import io.xxnjdg.notp.course.mapper.CourseAuditMapper;
@@ -43,6 +41,7 @@ import java.util.List;
  * @since 2020-04-17
  */
 @Service
+@Slf4j
 public class CourseAuditServiceImpl extends ServiceImpl<CourseAuditMapper, CourseAudit> implements CourseAuditService {
 
     @Autowired
@@ -116,8 +115,8 @@ public class CourseAuditServiceImpl extends ServiceImpl<CourseAuditMapper, Cours
         //插入简介
         CourseIntroduceAuditBO courseIntroduceAuditBO =
                 courseIntroduceAuditService.insertCourseIntroduceAudit(
-                        insertCourseAuditDTO.getIntroduce());
-
+                        new CourseIntroduceAuditDTO()
+                                .setIntroduce(insertCourseAuditDTO.getIntroduce()));
         CourseAudit courseAudit = CourseAuditMapStruct.INSTANCE.convertBTO2D(insertCourseAuditDTO);
 
         if (ObjectUtil.equal(courseAudit.getIsFree(),1)){
@@ -154,7 +153,7 @@ public class CourseAuditServiceImpl extends ServiceImpl<CourseAuditMapper, Cours
         LambdaQueryWrapper<CourseAudit> wrapper = new QueryWrapper<CourseAudit>()
                 .lambda()
                 .eq(CourseAudit::getStatusId, RowStatus.ENABLE)
-                .eq(CourseAudit::getId, courseAuditDTO.getId());
+                .eq(CourseAudit::getId, Long.valueOf(courseAuditDTO.getId()));
 
         CourseAudit courseAudit = this.getOne(wrapper);
         if (courseAudit == null){
@@ -170,7 +169,7 @@ public class CourseAuditServiceImpl extends ServiceImpl<CourseAuditMapper, Cours
         LambdaUpdateWrapper<CourseAudit> wrapper = new UpdateWrapper<CourseAudit>()
                 .lambda()
                 .eq(CourseAudit::getStatusId, RowStatus.ENABLE)
-                .eq(CourseAudit::getId, courseAuditDTO.getId())
+                .eq(CourseAudit::getId, Long.valueOf(courseAuditDTO.getId()))
                 .set(CourseAudit::getAuditStatus, courseAuditDTO.getAuditStatus());
 
         boolean update = this.update(wrapper);
@@ -178,5 +177,108 @@ public class CourseAuditServiceImpl extends ServiceImpl<CourseAuditMapper, Cours
             throw new BaseException(CourseAuditEnum.GET_ERROR);
         }
         return true;
+    }
+
+    @Override
+    public boolean updateCourseAuditById(CourseAuditDTO courseAuditDTO) {
+
+        CourseAudit courseAudit = CourseAuditMapStruct.INSTANCE.convertBTO2D(courseAuditDTO);
+
+        boolean update = this.updateById(courseAudit);
+        if (!update){
+            throw new BaseException(CourseAuditEnum.UPDATE_ERROR);
+        }
+
+        return true;
+    }
+
+    @Override
+    @Transactional
+    public Boolean updateCourseAudit(InsertCourseAuditDTO insertCourseAuditDTO) {
+
+        // 如果课程收费，价格不能为空
+        if (ObjectUtil.equal(insertCourseAuditDTO.getIsFree(),"0") && insertCourseAuditDTO.getCourseOriginal() == null){
+            throw new BaseException(CourseAuditEnum.UPDATE_ERROR);
+        }
+
+        //查询课程 和 参数 lecturerUserNo 是否一致
+        CourseAuditBO courseAuditBO = this.getCourseAuditById(
+                new CourseAuditDTO().setId(insertCourseAuditDTO.getId()));
+
+        if (!ObjectUtil.equal(courseAuditBO.getLecturerUserNo(),insertCourseAuditDTO.getLecturerUserNo())){
+            throw new BaseException(CourseAuditEnum.UPDATE_ERROR);
+        }
+
+        //更新描述
+        courseIntroduceAuditService.updateCourseIntroduceAudit(
+                new CourseIntroduceAuditDTO()
+                        .setId(String.valueOf(courseAuditBO.getIntroduceId()))
+                        .setIntroduce(insertCourseAuditDTO.getIntroduce()));
+
+        CourseAudit courseAudit = CourseAuditMapStruct.INSTANCE.convertBTO2D(insertCourseAuditDTO);
+
+        if (ObjectUtil.equal(courseAudit.getIsFree(),1)){
+            courseAudit.setCourseOriginal(BigDecimal.valueOf(0));
+        }
+
+        if (insertCourseAuditDTO.getCategoryId1() == null) {
+            courseAudit.setCategoryId1(0L);
+        }
+        if (insertCourseAuditDTO.getCategoryId2() == null) {
+            courseAudit.setCategoryId2(0L);
+        }
+        if (insertCourseAuditDTO.getCategoryId3() == null) {
+            courseAudit.setCategoryId3(0L);
+        }
+
+        courseAudit
+                .setGmtModified(LocalDateTime.now())
+                .setAuditStatus(0)
+                .setCourseDiscount(courseAudit.getCourseOriginal());
+
+        log.info(courseAudit.toString());
+
+        //更新
+        boolean update = this.updateById(courseAudit);
+
+        if (!update){
+            throw new BaseException(CourseAuditEnum.UPDATE_ERROR);
+        }
+
+        return true;
+    }
+
+    @Override
+    public Boolean updateCourseAudit(CourseAuditPutawayDTO courseAuditPutawayDTO) {
+        //查询课程 和 参数 lecturerUserNo 是否一致
+        CourseAuditBO courseAuditBO = this.getCourseAuditById(
+                new CourseAuditDTO().setId(courseAuditPutawayDTO.getId()));
+
+        if (!ObjectUtil.equal(courseAuditBO.getLecturerUserNo(),courseAuditPutawayDTO.getLecturerUserNo())){
+            throw new BaseException(CourseAuditEnum.UPDATE_ERROR);
+        }
+
+        CourseAudit courseAudit = new CourseAudit()
+                .setId(Long.valueOf(courseAuditPutawayDTO.getId()))
+                .setIsPutaway(Integer.valueOf(courseAuditPutawayDTO.getIsPutaway()));
+
+        //更新
+        boolean update = this.updateById(courseAudit);
+        if (!update){
+            throw new BaseException(CourseAuditEnum.UPDATE_ERROR);
+        }
+
+        return true;
+    }
+
+    @Override
+    public CourseAuditBO getCourseAudit(CourseAuditDTO courseAuditDTO) {
+        CourseAuditBO courseAuditBO = this.getCourseAuditById(courseAuditDTO);
+
+        CourseIntroduceAuditBO courseIntroduceAuditBO = courseIntroduceAuditService
+                .getCourseIntroduceAuditById(new CourseIntroduceAuditDTO().setId(
+                        String.valueOf(courseAuditBO.getIntroduceId())));
+
+        return courseAuditBO.setIntroduce(courseIntroduceAuditBO.getIntroduce());
     }
 }

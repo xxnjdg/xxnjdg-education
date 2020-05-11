@@ -1,6 +1,7 @@
 package io.xxnjdg.notp.course.service;
 
 import io.xxnjdg.notp.course.object.business.CourseIntroduceAuditBO;
+import io.xxnjdg.notp.course.object.data.transfer.CourseIntroduceAuditDTO;
 import io.xxnjdg.notp.course.object.persistent.CourseIntroduceAudit;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -16,9 +17,22 @@ public interface CourseIntroduceAuditService extends IService<CourseIntroduceAud
 
     /**
      * 插入 CourseIntroduceAudit
-     * @param introduce
+     * @param courseIntroduceAuditDTO
      * @return
      */
-    CourseIntroduceAuditBO insertCourseIntroduceAudit(String introduce);
+    CourseIntroduceAuditBO insertCourseIntroduceAudit(CourseIntroduceAuditDTO courseIntroduceAuditDTO);
 
+    /**
+     *  通过 id 获取 CourseIntroduceAudit
+     * @param courseIntroduceAuditDTO
+     * @return
+     */
+    CourseIntroduceAuditBO getCourseIntroduceAuditById(CourseIntroduceAuditDTO courseIntroduceAuditDTO);
+
+    /**
+     * 更新 CourseIntroduceAudit
+     * @param courseIntroduceAuditDTO
+     * @return
+     */
+    CourseIntroduceAuditBO updateCourseIntroduceAudit(CourseIntroduceAuditDTO courseIntroduceAuditDTO);
 }

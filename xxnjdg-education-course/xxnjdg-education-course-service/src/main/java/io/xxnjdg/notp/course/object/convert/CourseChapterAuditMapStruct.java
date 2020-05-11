@@ -1,6 +1,7 @@
 package io.xxnjdg.notp.course.object.convert;
 
 import io.xxnjdg.notp.course.object.business.CourseChapterAuditBO;
+import io.xxnjdg.notp.course.object.data.transfer.CourseChapterAuditDTO;
 import io.xxnjdg.notp.course.object.persistent.CourseChapterAudit;
 import io.xxnjdg.notp.course.object.view.InsertCourseChapterAuditVO;
 import io.xxnjdg.notp.course.object.view.ListCourseChapterAuditVO;
@@ -17,6 +18,13 @@ import java.util.List;
 @Mapper
 public interface CourseChapterAuditMapStruct {
     CourseChapterAuditMapStruct INSTANCE = Mappers.getMapper(CourseChapterAuditMapStruct.class);
+
+    /**
+     * DTO -> DO
+     * @param courseChapterAuditDTO
+     * @return
+     */
+    CourseChapterAudit convertDTO2D(CourseChapterAuditDTO courseChapterAuditDTO);
 
     /**
      * DO -> BO

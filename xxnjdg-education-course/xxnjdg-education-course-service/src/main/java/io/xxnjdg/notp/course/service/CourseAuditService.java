@@ -2,6 +2,7 @@ package io.xxnjdg.notp.course.service;
 
 import io.xxnjdg.notp.course.object.business.CourseAuditBO;
 import io.xxnjdg.notp.course.object.data.transfer.CourseAuditDTO;
+import io.xxnjdg.notp.course.object.data.transfer.CourseAuditPutawayDTO;
 import io.xxnjdg.notp.course.object.data.transfer.InsertCourseAuditDTO;
 import io.xxnjdg.notp.course.object.data.transfer.ListCourseAuditBTO;
 import io.xxnjdg.notp.course.object.persistent.CourseAudit;
@@ -46,4 +47,33 @@ public interface CourseAuditService extends IService<CourseAudit> {
      * @return
      */
     boolean updateCourseAudit(CourseAuditDTO courseAuditDTO);
+
+    /**
+     * 更新
+     * @param courseAuditDTO
+     * @return
+     */
+    boolean updateCourseAuditById(CourseAuditDTO courseAuditDTO);
+
+    /**
+     * 更新
+     * @param insertCourseAuditDTO
+     * @return
+     */
+    Boolean updateCourseAudit(InsertCourseAuditDTO insertCourseAuditDTO);
+
+    /**
+     * 更新
+     * @param courseAuditPutawayDTO
+     * @return
+     */
+    Boolean updateCourseAudit(CourseAuditPutawayDTO courseAuditPutawayDTO);
+
+
+    /**
+     * 查询 CourseAudit
+     * @param courseAuditDTO
+     * @return
+     */
+    CourseAuditBO getCourseAudit(CourseAuditDTO courseAuditDTO);
 }

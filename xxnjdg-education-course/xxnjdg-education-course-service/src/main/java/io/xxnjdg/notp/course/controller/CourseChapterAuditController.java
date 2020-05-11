@@ -54,6 +54,14 @@ public class CourseChapterAuditController {
         return ResponseResult.success(insertCourseChapterAuditVO);
     }
 
+    @PostMapping("/course/auth/course/chapter/audit/update")
+    public ResponseResult updateCourseChapterAudit(
+            @RequestBody @Validated InsertCourseChapterAuditDTO insertCourseChapterAuditDTO,
+            @RequestHeader("userNo") @NotNull(message = ValidationMessage.PARAMETER_NULL) Long userNo ){
+        courseChapterAuditService.updateCourseChapterAudit(
+                insertCourseChapterAuditDTO.setUserNo(userNo));
+        return ResponseResult.success();
+    }
 
 }
 

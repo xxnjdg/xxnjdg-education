@@ -11,23 +11,26 @@ import java.io.Serializable;
 /**
  * @author xxnjdg
  * @version 1.0
- * @date 20-5-10 下午8:37
+ * @date 20-5-11 下午3:13
  */
 @Data
 @Accessors(chain = true)
-public class CourseAuditDTO implements Serializable {
-    private static final long serialVersionUID = 5749303223632968328L;
-
+public class CourseAuditPutawayDTO implements Serializable {
+    private static final long serialVersionUID = -8976717871844917624L;
     /**
-     * 主键
+     * 课程ID
      */
     @NotBlank(message = ValidationMessage.PARAMETER_NULL)
     @Pattern(regexp = "^[\\d]{1,20}$")
     private String id;
-
     /**
-     * 审核状态(0:待审核,1:审核通过,2:审核不通过)
+     * 是否上架(1:上架，0:下架)
      */
-    private Integer auditStatus;
-
+    @NotBlank(message = ValidationMessage.PARAMETER_NULL)
+    @Pattern(regexp = "^[0-1]$",message = ValidationMessage.PARAMETER_ERROR)
+    private String isPutaway;
+    /**
+     * 用户编号
+     */
+    private Long lecturerUserNo;
 }

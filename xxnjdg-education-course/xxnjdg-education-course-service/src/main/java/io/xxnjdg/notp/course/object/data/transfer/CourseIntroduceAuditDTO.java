@@ -11,13 +11,13 @@ import java.io.Serializable;
 /**
  * @author xxnjdg
  * @version 1.0
- * @date 20-5-10 下午8:37
+ * @date 20-5-11 上午3:13
  */
 @Data
 @Accessors(chain = true)
-public class CourseAuditDTO implements Serializable {
-    private static final long serialVersionUID = 5749303223632968328L;
+public class CourseIntroduceAuditDTO implements Serializable {
 
+    private static final long serialVersionUID = -2743319903379929603L;
     /**
      * 主键
      */
@@ -26,8 +26,9 @@ public class CourseAuditDTO implements Serializable {
     private String id;
 
     /**
-     * 审核状态(0:待审核,1:审核通过,2:审核不通过)
+     * 课程简介
      */
-    private Integer auditStatus;
+    @NotBlank(message = ValidationMessage.PARAMETER_NULL)
+    private String introduce;
 
 }

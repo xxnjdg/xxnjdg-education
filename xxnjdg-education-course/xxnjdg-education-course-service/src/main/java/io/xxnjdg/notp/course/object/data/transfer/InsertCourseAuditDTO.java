@@ -1,6 +1,7 @@
 package io.xxnjdg.notp.course.object.data.transfer;
 
 import io.xxnjdg.notp.utils.constant.ValidationMessage;
+import io.xxnjdg.notp.utils.validator.group.Update;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -8,7 +9,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 /**
  * @author xxnjdg
@@ -20,6 +20,11 @@ import java.math.BigDecimal;
 public class InsertCourseAuditDTO implements Serializable {
 
     private static final long serialVersionUID = -1375075427856832536L;
+
+    @NotBlank(message = ValidationMessage.PARAMETER_NULL,groups = {Update.class})
+    @Pattern(regexp = "^[\\d]{1,20}$",groups = {Update.class})
+    private String id;
+
     /**
      * 一级分类ID
      */

@@ -14,6 +14,10 @@ import lombok.Getter;
 public enum CourseAuditEnum implements BaseResponse {
 
     /**
+     * 课程更新异常，请联系管理员
+     */
+    UPDATE_ERROR(400, "课程更新异常，请联系管理员"),
+    /**
      * 课程查询异常，请联系管理员
      */
     GET_ERROR(400, "课程查询异常，请联系管理员"),
