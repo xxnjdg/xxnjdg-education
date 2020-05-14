@@ -1,5 +1,7 @@
 package io.xxnjdg.notp.system.service.impl;
 
+import io.xxnjdg.notp.system.object.business.SysMenuRoleBO;
+import io.xxnjdg.notp.system.object.data.transfer.SysMenuRoleDTO;
 import io.xxnjdg.notp.system.object.persistent.SysMenuRole;
 import io.xxnjdg.notp.system.mapper.SysMenuRoleMapper;
 import io.xxnjdg.notp.system.service.SysMenuRoleService;
@@ -17,4 +19,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class SysMenuRoleServiceImpl extends ServiceImpl<SysMenuRoleMapper, SysMenuRole> implements SysMenuRoleService {
 
+    @Override
+    public SysMenuRoleBO listSysMenuRole(SysMenuRoleDTO sysMenuRoleDTO) {
+
+//        this.baseMapper.selectByMap()
+
+        return null;
+    }
 }

@@ -5,6 +5,7 @@ import io.xxnjdg.notp.utils.constant.ValidationMessage;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Null;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
@@ -38,5 +39,8 @@ public class UserLoginPasswordDTO implements Serializable {
     private String clientId;
 
     private String ip;
+
+    @Null
+    private Boolean admin;
 
 }

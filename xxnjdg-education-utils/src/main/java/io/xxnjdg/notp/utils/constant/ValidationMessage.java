@@ -21,4 +21,9 @@ public interface ValidationMessage {
      * 参数太长
      */
     String PARAMETER_TOO_LONG = "参数太长";
+
+    /**
+     * 参数不在范围
+     */
+    String PARAMETER_OUT_OF_SCOPE = "参数不在范围";
 }

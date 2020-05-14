@@ -1,9 +1,13 @@
 package io.xxnjdg.notp.system.controller;
 
 
+import io.xxnjdg.notp.system.apis.SysMenuControllerApi;
+import io.xxnjdg.notp.utils.response.ResponseResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * <p>
@@ -14,8 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2020-04-16
  */
 @RestController
-@RequestMapping("/sysMenu")
-public class SysMenuController {
-
+public class SysMenuController implements SysMenuControllerApi {
 }
 

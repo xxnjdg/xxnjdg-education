@@ -11,6 +11,7 @@ import io.xxnjdg.notp.course.service.CourseChapterPeriodAuditService;
 import io.xxnjdg.notp.utils.constant.ValidationMessage;
 import io.xxnjdg.notp.utils.response.ResponseResult;
 import io.xxnjdg.notp.utils.validator.group.Insert;
+import io.xxnjdg.notp.utils.validator.group.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -45,15 +46,24 @@ public class CourseChapterPeriodAuditController {
         return ResponseResult.success(listCourseChapterPeriodAuditVOS);
     }
 
-
-
     @PostMapping("/course/auth/course/chapter/period/audit/save")
     public ResponseResult insertCourseChapterPeriodAudit(
             @RequestBody @Validated(Insert.class) CourseChapterPeriodAuditBTO courseChapterPeriodAuditBTO,
             @RequestHeader("userNo") @NotNull(message = ValidationMessage.PARAMETER_NULL) Long userNo ){
 
-        CourseChapterPeriodAuditBO courseChapterPeriodAuditBO = courseChapterPeriodAuditService
-                .insertCourseChapterPeriodAudit(courseChapterPeriodAuditBTO.setUserNo(userNo));
+        courseChapterPeriodAuditService.insertCourseChapterPeriodAudit(
+                courseChapterPeriodAuditBTO.setUserNo(userNo));
+
+        return ResponseResult.success();
+    }
+
+    @PostMapping("/course/auth/course/chapter/period/audit/update")
+    public ResponseResult updateCourseChapterPeriodAudit(
+            @RequestBody @Validated(Update.class) CourseChapterPeriodAuditBTO courseChapterPeriodAuditBTO,
+            @RequestHeader("userNo") @NotNull(message = ValidationMessage.PARAMETER_NULL) Long userNo ){
+
+        courseChapterPeriodAuditService.updateCourseChapterPeriodAudit(
+                courseChapterPeriodAuditBTO.setUserNo(userNo));
 
         return ResponseResult.success();
     }

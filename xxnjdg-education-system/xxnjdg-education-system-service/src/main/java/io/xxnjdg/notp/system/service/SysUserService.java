@@ -1,7 +1,9 @@
 package io.xxnjdg.notp.system.service;
 
+import io.xxnjdg.notp.system.object.business.SysUserBO;
 import io.xxnjdg.notp.system.object.persistent.SysUser;
 import com.baomidou.mybatisplus.extension.service.IService;
+import io.xxnjdg.notp.system.objects.data.transfer.SysUserDTO;
 
 /**
  * <p>
@@ -13,4 +15,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface SysUserService extends IService<SysUser> {
 
+    /**
+     * 查询 SysUser 菜单 apiurl
+     * @param sysUserDTO
+     * @return
+     */
+    SysUserBO listMenuApiUrl(SysUserDTO sysUserDTO);
 }

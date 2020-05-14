@@ -4,6 +4,7 @@ import io.xxnjdg.notp.utils.constant.HttpStatus;
 import io.xxnjdg.notp.utils.response.ResponseResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -77,6 +78,12 @@ public class HandlerException {
     public ResponseResult handlerNoFoundException(Exception e) {
         logger.error(e.getMessage(), e);
         return ResponseResult.error(HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseResult handleHttpMessageNotReadableException(Exception e) {
+        logger.error(e.getMessage(), e);
+        return ResponseResult.error("类型转换错误");
     }
 
     /**

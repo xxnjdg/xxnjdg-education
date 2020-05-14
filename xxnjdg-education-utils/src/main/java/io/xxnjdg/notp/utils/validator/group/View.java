@@ -6,7 +6,7 @@ import javax.validation.groups.Default;
 /**
  * @author xxnjdg
  * @version 1.0
- * @date 20-5-11 上午5:14
+ * @date 20-5-13 下午5:35
  */
-public interface Update extends Default {
+public interface View extends Default {
 }

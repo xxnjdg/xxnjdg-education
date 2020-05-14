@@ -3,8 +3,10 @@ package io.xxnjdg.notp.course.object.data.transfer;
 import io.xxnjdg.notp.utils.constant.ValidationMessage;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
@@ -21,9 +23,9 @@ public class CourseIntroduceAuditDTO implements Serializable {
     /**
      * 主键
      */
-    @NotBlank(message = ValidationMessage.PARAMETER_NULL)
-    @Pattern(regexp = "^[\\d]{1,20}$")
-    private String id;
+    @NotNull(message = ValidationMessage.PARAMETER_NULL)
+    @Range(message = ValidationMessage.PARAMETER_OUT_OF_SCOPE)
+    private Long id;
 
     /**
      * 课程简介

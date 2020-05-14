@@ -5,11 +5,9 @@ import io.xxnjdg.notp.utils.validator.group.Insert;
 import io.xxnjdg.notp.utils.validator.group.Update;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.hibernate.validator.constraints.Range;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Null;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -26,10 +24,46 @@ public class CourseChapterAuditDTO implements Serializable {
     /**
      * 主键
      */
-    @NotBlank(message = ValidationMessage.PARAMETER_NULL,groups = {Update.class})
-    @Pattern(regexp = "^[\\d]{1,20}$",message = ValidationMessage.PARAMETER_ERROR,groups = {Update.class})
     @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Insert.class})
-    private String id;
+    @NotNull(message = ValidationMessage.PARAMETER_NULL,groups = {Update.class})
+    @Range(message = ValidationMessage.PARAMETER_OUT_OF_SCOPE,groups = {Update.class})
+    private Long id;
+
+    /**
+     * 排序
+     */
+    @NotNull(message = ValidationMessage.PARAMETER_NULL,groups = {Insert.class})
+    @Range(min = 1,max= Integer.MAX_VALUE,message = ValidationMessage.PARAMETER_OUT_OF_SCOPE,groups = {Insert.class})
+    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Update.class})
+    private Integer sort;
+
+    /**
+     * 课程ID
+     */
+    @NotNull(message = ValidationMessage.PARAMETER_NULL,groups = {Insert.class})
+    @Range(message = ValidationMessage.PARAMETER_OUT_OF_SCOPE,groups = {Insert.class})
+    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Update.class})
+    private Long courseId;
+
+    /**
+     * 章节名称
+     */
+    @NotBlank(message = ValidationMessage.PARAMETER_NULL)
+    @Size(max = 64,message = ValidationMessage.PARAMETER_TOO_LONG)
+    private String chapterName;
+
+    /**
+     * 是否免费：1免费，0收费
+     */
+    @NotNull(message = ValidationMessage.PARAMETER_NULL)
+    @Range(max = 1,message = ValidationMessage.PARAMETER_OUT_OF_SCOPE)
+    private Integer isFree;
+
+    /**
+     * 用户编号(不属于类的字段)
+     */
+    @Null(message = ValidationMessage.PARAMETER_ERROR)
+    private Long userNo;
 
     /**
      * 创建时间
@@ -50,13 +84,6 @@ public class CourseChapterAuditDTO implements Serializable {
     private Integer statusId;
 
     /**
-     * 排序
-     */
-    @NotBlank(message = ValidationMessage.PARAMETER_NULL,groups = {Insert.class})
-    @Pattern(regexp = "^[1-254]$",message = ValidationMessage.PARAMETER_ERROR,groups = {Insert.class})
-    private String sort;
-
-    /**
      * 审核状态(0:待审核;1:审核通过;2:审核不通过)
      */
     @Null(message = ValidationMessage.PARAMETER_ERROR)
@@ -69,31 +96,10 @@ public class CourseChapterAuditDTO implements Serializable {
     private String auditOpinion;
 
     /**
-     * 课程ID
-     */
-    @NotBlank(message = ValidationMessage.PARAMETER_NULL,groups = {Insert.class})
-    @Pattern(regexp = "^[\\d]{1,20}$",message = ValidationMessage.PARAMETER_ERROR,groups = {Insert.class})
-    private String courseId;
-
-    /**
-     * 章节名称
-     */
-    @NotBlank(message = ValidationMessage.PARAMETER_NULL)
-    @Size(max = 64,message = ValidationMessage.PARAMETER_TOO_LONG)
-    private String chapterName;
-
-    /**
      * 章节描述
      */
     @Null(message = ValidationMessage.PARAMETER_ERROR)
     private String chapterDesc;
-
-    /**
-     * 是否免费：1免费，0收费
-     */
-    @NotBlank(message = ValidationMessage.PARAMETER_NULL)
-    @Pattern(regexp = "^[0-1]$",message = ValidationMessage.PARAMETER_ERROR)
-    private String isFree;
 
     /**
      * 原价
@@ -107,9 +113,4 @@ public class CourseChapterAuditDTO implements Serializable {
     @Null(message = ValidationMessage.PARAMETER_ERROR)
     private BigDecimal chapterDiscount;
 
-    /**
-     * 用户编号
-     */
-    @Null(message = ValidationMessage.PARAMETER_ERROR)
-    private Long userNo;
 }

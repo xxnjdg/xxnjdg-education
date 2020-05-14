@@ -27,11 +27,25 @@ public interface CourseAuditService extends IService<CourseAudit> {
     PageResult<CourseAuditBO> listCourseAuditByPage(ListCourseAuditBTO listCourseAuditBTO);
 
     /**
-     * 插入
-     * @param insertCourseAuditDTO
+     * 查询 CourseAudit
+     * @param courseAuditDTO
      * @return
      */
-    CourseAuditBO insertCourseAudit(InsertCourseAuditDTO insertCourseAuditDTO);
+    CourseAuditBO getCourseAudit(CourseAuditDTO courseAuditDTO);
+
+    /**
+     * 插入
+     * @param courseAuditDTO
+     * @return
+     */
+    CourseAuditBO insertCourseAudit(CourseAuditDTO courseAuditDTO);
+
+    /**
+     * 更新
+     * @param courseAuditDTO
+     * @return
+     */
+    Boolean updateCourseAudit(CourseAuditDTO courseAuditDTO);
 
     /**
      * 通过 Id 获取 CourseAudit
@@ -40,40 +54,10 @@ public interface CourseAuditService extends IService<CourseAudit> {
      */
     CourseAuditBO getCourseAuditById(CourseAuditDTO courseAuditDTO);
 
-
     /**
-     * 更新
-     * @param courseAuditDTO
-     * @return
-     */
-    boolean updateCourseAudit(CourseAuditDTO courseAuditDTO);
-
-    /**
-     * 更新
+     * 通过 Id 更新
      * @param courseAuditDTO
      * @return
      */
     boolean updateCourseAuditById(CourseAuditDTO courseAuditDTO);
-
-    /**
-     * 更新
-     * @param insertCourseAuditDTO
-     * @return
-     */
-    Boolean updateCourseAudit(InsertCourseAuditDTO insertCourseAuditDTO);
-
-    /**
-     * 更新
-     * @param courseAuditPutawayDTO
-     * @return
-     */
-    Boolean updateCourseAudit(CourseAuditPutawayDTO courseAuditPutawayDTO);
-
-
-    /**
-     * 查询 CourseAudit
-     * @param courseAuditDTO
-     * @return
-     */
-    CourseAuditBO getCourseAudit(CourseAuditDTO courseAuditDTO);
 }

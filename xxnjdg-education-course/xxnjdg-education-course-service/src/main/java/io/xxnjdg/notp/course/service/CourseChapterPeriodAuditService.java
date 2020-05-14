@@ -30,5 +30,26 @@ public interface CourseChapterPeriodAuditService extends IService<CourseChapterP
      * @param courseChapterPeriodAuditBTO
      * @return
      */
-    CourseChapterPeriodAuditBO insertCourseChapterPeriodAudit(CourseChapterPeriodAuditBTO courseChapterPeriodAuditBTO);
+    Boolean insertCourseChapterPeriodAudit(CourseChapterPeriodAuditBTO courseChapterPeriodAuditBTO);
+
+    /**
+     * 修改 CourseChapterPeriodAudit
+     * @param courseChapterPeriodAuditBTO
+     * @return
+     */
+    Boolean updateCourseChapterPeriodAudit(CourseChapterPeriodAuditBTO courseChapterPeriodAuditBTO);
+
+    /**
+     * 通过id查询
+     * @param courseChapterPeriodAuditBTO
+     * @return
+     */
+    CourseChapterPeriodAuditBO getCourseChapterPeriodAuditById(CourseChapterPeriodAuditBTO courseChapterPeriodAuditBTO);
+
+    /**
+     * 通过id更新
+     * @param courseChapterPeriodAuditBTO
+     * @return
+     */
+    Boolean updateCourseChapterPeriodAuditById(CourseChapterPeriodAuditBTO courseChapterPeriodAuditBTO);
 }

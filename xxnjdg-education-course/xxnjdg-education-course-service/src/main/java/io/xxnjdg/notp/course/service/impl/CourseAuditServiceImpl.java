@@ -18,6 +18,8 @@ import io.xxnjdg.notp.course.service.CourseAuditService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.xxnjdg.notp.course.service.CourseIntroduceAuditService;
 import io.xxnjdg.notp.utils.config.SnowFlakeId;
+import io.xxnjdg.notp.utils.constant.AuditStatus;
+import io.xxnjdg.notp.utils.constant.CourseIsPutAway;
 import io.xxnjdg.notp.utils.constant.RowStatus;
 import io.xxnjdg.notp.utils.custom.utils.PageObjectUtil;
 import io.xxnjdg.notp.utils.exception.BaseException;
@@ -49,6 +51,17 @@ public class CourseAuditServiceImpl extends ServiceImpl<CourseAuditMapper, Cours
 
     @Autowired
     private SnowFlakeId snowFlakeId;
+
+    @Override
+    public CourseAuditBO getCourseAudit(CourseAuditDTO courseAuditDTO) {
+        CourseAuditBO courseAuditBO = this.getCourseAuditById(courseAuditDTO);
+
+        CourseIntroduceAuditBO courseIntroduceAuditBO = courseIntroduceAuditService
+                .getCourseIntroduceAuditById(new CourseIntroduceAuditDTO()
+                        .setId(courseAuditBO.getIntroduceId()));
+
+        return courseAuditBO.setIntroduce(courseIntroduceAuditBO.getIntroduce());
+    }
 
     @Override
     public PageResult<CourseAuditBO> listCourseAuditByPage(ListCourseAuditBTO listCourseAuditBTO) {
@@ -106,9 +119,9 @@ public class CourseAuditServiceImpl extends ServiceImpl<CourseAuditMapper, Cours
 
     @Override
     @Transactional
-    public CourseAuditBO insertCourseAudit(InsertCourseAuditDTO insertCourseAuditDTO) {
+    public CourseAuditBO insertCourseAudit(CourseAuditDTO courseAuditDTO) {
         // 如果课程收费，价格不能为空
-        if (ObjectUtil.equal(insertCourseAuditDTO.getIsFree(),"0") && insertCourseAuditDTO.getCourseOriginal() == null){
+        if (ObjectUtil.equal(courseAuditDTO.getIsFree(),0) && courseAuditDTO.getCourseOriginal() == null){
             throw new BaseException(CourseAuditEnum.INSERT_ERROR);
         }
 
@@ -116,8 +129,8 @@ public class CourseAuditServiceImpl extends ServiceImpl<CourseAuditMapper, Cours
         CourseIntroduceAuditBO courseIntroduceAuditBO =
                 courseIntroduceAuditService.insertCourseIntroduceAudit(
                         new CourseIntroduceAuditDTO()
-                                .setIntroduce(insertCourseAuditDTO.getIntroduce()));
-        CourseAudit courseAudit = CourseAuditMapStruct.INSTANCE.convertBTO2D(insertCourseAuditDTO);
+                                .setIntroduce(courseAuditDTO.getIntroduce()));
+        CourseAudit courseAudit = CourseAuditMapStruct.INSTANCE.convertBTO2D(courseAuditDTO);
 
         if (ObjectUtil.equal(courseAudit.getIsFree(),1)){
             courseAudit.setCourseOriginal(BigDecimal.valueOf(0));
@@ -129,14 +142,8 @@ public class CourseAuditServiceImpl extends ServiceImpl<CourseAuditMapper, Cours
 
         courseAudit
                 .setId(id)
-                .setGmtCreate(LocalDateTime.now())
-                .setGmtModified(LocalDateTime.now())
-                .setStatusId(RowStatus.ENABLE)
-                .setSort(1)
-                .setAuditStatus(0)
                 .setIntroduceId(courseIntroduceAuditBO.getId())
-                .setCourseDiscount(courseAudit.getCourseOriginal())
-                .setIsPutaway(1);
+                .setCourseDiscount(courseAudit.getCourseOriginal());
 
         //插入
         boolean save = this.save(courseAudit);
@@ -148,12 +155,68 @@ public class CourseAuditServiceImpl extends ServiceImpl<CourseAuditMapper, Cours
         return CourseAuditMapStruct.INSTANCE.convertD2B(courseAudit);
     }
 
+
+
+    @Override
+    @Transactional
+    public Boolean updateCourseAudit(CourseAuditDTO courseAuditDTO) {
+
+        // 如果课程收费，价格不能为空
+        if (ObjectUtil.equal(courseAuditDTO.getIsFree(),0) && courseAuditDTO.getCourseOriginal() == null){
+            throw new BaseException(CourseAuditEnum.UPDATE_ERROR);
+        }
+
+        //查询课程 和 参数 lecturerUserNo 是否一致
+        CourseAuditBO courseAuditBO = this.getCourseAuditById(
+                new CourseAuditDTO().setId(courseAuditDTO.getId()));
+
+        if (!ObjectUtil.equal(courseAuditBO.getLecturerUserNo(),courseAuditDTO.getLecturerUserNo())){
+            throw new BaseException(CourseAuditEnum.UPDATE_ERROR);
+        }
+
+        //更新描述
+        courseIntroduceAuditService.updateCourseIntroduceAudit(
+                new CourseIntroduceAuditDTO()
+                        .setId(courseAuditBO.getIntroduceId())
+                        .setIntroduce(courseAuditDTO.getIntroduce()));
+
+        if (ObjectUtil.equal(courseAuditDTO.getIsFree(),1)){
+            courseAuditDTO.setCourseOriginal(String.valueOf(0));
+        }
+
+        if (courseAuditDTO.getCategoryId1() == null) {
+            courseAuditDTO.setCategoryId1(0L);
+        }
+        if (courseAuditDTO.getCategoryId2() == null) {
+            courseAuditDTO.setCategoryId2(0L);
+        }
+        if (courseAuditDTO.getCategoryId3() == null) {
+            courseAuditDTO.setCategoryId3(0L);
+        }
+
+        courseAuditDTO
+                .setGmtModified(LocalDateTime.now())
+                .setAuditStatus(0)
+                .setCourseDiscount(new BigDecimal(courseAuditDTO.getCourseOriginal()));
+
+        log.info(courseAuditDTO.toString());
+
+        //更新
+        boolean update = this.updateCourseAuditById(courseAuditDTO);
+
+        if (!update){
+            throw new BaseException(CourseAuditEnum.UPDATE_ERROR);
+        }
+
+        return true;
+    }
+
     @Override
     public CourseAuditBO getCourseAuditById(CourseAuditDTO courseAuditDTO) {
         LambdaQueryWrapper<CourseAudit> wrapper = new QueryWrapper<CourseAudit>()
                 .lambda()
                 .eq(CourseAudit::getStatusId, RowStatus.ENABLE)
-                .eq(CourseAudit::getId, Long.valueOf(courseAuditDTO.getId()));
+                .eq(CourseAudit::getId, courseAuditDTO.getId());
 
         CourseAudit courseAudit = this.getOne(wrapper);
         if (courseAudit == null){
@@ -164,121 +227,21 @@ public class CourseAuditServiceImpl extends ServiceImpl<CourseAuditMapper, Cours
     }
 
     @Override
-    public boolean updateCourseAudit(CourseAuditDTO courseAuditDTO) {
+    public boolean updateCourseAuditById(CourseAuditDTO courseAuditDTO) {
 
         LambdaUpdateWrapper<CourseAudit> wrapper = new UpdateWrapper<CourseAudit>()
                 .lambda()
                 .eq(CourseAudit::getStatusId, RowStatus.ENABLE)
-                .eq(CourseAudit::getId, Long.valueOf(courseAuditDTO.getId()))
-                .set(CourseAudit::getAuditStatus, courseAuditDTO.getAuditStatus());
+                .eq(CourseAudit::getId, courseAuditDTO.getId());
 
-        boolean update = this.update(wrapper);
+        CourseAudit courseAudit =
+                CourseAuditMapStruct.INSTANCE.convertBTO2D(courseAuditDTO);
+
+
+        boolean update = this.update(courseAudit, wrapper);
         if (!update){
             throw new BaseException(CourseAuditEnum.GET_ERROR);
         }
         return true;
-    }
-
-    @Override
-    public boolean updateCourseAuditById(CourseAuditDTO courseAuditDTO) {
-
-        CourseAudit courseAudit = CourseAuditMapStruct.INSTANCE.convertBTO2D(courseAuditDTO);
-
-        boolean update = this.updateById(courseAudit);
-        if (!update){
-            throw new BaseException(CourseAuditEnum.UPDATE_ERROR);
-        }
-
-        return true;
-    }
-
-    @Override
-    @Transactional
-    public Boolean updateCourseAudit(InsertCourseAuditDTO insertCourseAuditDTO) {
-
-        // 如果课程收费，价格不能为空
-        if (ObjectUtil.equal(insertCourseAuditDTO.getIsFree(),"0") && insertCourseAuditDTO.getCourseOriginal() == null){
-            throw new BaseException(CourseAuditEnum.UPDATE_ERROR);
-        }
-
-        //查询课程 和 参数 lecturerUserNo 是否一致
-        CourseAuditBO courseAuditBO = this.getCourseAuditById(
-                new CourseAuditDTO().setId(insertCourseAuditDTO.getId()));
-
-        if (!ObjectUtil.equal(courseAuditBO.getLecturerUserNo(),insertCourseAuditDTO.getLecturerUserNo())){
-            throw new BaseException(CourseAuditEnum.UPDATE_ERROR);
-        }
-
-        //更新描述
-        courseIntroduceAuditService.updateCourseIntroduceAudit(
-                new CourseIntroduceAuditDTO()
-                        .setId(String.valueOf(courseAuditBO.getIntroduceId()))
-                        .setIntroduce(insertCourseAuditDTO.getIntroduce()));
-
-        CourseAudit courseAudit = CourseAuditMapStruct.INSTANCE.convertBTO2D(insertCourseAuditDTO);
-
-        if (ObjectUtil.equal(courseAudit.getIsFree(),1)){
-            courseAudit.setCourseOriginal(BigDecimal.valueOf(0));
-        }
-
-        if (insertCourseAuditDTO.getCategoryId1() == null) {
-            courseAudit.setCategoryId1(0L);
-        }
-        if (insertCourseAuditDTO.getCategoryId2() == null) {
-            courseAudit.setCategoryId2(0L);
-        }
-        if (insertCourseAuditDTO.getCategoryId3() == null) {
-            courseAudit.setCategoryId3(0L);
-        }
-
-        courseAudit
-                .setGmtModified(LocalDateTime.now())
-                .setAuditStatus(0)
-                .setCourseDiscount(courseAudit.getCourseOriginal());
-
-        log.info(courseAudit.toString());
-
-        //更新
-        boolean update = this.updateById(courseAudit);
-
-        if (!update){
-            throw new BaseException(CourseAuditEnum.UPDATE_ERROR);
-        }
-
-        return true;
-    }
-
-    @Override
-    public Boolean updateCourseAudit(CourseAuditPutawayDTO courseAuditPutawayDTO) {
-        //查询课程 和 参数 lecturerUserNo 是否一致
-        CourseAuditBO courseAuditBO = this.getCourseAuditById(
-                new CourseAuditDTO().setId(courseAuditPutawayDTO.getId()));
-
-        if (!ObjectUtil.equal(courseAuditBO.getLecturerUserNo(),courseAuditPutawayDTO.getLecturerUserNo())){
-            throw new BaseException(CourseAuditEnum.UPDATE_ERROR);
-        }
-
-        CourseAudit courseAudit = new CourseAudit()
-                .setId(Long.valueOf(courseAuditPutawayDTO.getId()))
-                .setIsPutaway(Integer.valueOf(courseAuditPutawayDTO.getIsPutaway()));
-
-        //更新
-        boolean update = this.updateById(courseAudit);
-        if (!update){
-            throw new BaseException(CourseAuditEnum.UPDATE_ERROR);
-        }
-
-        return true;
-    }
-
-    @Override
-    public CourseAuditBO getCourseAudit(CourseAuditDTO courseAuditDTO) {
-        CourseAuditBO courseAuditBO = this.getCourseAuditById(courseAuditDTO);
-
-        CourseIntroduceAuditBO courseIntroduceAuditBO = courseIntroduceAuditService
-                .getCourseIntroduceAuditById(new CourseIntroduceAuditDTO().setId(
-                        String.valueOf(courseAuditBO.getIntroduceId())));
-
-        return courseAuditBO.setIntroduce(courseIntroduceAuditBO.getIntroduce());
     }
 }

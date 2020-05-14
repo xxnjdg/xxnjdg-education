@@ -28,10 +28,10 @@ public interface CourseChapterAuditService extends IService<CourseChapterAudit> 
 
     /**
      * 插入 CourseChapterAudit
-     * @param insertCourseChapterAuditDTO
+     * @param courseChapterAuditDTO
      * @return
      */
-    CourseChapterAuditBO insertCourseChapterAudit(InsertCourseChapterAuditDTO insertCourseChapterAuditDTO);
+    CourseChapterAuditBO insertCourseChapterAudit(CourseChapterAuditDTO courseChapterAuditDTO);
 
     /**
      * 更新 CourseChapterAudit

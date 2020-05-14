@@ -5,6 +5,8 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import io.xxnjdg.notp.course.object.business.CourseAuditBO;
 import io.xxnjdg.notp.course.object.business.CourseChapterAuditBO;
 import io.xxnjdg.notp.course.object.business.CourseChapterPeriodAuditBO;
@@ -18,6 +20,7 @@ import io.xxnjdg.notp.course.service.CourseChapterAuditService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.xxnjdg.notp.course.service.CourseChapterPeriodAuditService;
 import io.xxnjdg.notp.utils.config.SnowFlakeId;
+import io.xxnjdg.notp.utils.constant.AuditStatus;
 import io.xxnjdg.notp.utils.constant.RowStatus;
 import io.xxnjdg.notp.utils.exception.BaseException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,15 +81,18 @@ public class CourseChapterAuditServiceImpl extends ServiceImpl<CourseChapterAudi
 
     @Override
     @Transactional
-    public CourseChapterAuditBO insertCourseChapterAudit(InsertCourseChapterAuditDTO insertCourseChapterAuditDTO) {
+    public CourseChapterAuditBO insertCourseChapterAudit(CourseChapterAuditDTO courseChapterAuditDTO) {
+        //构造 courseAuditDTO
         CourseAuditDTO courseAuditDTO = new CourseAuditDTO()
-                .setId(insertCourseChapterAuditDTO.getCourseId())
-                .setAuditStatus(0);
+                .setId(courseChapterAuditDTO.getCourseId())
+                .setAuditStatus(AuditStatus.PENDING_APPROVAL);
 
+        //查询 CourseAudit
         CourseAuditBO courseAuditBO = courseAuditService
                 .getCourseAuditById(courseAuditDTO);
 
-        if (!ObjectUtil.equal(courseAuditBO.getLecturerUserNo(),insertCourseChapterAuditDTO.getUserNo())){
+        //确保有权限修改
+        if (!ObjectUtil.equal(courseAuditBO.getLecturerUserNo(),courseChapterAuditDTO.getUserNo())){
             throw new BaseException(CourseChapterAuditEnum.INSERT_ERROR);
         }
 
@@ -94,20 +100,23 @@ public class CourseChapterAuditServiceImpl extends ServiceImpl<CourseChapterAudi
         Snowflake snowflake = IdUtil.createSnowflake(snowFlakeId.getWorkerId(), snowFlakeId.getDataCenterId());
         long id = snowflake.nextId();
 
-        CourseChapterAudit courseChapterAudit = new CourseChapterAudit()
-                .setId(id)
-                .setSort(new Integer(insertCourseChapterAuditDTO.getSort()))
-                .setAuditStatus(0)
-                .setCourseId(new Long(insertCourseChapterAuditDTO.getCourseId()))
-                .setChapterName(insertCourseChapterAuditDTO.getChapterName())
-                .setIsFree(new Integer(insertCourseChapterAuditDTO.getIsFree()));
+        //dto -> do
+        CourseChapterAudit courseChapterAudit =
+                CourseChapterAuditMapStruct.INSTANCE.convertDTO2D(courseChapterAuditDTO);
 
+        //构造剩余字段
+        courseChapterAudit
+                .setId(id)
+                .setAuditStatus(AuditStatus.PENDING_APPROVAL);
+
+        //插入
         boolean save = this.save(courseChapterAudit);
         if (!save){
             throw new BaseException(CourseChapterAuditEnum.INSERT_ERROR);
         }
 
-        courseAuditService.updateCourseAudit(courseAuditDTO);
+        //同时更新 CourseAudit AuditStatus 为0
+        courseAuditService.updateCourseAuditById(courseAuditDTO);
 
         return CourseChapterAuditMapStruct.INSTANCE.convertD2B(courseChapterAudit);
     }
@@ -115,17 +124,20 @@ public class CourseChapterAuditServiceImpl extends ServiceImpl<CourseChapterAudi
     @Override
     @Transactional
     public Boolean updateCourseChapterAudit(CourseChapterAuditDTO courseChapterAuditDTO) {
-
-        Long value = Long.valueOf(courseChapterAuditDTO.getId());
-        Integer isFree = Integer.valueOf(courseChapterAuditDTO.getIsFree());
-
+        //查询 CourseChapterAudit
         CourseChapterAuditBO one = this.getCourseChapterAuditById(courseChapterAuditDTO);
 
-        //查询 CourseAudit
-        String id = String.valueOf(one.getCourseId());
-        CourseAuditBO courseAuditBO = courseAuditService.getCourseAuditById(
-                new CourseAuditDTO().setId(id));
+        //
+        Long courseId = one.getCourseId();
 
+        CourseAuditDTO courseAuditDTO = new CourseAuditDTO()
+                .setId(courseId)
+                .setAuditStatus(AuditStatus.PENDING_APPROVAL);
+
+        //查询 CourseAudit
+        CourseAuditBO courseAuditBO = courseAuditService.getCourseAuditById(courseAuditDTO);
+
+        //确保有权限修改
         if (!ObjectUtil.equal(courseAuditBO.getLecturerUserNo(),courseChapterAuditDTO.getUserNo())){
             throw new BaseException(CourseChapterAuditEnum.UPDATE_ERROR);
         }
@@ -134,31 +146,27 @@ public class CourseChapterAuditServiceImpl extends ServiceImpl<CourseChapterAudi
                 .setGmtModified(LocalDateTime.now())
                 .setAuditStatus(0);
 
-//        CourseChapterAudit courseChapterAudit = new CourseChapterAudit()
-//                .setId(value)
-//                .setIsFree(isFree)
-//                .setChapterName(insertCourseChapterAuditDTO.getChapterName())
-//                .setGmtModified(LocalDateTime.now())
-//                .setAuditStatus(0);
-
-//        boolean update = this.updateById(courseChapterAudit);
-//        if (!update){
-//            throw new BaseException(CourseChapterAuditEnum.UPDATE_ERROR);
-//        }
-
+        //更新自己
         this.updateCourseChapterAuditById(courseChapterAuditDTO);
 
-        courseAuditService.updateCourseAudit(new CourseAuditDTO().setId(id).setAuditStatus(0));
+        //同时更新 CourseAudit AuditStatus 为0
+        courseAuditService.updateCourseAuditById(courseAuditDTO);
 
         return true;
     }
 
     @Override
     public Boolean updateCourseChapterAuditById(CourseChapterAuditDTO courseChapterAuditDTO) {
+
+        LambdaUpdateWrapper<CourseChapterAudit> wrapper = new UpdateWrapper<CourseChapterAudit>()
+                .lambda()
+                .eq(CourseChapterAudit::getStatusId, RowStatus.ENABLE)
+                .eq(CourseChapterAudit::getId, courseChapterAuditDTO.getId());
+
         CourseChapterAudit courseChapterAudit =
                 CourseChapterAuditMapStruct.INSTANCE.convertDTO2D(courseChapterAuditDTO);
 
-        boolean update = this.updateById(courseChapterAudit);
+        boolean update = this.update(courseChapterAudit,wrapper);
         if (!update){
             throw new BaseException(CourseChapterAuditEnum.UPDATE_ERROR);
         }
@@ -168,7 +176,7 @@ public class CourseChapterAuditServiceImpl extends ServiceImpl<CourseChapterAudi
 
     @Override
     public CourseChapterAuditBO getCourseChapterAuditById(CourseChapterAuditDTO courseChapterAuditDTO) {
-        Long value = Long.valueOf(courseChapterAuditDTO.getId());
+        Long value = courseChapterAuditDTO.getId();
 
         LambdaQueryWrapper<CourseChapterAudit> wrapper = new QueryWrapper<CourseChapterAudit>()
                 .lambda()

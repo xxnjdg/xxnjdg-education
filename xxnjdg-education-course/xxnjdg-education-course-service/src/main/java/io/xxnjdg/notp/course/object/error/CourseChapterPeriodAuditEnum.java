@@ -21,6 +21,11 @@ public enum CourseChapterPeriodAuditEnum implements BaseResponse {
     /**
      * 课程查询章节异常，请联系管理员
      */
+    GET_LIST_ERROR(400, "课程查询课时异常，请联系管理员"),
+
+    /**
+     * 课程查询章节异常，请联系管理员
+     */
     UPDATE_ERROR(400, "课程更新课时异常，请联系管理员"),
 
     /**

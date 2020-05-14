@@ -6,6 +6,8 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import io.xxnjdg.notp.course.object.business.CourseAuditBO;
 import io.xxnjdg.notp.course.object.business.CourseChapterAuditBO;
 import io.xxnjdg.notp.course.object.business.CourseChapterPeriodAuditBO;
@@ -19,13 +21,16 @@ import io.xxnjdg.notp.course.service.CourseChapterAuditService;
 import io.xxnjdg.notp.course.service.CourseChapterPeriodAuditService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.xxnjdg.notp.utils.config.SnowFlakeId;
+import io.xxnjdg.notp.utils.constant.AuditStatus;
 import io.xxnjdg.notp.utils.constant.RowStatus;
 import io.xxnjdg.notp.utils.exception.BaseException;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -56,16 +61,17 @@ public class CourseChapterPeriodAuditServiceImpl extends ServiceImpl<CourseChapt
                 .lambda()
                 .eq(CourseChapterPeriodAudit::getChapterId, new Long(listCourseChapterPeriodAuditBTO.getChapterId()))
                 .eq(CourseChapterPeriodAudit::getStatusId, RowStatus.ENABLE)
-                .orderByAsc(CourseChapterPeriodAudit::getSort,CourseChapterPeriodAudit::getId);
+                .orderByAsc(CourseChapterPeriodAudit::getSort)
+                .orderByAsc(CourseChapterPeriodAudit::getId);
 
         return CourseChapterPeriodAuditMapStruct.INSTANCE.convertD2B(this.list(wrapper));
     }
 
     @Override
     @Transactional
-    public CourseChapterPeriodAuditBO insertCourseChapterPeriodAudit(CourseChapterPeriodAuditBTO courseChapterPeriodAuditBTO) {
+    public Boolean insertCourseChapterPeriodAudit(CourseChapterPeriodAuditBTO courseChapterPeriodAuditBTO) {
 
-        String chapterId = courseChapterPeriodAuditBTO.getChapterId();
+        Long chapterId = courseChapterPeriodAuditBTO.getChapterId();
 
         CourseChapterAuditDTO courseChapterAuditDTO =
                 new CourseChapterAuditDTO().setId(chapterId);
@@ -75,46 +81,133 @@ public class CourseChapterPeriodAuditServiceImpl extends ServiceImpl<CourseChapt
                 .getCourseChapterAuditById(courseChapterAuditDTO);
 
         //查询 CourseAudit
-        String id = String.valueOf(courseChapterAuditBO.getCourseId());
-        CourseAuditDTO courseAuditDTO = new CourseAuditDTO().setId(id);
+        Long courseId = courseChapterAuditBO.getCourseId();
+        CourseAuditDTO courseAuditDTO = new CourseAuditDTO().setId(courseId);
         CourseAuditBO courseAuditBO = courseAuditService.getCourseAuditById(courseAuditDTO);
 
         if (!ObjectUtil.equal(courseAuditBO.getLecturerUserNo(),courseChapterPeriodAuditBTO.getUserNo())){
             throw new BaseException(CourseChapterPeriodAuditEnum.UPDATE_ERROR);
         }
 
-        //设置
+        //生成主键id
+        Snowflake snowflake = IdUtil.createSnowflake(snowFlakeId.getWorkerId(), snowFlakeId.getDataCenterId());
+        long id = snowflake.nextId();
+
+        //BTO -> DO
         CourseChapterPeriodAudit courseChapterPeriodAudit =
                 CourseChapterPeriodAuditMapStruct.INSTANCE.convertBTO2D(courseChapterPeriodAuditBTO);
 
+        //设置 setIsDoc
         if (StrUtil.isNotBlank(courseChapterPeriodAudit.getDocUrl())){
             courseChapterPeriodAudit.setIsDoc(1);
         }
 
-        //生成主键id
-        Snowflake snowflake = IdUtil.createSnowflake(snowFlakeId.getWorkerId(), snowFlakeId.getDataCenterId());
-        long cid = snowflake.nextId();
-
+        //设置 主键 课程id 待审核状态
         courseChapterPeriodAudit
-                .setId(cid)
-                .setCourseId(courseChapterAuditBO.getCourseId())
-                .setAuditStatus(0);
+                .setId(id)
+                .setCourseId(courseId)
+                .setAuditStatus(AuditStatus.PENDING_APPROVAL);
 
-        //更新
+        //插入
         boolean save = this.save(courseChapterPeriodAudit);
         if (!save){
             throw new BaseException(CourseChapterPeriodAuditEnum.UPDATE_ERROR);
         }
 
+        //更新 courseChapterAudit 待审核状态
         courseChapterAuditDTO
-                .setAuditStatus(0)
+                .setAuditStatus(AuditStatus.PENDING_APPROVAL)
                 .setGmtModified(LocalDateTime.now());
 
         courseChapterAuditService.updateCourseChapterAuditById(courseChapterAuditDTO);
 
-        courseAuditDTO.setAuditStatus(0);
+        //更新 courseAudit 待审核状态
+        courseAuditDTO
+                .setGmtModified(LocalDateTime.now())
+                .setAuditStatus(AuditStatus.PENDING_APPROVAL);
+
         courseAuditService.updateCourseAuditById(courseAuditDTO);
 
-        return null;
+        return true;
+    }
+
+    @Override
+    @Transactional
+    public Boolean updateCourseChapterPeriodAudit(CourseChapterPeriodAuditBTO courseChapterPeriodAuditBTO) {
+
+        //查询自己
+        CourseChapterPeriodAuditBO courseChapterPeriodAuditBO =
+                this.getCourseChapterPeriodAuditById(courseChapterPeriodAuditBTO);
+
+        //查询课程
+        CourseAuditDTO courseAuditDTO = new CourseAuditDTO()
+                .setId(courseChapterPeriodAuditBO.getCourseId())
+                .setAuditStatus(AuditStatus.PENDING_APPROVAL);
+        CourseAuditBO courseAuditBO = courseAuditService.getCourseAuditById(courseAuditDTO);
+
+        //判断是否有权限
+        if (!ObjectUtil.equal(courseAuditBO.getLecturerUserNo(),courseChapterPeriodAuditBTO.getUserNo())){
+            throw new BaseException(CourseChapterPeriodAuditEnum.UPDATE_ERROR);
+        }
+
+        if (StrUtil.isNotBlank(courseChapterPeriodAuditBTO.getDocUrl())){
+            courseChapterPeriodAuditBTO.setIsDoc(1);
+        }else{
+            courseChapterPeriodAuditBTO
+                    .setDocUrl(null)
+                    .setDocName(null)
+                    .setIsDoc(0);
+        }
+
+        //更新
+        this.updateCourseChapterPeriodAuditById(courseChapterPeriodAuditBTO);
+
+        //更新 CourseChapterAudit
+        CourseChapterAuditDTO courseChapterAuditDTO = new CourseChapterAuditDTO()
+                .setId(courseChapterPeriodAuditBO.getChapterId())
+                .setAuditStatus(AuditStatus.PENDING_APPROVAL);
+
+        courseChapterAuditService.updateCourseChapterAuditById(courseChapterAuditDTO);
+
+        //更新 CourseAudit
+        courseAuditService.updateCourseAuditById(courseAuditDTO);
+
+        return true;
+    }
+
+    @Override
+    public CourseChapterPeriodAuditBO getCourseChapterPeriodAuditById(CourseChapterPeriodAuditBTO courseChapterPeriodAuditBTO) {
+
+        LambdaQueryWrapper<CourseChapterPeriodAudit> wrapper = new QueryWrapper<CourseChapterPeriodAudit>()
+                .lambda()
+                .eq(CourseChapterPeriodAudit::getId, courseChapterPeriodAuditBTO.getId())
+                .eq(CourseChapterPeriodAudit::getStatusId, RowStatus.ENABLE);
+
+        CourseChapterPeriodAudit one = this.getOne(wrapper);
+        if (one == null){
+            throw new BaseException(CourseChapterPeriodAuditEnum.GET_ERROR);
+        }
+
+        return CourseChapterPeriodAuditMapStruct.INSTANCE.convertD2B(one);
+    }
+
+    @Override
+    public Boolean updateCourseChapterPeriodAuditById(CourseChapterPeriodAuditBTO courseChapterPeriodAuditBTO) {
+
+        LambdaUpdateWrapper<CourseChapterPeriodAudit> wrapper = new UpdateWrapper<CourseChapterPeriodAudit>()
+                .lambda()
+                .eq(CourseChapterPeriodAudit::getId, courseChapterPeriodAuditBTO.getId())
+                .eq(CourseChapterPeriodAudit::getStatusId, RowStatus.ENABLE);
+
+        CourseChapterPeriodAudit courseChapterPeriodAudit =
+                CourseChapterPeriodAuditMapStruct.INSTANCE.convertBTO2D(courseChapterPeriodAuditBTO);
+
+        boolean update = this.update(courseChapterPeriodAudit, wrapper);
+
+        if (!update){
+            throw new BaseException(CourseChapterPeriodAuditEnum.UPDATE_ERROR);
+        }
+
+        return true;
     }
 }

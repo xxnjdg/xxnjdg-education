@@ -27,6 +27,13 @@ public interface CourseChapterPeriodAuditMapStruct {
 
     /**
      * DO -> BO
+     * @param courseChapterPeriodAudit
+     * @return
+     */
+    CourseChapterPeriodAuditBO convertD2B(CourseChapterPeriodAudit courseChapterPeriodAudit);
+
+    /**
+     * DO -> BO
      * @param courseChapterPeriodAudits
      * @return
      */

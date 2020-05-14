@@ -3,6 +3,7 @@ package io.xxnjdg.notp.utils.exception;
 import io.xxnjdg.notp.utils.interfaces.BaseResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
@@ -13,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper=true)
 public class BaseException extends RuntimeException  {
 
     /**
