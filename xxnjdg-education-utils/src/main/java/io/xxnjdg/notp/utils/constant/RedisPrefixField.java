@@ -8,4 +8,6 @@ package io.xxnjdg.notp.utils.constant;
 public interface RedisPrefixField {
 
     String VERIFY_PREFIX = "Verify_";
+    String AUTHORITY_PREFIX = "Authority_";
+    String LOGIN_PREFIX = "Login_";
 }

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @version 1.0
  * @date 20-4-25 下午9:27
  */
-@FeignClient("xxnjdg-system-service")
+@FeignClient(name = "xxnjdg-system-service",contextId = "SysControllerApi")
 public interface SysControllerApi {
 
     /**

@@ -1,7 +1,11 @@
 package io.xxnjdg.notp.system.service;
 
+import io.xxnjdg.notp.system.object.business.SysMenuBO;
+import io.xxnjdg.notp.system.object.data.transfer.SysMenuDTO;
 import io.xxnjdg.notp.system.object.persistent.SysMenu;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -12,5 +16,12 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2020-04-16
  */
 public interface SysMenuService extends IService<SysMenu> {
+
+    /**
+     * ids 查询 SysMenu 列表
+     * @param sysMenuDTO
+     * @return
+     */
+    List<SysMenuBO> listSysMenuByIds(SysMenuDTO sysMenuDTO);
 
 }

@@ -1,5 +1,6 @@
 package io.xxnjdg.notp.user.service;
 
+import io.xxnjdg.notp.user.object.data.transfer.UserLogLoginDTO;
 import io.xxnjdg.notp.user.object.persistent.UserLogLogin;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -12,5 +13,12 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2020-04-20
  */
 public interface UserLogLoginService extends IService<UserLogLogin> {
+
+    /**
+     * 插入
+     * @param userLogLoginDTO
+     * @return
+     */
+    Boolean insertUserLogLogin(UserLogLoginDTO userLogLoginDTO);
 
 }

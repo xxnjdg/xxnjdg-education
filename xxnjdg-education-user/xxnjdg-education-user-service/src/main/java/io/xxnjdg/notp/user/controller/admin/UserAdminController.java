@@ -23,8 +23,8 @@ public class UserAdminController {
     private UserService userService;
 
     @PostMapping("/user/pc/api/user/login/password")
-    public ResponseResult<String> userLogin(@RequestBody @Validated UserLoginPasswordDTO userLoginPasswordDTO){
-        UserLoginVO userLoginVO = userService.postUserLoginByPassword(userLoginPasswordDTO);
-        return ResponseResult.success("sssss");
+    public ResponseResult userLogin(@RequestBody @Validated UserLoginPasswordDTO userLoginPasswordDTO){
+        UserLoginVO userLoginVO = userService.postUserLoginByPassword(userLoginPasswordDTO.setAdmin(true));
+        return ResponseResult.success(userLoginVO);
     }
 }

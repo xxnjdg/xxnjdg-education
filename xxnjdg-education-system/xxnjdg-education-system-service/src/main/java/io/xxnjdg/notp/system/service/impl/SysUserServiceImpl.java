@@ -3,25 +3,26 @@ package io.xxnjdg.notp.system.service.impl;
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import io.xxnjdg.notp.system.object.business.SysRoleBO;
-import io.xxnjdg.notp.system.object.business.SysRoleUserBO;
-import io.xxnjdg.notp.system.object.business.SysUserBO;
+import io.xxnjdg.notp.system.object.business.*;
+import io.xxnjdg.notp.system.object.convert.SysUserMapStruct;
+import io.xxnjdg.notp.system.object.data.transfer.SysMenuDTO;
+import io.xxnjdg.notp.system.object.data.transfer.SysMenuRoleDTO;
 import io.xxnjdg.notp.system.object.data.transfer.SysRoleDTO;
 import io.xxnjdg.notp.system.object.data.transfer.SysRoleUserDTO;
 import io.xxnjdg.notp.system.objects.error.SysUserEnum;
 import io.xxnjdg.notp.system.object.persistent.SysUser;
 import io.xxnjdg.notp.system.mapper.SysUserMapper;
 import io.xxnjdg.notp.system.objects.data.transfer.SysUserDTO;
-import io.xxnjdg.notp.system.service.SysRoleService;
-import io.xxnjdg.notp.system.service.SysRoleUserService;
-import io.xxnjdg.notp.system.service.SysUserService;
+import io.xxnjdg.notp.system.service.*;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.xxnjdg.notp.utils.constant.RowStatus;
 import io.xxnjdg.notp.utils.exception.BaseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -40,6 +41,12 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Autowired
     private SysRoleService sysRoleService;
+
+    @Autowired
+    private SysMenuRoleService sysMenuRoleService;
+
+    @Autowired
+    private SysMenuService sysMenuService;
 
     @Override
     public SysUserBO listMenuApiUrl(SysUserDTO sysUserDTO) {
@@ -64,16 +71,33 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             return null;
         }
 
-        //查询角色
-        List<Long> ids = sysRoleUserBOS.stream()
-                .map(SysRoleUserBO::getRoleId)
-                .collect(Collectors.toList());
+        //查询角色和菜单中间表
+        Set<Long> roleIds = sysRoleUserBOS.stream().map(SysRoleUserBO::getRoleId).collect(Collectors.toSet());
+        List<SysMenuRoleBO> sysMenuRoleBOS = sysMenuRoleService.listSysMenuRole(
+                new SysMenuRoleDTO().setRoleIds(roleIds));
 
-        List<SysRoleBO> sysRoleByIds = sysRoleService
-                .getSysRoleByIds(new SysRoleDTO().setIds(ids));
+        if (CollUtil.isEmpty(sysMenuRoleBOS)){
+            return null;
+        }
 
+        //查询菜单
+        Set<Long> meneIds = sysMenuRoleBOS.stream()
+                .map(SysMenuRoleBO::getMenuId)
+                .collect(Collectors.toSet());
 
+        List<SysMenuBO> sysMenuBOS =
+                sysMenuService.listSysMenuByIds(new SysMenuDTO().setIds(meneIds));
 
-        return null;
+        if (CollUtil.isEmpty(sysMenuBOS)){
+            return null;
+        }
+
+        ArrayList<String> list = new ArrayList<>();
+
+        sysMenuBOS.forEach(sysMenuBO -> list.add(sysMenuBO.getApiUrl()));
+
+        SysUserBO sysUserBO = SysUserMapStruct.INSTANCE.convertD2B(one);
+
+        return sysUserBO.setListMenuApiUrl(list);
     }
 }

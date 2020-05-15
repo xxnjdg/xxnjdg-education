@@ -1,15 +1,22 @@
 package io.xxnjdg.notp.user.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Snowflake;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.digest.DigestUtil;
+import com.alibaba.druid.support.json.JSONUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.xxnjdg.notp.system.apis.SysUserControllerApi;
+import io.xxnjdg.notp.system.objects.data.transfer.SysUserDTO;
+import io.xxnjdg.notp.system.objects.view.SysUserVO;
 import io.xxnjdg.notp.user.config.SnowFlakeId;
+import io.xxnjdg.notp.user.object.data.transfer.UserLogLoginDTO;
 import io.xxnjdg.notp.user.object.data.transfer.UserLoginPasswordDTO;
 import io.xxnjdg.notp.user.object.data.transfer.UserRegisterDTO;
 import io.xxnjdg.notp.user.object.error.PlatformEnum;
@@ -22,13 +29,16 @@ import io.xxnjdg.notp.user.object.persistent.UserExt;
 import io.xxnjdg.notp.user.object.view.UserLoginVO;
 import io.xxnjdg.notp.user.service.PlatformService;
 import io.xxnjdg.notp.user.service.UserExtService;
+import io.xxnjdg.notp.user.service.UserLogLoginService;
 import io.xxnjdg.notp.user.service.UserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import io.xxnjdg.notp.utils.constant.HttpStatus;
 import io.xxnjdg.notp.utils.constant.RedisPrefixField;
 import io.xxnjdg.notp.utils.constant.RowStatus;
 import io.xxnjdg.notp.utils.custom.utils.JWTUtil;
 import io.xxnjdg.notp.utils.custom.utils.NOUtil;
 import io.xxnjdg.notp.utils.exception.BaseException;
+import io.xxnjdg.notp.utils.response.ResponseResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +46,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
 
@@ -64,11 +75,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Autowired
     private UserExtService userExtService;
 
+    @Autowired
+    private UserLogLoginService userLogLoginService;
+
+    @Autowired
+    private SysUserControllerApi sysUserControllerApi;
+
     @Override
     public UserLoginVO postUserLoginByPassword(UserLoginPasswordDTO userLoginPasswordDTO) {
 
+        String clientId = userLoginPasswordDTO.getClientId();
+
         //判断平台是否存在
-        platformService.getPlatformByClientId(userLoginPasswordDTO.getClientId());
+        platformService.getPlatformByClientId(clientId);
 
         LambdaQueryWrapper<User> userQueryWrapper = new QueryWrapper<User>()
                 .lambda()
@@ -84,6 +103,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             throw new BaseException(UserEnum.USER_OR_PASSWORD_ERROR);
         }
 
+        Long userNo = user.getUserNo();
+
         //判断密码是否正确
         if (!ObjectUtil.equal(
                 DigestUtil.sha1Hex(user.getMobileSalt() + userLoginPasswordDTO.getPassword())
@@ -92,12 +113,35 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             throw new BaseException(UserEnum.USER_OR_PASSWORD_ERROR);
         }
 
-        String jwt = JWTUtil.create(user.getUserNo(), JWTUtil.DATE);
-        stringRedisTemplate.opsForValue().set(user.getUserNo().toString(),jwt,30, TimeUnit.MINUTES);
+        if (userLoginPasswordDTO.getAdmin()!=null && userLoginPasswordDTO.getAdmin()){
+            ResponseResult<SysUserVO> result = sysUserControllerApi
+                    .listMenuApiUrl(new SysUserDTO().setUserNo(userNo));
 
-        //创建 jwt 并返回
+            if (result==null ||
+                    !ObjectUtil.equal(result.getStatus(),HttpStatus.SUCCESS.getStatus()) ||
+                    result.getData() == null ||
+                    CollUtil.isEmpty(result.getData().getListMenuApiUrl())){
+                throw new BaseException(UserEnum.USER_OR_PASSWORD_ERROR);
+            }
+            String jsonString = JSONUtils.toJSONString(result.getData().getListMenuApiUrl());
+            stringRedisTemplate.opsForValue().set(RedisPrefixField.AUTHORITY_PREFIX+userNo,jsonString,30, TimeUnit.MINUTES);
+        }
+
+        //插入登录状态
+        UserLogLoginDTO userLogLoginDTO = new UserLogLoginDTO()
+                .setLoginStatus(1)
+                .setUserNo(userNo)
+                .setClientId(clientId);
+
+        userLogLoginService.insertUserLogLogin(userLogLoginDTO);
+
+        //生成jwt
+        String jwt = JWTUtil.create(userNo, JWTUtil.DATE);
+        stringRedisTemplate.opsForValue().set(RedisPrefixField.LOGIN_PREFIX+userNo.toString(),jwt,30, TimeUnit.MINUTES);
+
+        //返回
         return new UserLoginVO(
-                user.getUserNo(),
+                userNo,
                 user.getMobile(),
                 jwt
         );

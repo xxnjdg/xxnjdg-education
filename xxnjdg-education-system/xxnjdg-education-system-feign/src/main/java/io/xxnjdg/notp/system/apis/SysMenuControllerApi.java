@@ -7,7 +7,7 @@ import org.springframework.cloud.openfeign.FeignClient;
  * @version 1.0
  * @date 20-5-14 下午6:53
  */
-@FeignClient("xxnjdg-system-service")
+@FeignClient(name = "xxnjdg-system-service",contextId = "SysMenuControllerApi")
 public interface SysMenuControllerApi {
 
 }

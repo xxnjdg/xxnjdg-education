@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.xxnjdg.notp.gateway.error.ErrorStatus;
+import io.xxnjdg.notp.utils.constant.RedisPrefixField;
 import io.xxnjdg.notp.utils.custom.utils.JWTUtil;
 import io.xxnjdg.notp.utils.exception.BaseException;
 import lombok.extern.slf4j.Slf4j;
@@ -78,7 +79,8 @@ public class AuthGatewayFilterFactory extends AbstractGatewayFilterFactory<AuthG
 
                 String userNo = verify.getClaim("userNo").asString();
 
-                String jwt = stringRedisTemplate.opsForValue().get(userNo);
+                String key = RedisPrefixField.LOGIN_PREFIX+userNo;
+                String jwt = stringRedisTemplate.opsForValue().get(key);
                 //token 已过期
                 if (StrUtil.isBlank(jwt)) {
                     throw new BaseException(ErrorStatus.TOKEN_NULL);
@@ -90,7 +92,7 @@ public class AuthGatewayFilterFactory extends AbstractGatewayFilterFactory<AuthG
                     throw new BaseException(ErrorStatus.TOKEN_NULL);
                 }
 
-                Long expire = stringRedisTemplate.getExpire(userNo);
+                Long expire = stringRedisTemplate.getExpire(key);
 
                 //-2 建不存在 -1 不过期,让用户重新登陆
                 if (expire == null || expire < 0){
@@ -98,7 +100,7 @@ public class AuthGatewayFilterFactory extends AbstractGatewayFilterFactory<AuthG
                 }
 
                 if (10 * 60 > expire) {
-                    stringRedisTemplate.opsForValue().set(userNo,jwt,30, TimeUnit.MINUTES);
+                    stringRedisTemplate.opsForValue().set(key,jwt,30, TimeUnit.MINUTES);
                 }
 
                 // <6> 认证通过，将 userId 添加到 Header 中

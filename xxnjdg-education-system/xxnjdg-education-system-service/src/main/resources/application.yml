@@ -36,6 +36,9 @@ eureka:
       defaultZone: http://${info.eureka.host}:${info.eureka.port}/eureka
 mybatis-plus:
   mapper-locations: classpath:mybatis/*.xml
+  # 终端打印 sql
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 test:
   mybatis:
     plus:

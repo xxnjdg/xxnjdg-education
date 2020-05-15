@@ -3,7 +3,9 @@ package io.xxnjdg.notp.system.controller;
 
 import io.xxnjdg.notp.system.apis.SysUserControllerApi;
 import io.xxnjdg.notp.system.object.business.SysUserBO;
+import io.xxnjdg.notp.system.object.convert.SysUserMapStruct;
 import io.xxnjdg.notp.system.objects.data.transfer.SysUserDTO;
+import io.xxnjdg.notp.system.objects.view.SysUserVO;
 import io.xxnjdg.notp.system.service.SysUserService;
 import io.xxnjdg.notp.utils.response.ResponseResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,10 +30,10 @@ public class SysUserController implements SysUserControllerApi {
     private SysUserService sysUserService;
 
     @Override
-    public ResponseResult<List<String>> listMenuApiUrl(SysUserDTO sysUserDTO) {
+    public ResponseResult<SysUserVO> listMenuApiUrl(SysUserDTO sysUserDTO) {
         SysUserBO sysUserBO = sysUserService.listMenuApiUrl(sysUserDTO);
-
-        return ResponseResult.success();
+        SysUserVO sysUserVO = SysUserMapStruct.INSTANCE.convertB2V(sysUserBO);
+        return ResponseResult.success(sysUserVO);
     }
 }
 

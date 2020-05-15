@@ -1,6 +1,7 @@
 package io.xxnjdg.notp.system.apis;
 
 import io.xxnjdg.notp.system.objects.data.transfer.SysUserDTO;
+import io.xxnjdg.notp.system.objects.view.SysUserVO;
 import io.xxnjdg.notp.utils.response.ResponseResult;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.validation.annotation.Validated;
@@ -15,7 +16,7 @@ import java.util.List;
  * @version 1.0
  * @date 20-5-14 下午7:13
  */
-@FeignClient("xxnjdg-system-service")
+@FeignClient(name = "xxnjdg-system-service",contextId = "SysUserControllerApi")
 public interface SysUserControllerApi {
 
     /**
@@ -24,5 +25,5 @@ public interface SysUserControllerApi {
      * @return
      */
     @RequestMapping(value = "/feign/system/sysMenu/listForPage", method = RequestMethod.POST)
-    ResponseResult<List<String>> listMenuApiUrl(@RequestBody @Validated SysUserDTO sysUserDTO);
+    ResponseResult<SysUserVO> listMenuApiUrl(@RequestBody @Validated SysUserDTO sysUserDTO);
 }

@@ -5,6 +5,8 @@ import io.xxnjdg.notp.system.object.data.transfer.SysMenuRoleDTO;
 import io.xxnjdg.notp.system.object.persistent.SysMenuRole;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  * 菜单角色关联表 服务类
@@ -20,6 +22,6 @@ public interface SysMenuRoleService extends IService<SysMenuRole> {
      * @param sysMenuRoleDTO
      * @return
      */
-    SysMenuRoleBO listSysMenuRole(SysMenuRoleDTO sysMenuRoleDTO);
+    List<SysMenuRoleBO> listSysMenuRole(SysMenuRoleDTO sysMenuRoleDTO);
 
 }

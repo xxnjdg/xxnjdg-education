@@ -14,7 +14,7 @@ import reactor.core.publisher.Mono;
  * @version 1.0
  * @date 20-4-14 下午9:42
  */
-@Component
+//@Component
 @Slf4j
 public class globalFilter implements GlobalFilter, Ordered {
     @Override

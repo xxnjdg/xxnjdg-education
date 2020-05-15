@@ -1,4 +1,4 @@
-package io.xxnjdg.notp.system.object.data.transfer;
+package io.xxnjdg.notp.system.object.business;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -6,20 +6,16 @@ import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.List;
 
 /**
  * @author xxnjdg
  * @version 1.0
- * @date 20-5-14 下午10:34
+ * @date 2020/5/15 20:51
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class SysMenuRoleDTO implements Serializable {
-
-    private static final long serialVersionUID=1L;
+public class SysMenuBO {
 
     /**
      * 主键
@@ -47,18 +43,39 @@ public class SysMenuRoleDTO implements Serializable {
     private Integer sort;
 
     /**
-     * 菜单ID
+     * 父ID
      */
-    private Long menuId;
+    private Long parentId;
 
     /**
-     * 角色ID
+     * 菜单名称
      */
-    private Long roleId;
+    private String menuName;
 
     /**
-     * 角色ID 列表
+     * 路由路径
      */
-    private Collection<Long> roleIds;
+    private String menuUrl;
+
+    /**
+     * 接口URL
+     */
+    private String apiUrl;
+
+    /**
+     * 菜单图标
+     */
+    private String menuIcon;
+
+    /**
+     * 备注
+     */
+    private String remark;
+
+    /**
+     * 菜单类型(1：目录   2：菜单   3：按钮)
+     */
+    private Integer menuType;
+
 
 }

@@ -1,32 +1,26 @@
-package io.xxnjdg.notp.user.object.persistent;
+package io.xxnjdg.notp.user.object.data.transfer;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import java.time.LocalDateTime;
-import com.baomidou.mybatisplus.annotation.TableId;
-import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
+import java.time.LocalDateTime;
+
 /**
- * <p>
- * 用户错误登录日志
- * </p>
- *
  * @author xxnjdg
- * @since 2020-04-20
+ * @version 1.0
+ * @date 2020/5/16 1:03
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class UserLogLogin implements Serializable {
+public class UserLogLoginDTO implements Serializable {
 
-    private static final long serialVersionUID=1L;
-
+    private static final long serialVersionUID = 1434999078159648155L;
     /**
      * 主键
      */
-    @TableId(value = "id", type = IdType.INPUT)
     private Long id;
 
     /**
@@ -53,6 +47,5 @@ public class UserLogLogin implements Serializable {
      * 登录IP
      */
     private String loginIp;
-
 
 }

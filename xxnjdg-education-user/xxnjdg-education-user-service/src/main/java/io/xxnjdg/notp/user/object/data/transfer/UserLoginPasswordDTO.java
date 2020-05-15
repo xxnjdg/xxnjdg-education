@@ -3,6 +3,7 @@ package io.xxnjdg.notp.user.object.data.transfer;
 import io.xxnjdg.notp.utils.validator.annotations.IdentityUserPhoneAndEmail;
 import io.xxnjdg.notp.utils.constant.ValidationMessage;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Null;
@@ -15,6 +16,7 @@ import java.io.Serializable;
  * @date 20-4-20 上午1:53
  */
 @Data
+@Accessors(chain = true)
 public class UserLoginPasswordDTO implements Serializable {
 
     private static final long serialVersionUID = 3240318938500500995L;
