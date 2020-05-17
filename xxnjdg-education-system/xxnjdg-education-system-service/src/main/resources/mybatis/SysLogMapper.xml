@@ -19,5 +19,20 @@
     <sql id="Base_Column_List">
         id, gmt_create, user_no, real_name, ip, operation, method, path, content
     </sql>
+    <select id="listSysLogByPage" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"></include> from sys_log where
+        (select id from sys_log
+        <where>
+            <if test="realName != null">and real_name like CONCAT('%', #{realName}, '%') </if>
+            <if test="beginDate != null">and gmt_create >= #{beginDate}</if>
+            <if test="endDate != null">and #{endDate} >= gmt_create </if>
+        </where>
+        order by id desc limit #{offset},1
+        ) >= id
+        <if test="realName != null">and real_name like CONCAT('%', #{realName}, '%') </if>
+        <if test="beginDate != null">and gmt_create >= #{beginDate}</if>
+        <if test="endDate != null">and #{endDate} >= gmt_create </if>
+        order by id desc limit #{size}
+    </select>
 
 </mapper>

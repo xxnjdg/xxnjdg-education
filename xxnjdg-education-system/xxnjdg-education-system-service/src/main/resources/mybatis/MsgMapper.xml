@@ -23,5 +23,22 @@
     <sql id="Base_Column_List">
         id, gmt_create, gmt_modified, status_id, sort, msg_type, msg_title, msg_text, is_time_send, send_time, is_send, is_top, back_remark
     </sql>
+    <select id="listMsgByPage" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"></include> from msg where
+        (select id from msg
+        <where>
+            <if test="msgTitle != null">and msg_title like CONCAT('%', #{msgTitle}, '%') </if>
+            <if test="statusId != null">and status_id = #{statusId}</if>
+            <if test="isSend != null">and is_send = #{isSend}</if>
+            <if test="isTop != null">and is_top = #{isTop}</if>
+        </where>
+        order by id desc limit #{offset},1
+        ) >= id
+        <if test="msgTitle != null">and msg_title like CONCAT('%', #{msgTitle}, '%') </if>
+        <if test="statusId != null">and status_id = #{statusId}</if>
+        <if test="isSend != null">and is_send = #{isSend}</if>
+        <if test="isTop != null">and is_top = #{isTop}</if>
+        order by id desc limit #{size}
+    </select>
 
 </mapper>

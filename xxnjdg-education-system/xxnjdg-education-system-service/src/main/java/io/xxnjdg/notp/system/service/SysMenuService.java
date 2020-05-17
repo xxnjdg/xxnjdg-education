@@ -24,4 +24,17 @@ public interface SysMenuService extends IService<SysMenu> {
      */
     List<SysMenuBO> listSysMenuByIds(SysMenuDTO sysMenuDTO);
 
+    /**
+     * 查询 sysmenu 的 button 列表
+     * @param sysMenuDTO
+     * @return
+     */
+    List<SysMenuBO> listButton(SysMenuDTO sysMenuDTO);
+
+    /**
+     * 查询 sysmenu 的 目录和菜单 列表
+     * @param sysMenuDTO
+     * @return
+     */
+    List<SysMenuBO> listDirectoryAndMenu(SysMenuDTO sysMenuDTO);
 }

@@ -1,7 +1,6 @@
 package io.xxnjdg.notp.user.controller.admin;
 
 import io.xxnjdg.notp.user.object.data.transfer.UserLoginPasswordDTO;
-import io.xxnjdg.notp.user.object.data.transfer.UserRegisterDTO;
 import io.xxnjdg.notp.user.object.view.UserLoginVO;
 import io.xxnjdg.notp.user.service.UserService;
 import io.xxnjdg.notp.utils.response.ResponseResult;

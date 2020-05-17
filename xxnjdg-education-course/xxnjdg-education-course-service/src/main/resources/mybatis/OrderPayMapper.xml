@@ -4,18 +4,30 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="io.xxnjdg.notp.course.object.persistent.OrderPay">
-        <id column="id" property="id" />
-        <result column="gmt_create" property="gmtCreate" />
-        <result column="order_no" property="orderNo" />
-        <result column="serial_number" property="serialNumber" />
-        <result column="order_status" property="orderStatus" />
-        <result column="pay_type" property="payType" />
-        <result column="pay_time" property="payTime" />
+        <id column="id" property="id"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="order_no" property="orderNo"/>
+        <result column="serial_number" property="serialNumber"/>
+        <result column="order_status" property="orderStatus"/>
+        <result column="pay_type" property="payType"/>
+        <result column="pay_time" property="payTime"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id, gmt_create, order_no, serial_number, order_status, pay_type, pay_time
     </sql>
+
+    <select id="listOrderPayByPage" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"></include> from order_pay where
+        (select id from order_pay
+        <where>
+            <if test="orderNo != null">order_no = #{orderNo}</if>
+        </where>
+        order by id desc limit #{offset},1
+        ) >= id
+        <if test="orderNo != null">and order_no = #{orderNo}</if>
+        order by id desc limit #{size}
+    </select>
 
 </mapper>

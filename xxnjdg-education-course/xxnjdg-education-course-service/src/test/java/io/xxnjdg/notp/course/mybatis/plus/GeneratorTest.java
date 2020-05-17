@@ -61,8 +61,7 @@ public class GeneratorTest {
                 .setIdType(IdType.AUTO) // 主键策略
                 .setServiceName("%sService")  // 设置生成的service接口的名字的首字母是否为I
                 .setBaseResultMap(true)
-                .setBaseColumnList(true)
-                .setFileOverride(true);
+                .setBaseColumnList(true);
 
 
         //2. 数据源配置

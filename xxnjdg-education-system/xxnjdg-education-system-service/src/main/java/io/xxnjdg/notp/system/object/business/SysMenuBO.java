@@ -6,6 +6,7 @@ import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @author xxnjdg
@@ -16,6 +17,11 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 public class SysMenuBO {
+
+    /**
+     * 子节点
+     */
+    private List<SysMenuBO> children;
 
     /**
      * 主键

@@ -2,6 +2,9 @@ package io.xxnjdg.notp.course.mapper;
 
 import io.xxnjdg.notp.course.object.persistent.OrderPay;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,12 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface OrderPayMapper extends BaseMapper<OrderPay> {
 
+    /**
+     * 分页查询OrderPay列表
+     * @param orderNo
+     * @param offset
+     * @param size
+     * @return
+     */
+    List<OrderPay> listOrderPayByPage(@Param("orderNo") Long orderNo,@Param("offset") Integer offset, @Param("size") Integer size);
 }

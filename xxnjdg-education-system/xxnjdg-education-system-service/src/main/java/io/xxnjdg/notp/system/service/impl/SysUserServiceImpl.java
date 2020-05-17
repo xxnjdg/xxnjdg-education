@@ -52,20 +52,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     public SysUserBO listMenuApiUrl(SysUserDTO sysUserDTO) {
 
         //查询 SysUser
-        LambdaQueryWrapper<SysUser> wrapper = new QueryWrapper<SysUser>()
-                .lambda()
-                .eq(SysUser::getStatusId, RowStatus.ENABLE)
-                .eq(SysUser::getUserNo, sysUserDTO.getUserNo());
-
-        SysUser one = this.getOne(wrapper);
-
-        if (one == null){
-            throw new BaseException(SysUserEnum.GET_ERROR);
-        }
+        SysUserBO sysUserBO = this.getSysUserByUserNo(sysUserDTO);
 
         //查询用户和角色中间表
         List<SysRoleUserBO> sysRoleUserBOS = sysRoleUserService
-                .listSysRoleUser(new SysRoleUserDTO().setUserId(one.getId()));
+                .listSysRoleUser(new SysRoleUserDTO().setUserId(sysUserBO.getId()));
 
         if (CollUtil.isEmpty(sysRoleUserBOS)){
             return null;
@@ -96,8 +87,23 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
         sysMenuBOS.forEach(sysMenuBO -> list.add(sysMenuBO.getApiUrl()));
 
-        SysUserBO sysUserBO = SysUserMapStruct.INSTANCE.convertD2B(one);
-
         return sysUserBO.setListMenuApiUrl(list);
+    }
+
+    @Override
+    public SysUserBO getSysUserByUserNo(SysUserDTO sysUserDTO) {
+        //查询 SysUser
+        LambdaQueryWrapper<SysUser> wrapper = new QueryWrapper<SysUser>()
+                .lambda()
+                .eq(SysUser::getStatusId, RowStatus.ENABLE)
+                .eq(SysUser::getUserNo, sysUserDTO.getUserNo());
+
+        SysUser one = this.getOne(wrapper);
+
+        if (one == null){
+            throw new BaseException(SysUserEnum.GET_ERROR);
+        }
+
+        return SysUserMapStruct.INSTANCE.convertD2B(one);
     }
 }

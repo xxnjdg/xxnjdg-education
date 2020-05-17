@@ -21,4 +21,12 @@ public interface SysUserService extends IService<SysUser> {
      * @return
      */
     SysUserBO listMenuApiUrl(SysUserDTO sysUserDTO);
+
+
+    /**
+     * 使用UserNo查询
+     * @param sysUserDTO
+     * @return
+     */
+    SysUserBO getSysUserByUserNo(SysUserDTO sysUserDTO);
 }
