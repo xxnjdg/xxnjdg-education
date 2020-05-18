@@ -4,18 +4,23 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="io.xxnjdg.notp.system.object.persistent.MsgTemplate">
-        <id column="id" property="id" />
-        <result column="gmt_create" property="gmtCreate" />
-        <result column="gmt_modified" property="gmtModified" />
-        <result column="status_id" property="statusId" />
-        <result column="title" property="title" />
-        <result column="remark" property="remark" />
-        <result column="sort" property="sort" />
+        <id column="id" property="id"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modified" property="gmtModified"/>
+        <result column="status_id" property="statusId"/>
+        <result column="title" property="title"/>
+        <result column="remark" property="remark"/>
+        <result column="sort" property="sort"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id, gmt_create, gmt_modified, status_id, title, remark, sort
     </sql>
+    <select id="listMsgTemplateByPage" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"></include> from msg_template where
+        (select id from msg_template order by id desc limit #{offset},1) >= id
+        order by id desc limit #{size}
+    </select>
 
 </mapper>

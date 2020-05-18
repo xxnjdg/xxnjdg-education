@@ -16,6 +16,11 @@ public enum MsgEnum implements BaseResponse {
     /**
      * 错误请求
      */
+    GET_ERROR(400,"消息更新异常，请联系管理员"),
+
+    /**
+     * 错误请求
+     */
     UPDATE_ERROR(400,"消息更新异常，请联系管理员"),
 
     /**

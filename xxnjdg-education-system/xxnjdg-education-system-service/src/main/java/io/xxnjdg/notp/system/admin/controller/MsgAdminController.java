@@ -6,10 +6,7 @@ import io.xxnjdg.notp.system.admin.object.data.transfer.MsgDTO;
 import io.xxnjdg.notp.system.admin.service.MsgAdminService;
 import io.xxnjdg.notp.utils.response.PageResult;
 import io.xxnjdg.notp.utils.response.ResponseResult;
-import io.xxnjdg.notp.utils.validator.group.Delete;
-import io.xxnjdg.notp.utils.validator.group.Insert;
-import io.xxnjdg.notp.utils.validator.group.Page;
-import io.xxnjdg.notp.utils.validator.group.Update;
+import io.xxnjdg.notp.utils.validator.group.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,6 +46,12 @@ public class MsgAdminController {
     public ResponseResult updateMsg(@RequestBody @Validated(Update.class) MsgDTO msgDTO ){
         Boolean result = msgAdminService.updateMsg(msgDTO);
         return ResponseResult.success(result);
+    }
+
+    @PostMapping("/system/pc/msg/view")
+    public ResponseResult getMsg(@RequestBody @Validated(Get.class) MsgDTO msgDTO ){
+        MsgBO msgBO = msgAdminService.getMsg(msgDTO);
+        return ResponseResult.success(MsgMapStruct.INSTANCE.B2FV(msgBO));
     }
 
 }

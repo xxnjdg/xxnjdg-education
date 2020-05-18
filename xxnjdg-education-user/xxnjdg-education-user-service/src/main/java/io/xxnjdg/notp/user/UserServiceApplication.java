@@ -1,6 +1,7 @@
 package io.xxnjdg.notp.user;
 
 import io.xxnjdg.notp.utils.config.GeneralSwaggerConfig;
+import io.xxnjdg.notp.utils.config.SnowFlakeId;
 import io.xxnjdg.notp.utils.exception.HandlerException;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -16,7 +17,7 @@ import org.springframework.context.annotation.Import;
  */
 @SpringBootApplication
 @MapperScan(basePackages = {"io.xxnjdg.notp.user.mapper"})
-@Import({GeneralSwaggerConfig.class, HandlerException.class})
+@Import({GeneralSwaggerConfig.class, HandlerException.class, SnowFlakeId.class})
 @EnableEurekaClient
 @EnableFeignClients(basePackages = "io.xxnjdg.notp.*")
 public class UserServiceApplication {

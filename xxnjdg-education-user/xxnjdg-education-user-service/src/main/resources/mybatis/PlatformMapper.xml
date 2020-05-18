@@ -19,5 +19,16 @@
     <sql id="Base_Column_List">
         id, gmt_create, gmt_modified, status_id, sort, client_id, client_secret, client_name, remark
     </sql>
+    <select id="listPlatformByPage" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"></include> from platform where
+        (select id from platform
+        <where>
+            <if test="clientName != null">and client_name like CONCAT('%', #{clientName}, '%') </if>
+        </where>
+        order by id desc limit #{offset},1
+        ) >= id
+        <if test="clientName != null">and client_name like CONCAT('%', #{clientName}, '%') </if>
+        order by id desc limit #{size}
+    </select>
 
 </mapper>

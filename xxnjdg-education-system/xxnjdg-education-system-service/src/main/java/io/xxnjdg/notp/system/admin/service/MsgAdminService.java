@@ -39,4 +39,11 @@ public interface MsgAdminService extends IService<Msg> {
      * @return
      */
     Boolean updateMsg(MsgDTO msgDTO);
+
+    /**
+     * 获取msg
+     * @param msgDTO
+     * @return
+     */
+    MsgBO getMsg(MsgDTO msgDTO);
 }

@@ -19,5 +19,16 @@
     <sql id="Base_Column_List">
         id, gmt_create, gmt_modified, status_id, sort, user_no, mobile, real_name, remark
     </sql>
+    <select id="listSysUserByPage" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"></include> from sys_user where
+        (select id from sys_user
+        <where>
+            <if test="mobile != null">and mobile like CONCAT('%', #{mobile}, '%') </if>
+        </where>
+        order by id desc limit #{offset},1
+        ) >= id
+        <if test="mobile != null">and mobile like CONCAT('%', #{mobile}, '%') </if>
+        order by id desc limit #{size}
+    </select>
 
 </mapper>

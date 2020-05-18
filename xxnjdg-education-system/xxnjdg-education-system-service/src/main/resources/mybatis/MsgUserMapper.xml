@@ -22,5 +22,18 @@
     <sql id="Base_Column_List">
         id, gmt_create, gmt_modified, status_id, sort, msg_id, user_no, mobile, msg_type, msg_title, is_read, is_top
     </sql>
+    <select id="listMsgUserByPage" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"></include> from msg_user where
+        (select id from msg_user
+        <where>
+            <if test="mobile != null">and mobile like CONCAT('%', #{mobile}, '%') </if>
+            <if test="msgTitle != null">and msg_title like CONCAT('%', #{msgTitle}, '%') </if>
+        </where>
+        order by id desc limit #{offset},1
+        ) >= id
+        <if test="mobile != null">and mobile like CONCAT('%', #{mobile}, '%') </if>
+        <if test="msgTitle != null">and msg_title like CONCAT('%', #{msgTitle}, '%') </if>
+        order by id desc limit #{size}
+    </select>
 
 </mapper>

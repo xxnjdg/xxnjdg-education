@@ -2,6 +2,7 @@ package io.xxnjdg.notp.system.admin.object.convert;
 
 import io.xxnjdg.notp.system.admin.object.business.MsgBO;
 import io.xxnjdg.notp.system.admin.object.data.transfer.MsgDTO;
+import io.xxnjdg.notp.system.admin.object.view.FullMsgVO;
 import io.xxnjdg.notp.system.admin.object.view.MsgVO;
 import io.xxnjdg.notp.system.object.persistent.Msg;
 import io.xxnjdg.notp.utils.response.PageResult;
@@ -28,10 +29,10 @@ public interface MsgMapStruct {
 
     /**
      * P2B
-     * @param sysLog
+     * @param msg
      * @return
      */
-    MsgBO P2B(Msg sysLog);
+    MsgBO P2B(Msg msg);
 
 
     /**
@@ -40,6 +41,13 @@ public interface MsgMapStruct {
      * @return
      */
     List<MsgBO> P2B(List<Msg> sysLogs);
+
+    /**
+     * B2V
+     * @param sysLogBO
+     * @return
+     */
+    FullMsgVO B2FV(MsgBO sysLogBO);
 
     /**
      * B2V

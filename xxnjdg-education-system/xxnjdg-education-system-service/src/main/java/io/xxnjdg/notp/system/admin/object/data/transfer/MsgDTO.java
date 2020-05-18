@@ -1,10 +1,7 @@
 package io.xxnjdg.notp.system.admin.object.data.transfer;
 
 import io.xxnjdg.notp.utils.constant.ValidationMessage;
-import io.xxnjdg.notp.utils.validator.group.Delete;
-import io.xxnjdg.notp.utils.validator.group.Insert;
-import io.xxnjdg.notp.utils.validator.group.Page;
-import io.xxnjdg.notp.utils.validator.group.Update;
+import io.xxnjdg.notp.utils.validator.group.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -46,7 +43,7 @@ public class MsgDTO implements Serializable {
      * 状态(1有效, 0无效)
      */
     @Range(max = 1,message = ValidationMessage.PARAMETER_OUT_OF_SCOPE,groups = {Insert.class,Page.class})
-    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Delete.class,Update.class})
+    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Delete.class,Update.class,Get.class})
     private Integer statusId;
 
     /**
@@ -54,54 +51,54 @@ public class MsgDTO implements Serializable {
      */
     @NotBlank(message = ValidationMessage.PARAMETER_NULL,groups = {Insert.class,Update.class})
     @Length(max = 254,message = ValidationMessage.PARAMETER_TOO_LONG,groups = {Insert.class,Page.class,Update.class})
-    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Delete.class})
+    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Delete.class,Get.class})
     private String msgTitle;
 
     /**
      * 是否已发送(1是;0否)
      */
     @Range(max = 1,message = ValidationMessage.PARAMETER_OUT_OF_SCOPE,groups = {Insert.class,Page.class})
-    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Delete.class,Update.class})
+    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Delete.class,Update.class,Get.class})
     private Integer isSend;
 
     /**
      * 是否置顶(1是;0否)
      */
-    @Range(max = 1,message = ValidationMessage.PARAMETER_OUT_OF_SCOPE,groups = {Insert.class,Page.class,Update.class})
-    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Delete.class})
+     @Range(max = 1,message = ValidationMessage.PARAMETER_OUT_OF_SCOPE,groups = {Insert.class,Page.class,Update.class})
+    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Delete.class,Get.class})
     private Integer isTop;
 
     /**
      * 短信类型(1系统消息,2其他)
      */
     @Range(min = 1, max = 2,message = ValidationMessage.PARAMETER_OUT_OF_SCOPE,groups = {Insert.class})
-    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Page.class,Delete.class,Update.class})
+    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Page.class,Delete.class,Update.class,Get.class})
     private Integer msgType;
 
     /**
      * 发送时间
      */
-    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Page.class,Delete.class,Update.class})
+    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Page.class,Delete.class,Update.class,Get.class})
     private LocalDateTime sendTime;
 
     /**
      * 短信内容
      */
-    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Page.class,Delete.class})
+    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Page.class,Delete.class,Get.class})
     private String msgText;
 
     /**
      * 是否定时发送（1是，0否）
      */
     @Range(max = 1,message = ValidationMessage.PARAMETER_OUT_OF_SCOPE,groups = {Insert.class})
-    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Page.class,Delete.class,Update.class})
+    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Page.class,Delete.class,Update.class,Get.class})
     private Integer isTimeSend;
 
     /**
      * 主键
      */
-    @NotNull(message = ValidationMessage.PARAMETER_NULL,groups = {Delete.class, Update.class})
-    @Range(message = ValidationMessage.PARAMETER_OUT_OF_SCOPE,groups = {Delete.class, Update.class})
+    @NotNull(message = ValidationMessage.PARAMETER_NULL,groups = {Delete.class, Update.class, Get.class})
+    @Range(message = ValidationMessage.PARAMETER_OUT_OF_SCOPE,groups = {Delete.class, Update.class,Get.class})
     @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Page.class,Insert.class})
     private Long id;
 

@@ -128,4 +128,13 @@ public class MsgAdminServiceImpl extends ServiceImpl<MsgMapper, Msg> implements 
         }
         return true;
     }
+
+    @Override
+    public MsgBO getMsg(MsgDTO msgDTO) {
+        Msg msg = this.getById(msgDTO.getId());
+        if (msg == null){
+            throw new BaseException(MsgEnum.GET_ERROR);
+        }
+        return MsgMapStruct.INSTANCE.P2B(msg);
+    }
 }
