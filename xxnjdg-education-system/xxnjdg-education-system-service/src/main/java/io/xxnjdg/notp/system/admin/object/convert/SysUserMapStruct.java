@@ -3,6 +3,7 @@ package io.xxnjdg.notp.system.admin.object.convert;
 import io.xxnjdg.notp.system.admin.object.business.SysUserBO;
 import io.xxnjdg.notp.system.admin.object.data.transfer.SysUserDTO;
 import io.xxnjdg.notp.system.admin.object.view.SysUserPageVO;
+import io.xxnjdg.notp.system.admin.object.view.SysUserVO;
 import io.xxnjdg.notp.system.object.persistent.SysUser;
 import io.xxnjdg.notp.utils.response.PageResult;
 import org.mapstruct.Mapper;
@@ -61,4 +62,12 @@ public interface SysUserMapStruct {
      * @return
      */
     PageResult<SysUserPageVO> B2PV(PageResult<SysUserBO> result);
+
+    /**
+     * B2V
+     * @param sysUserBO
+     * @return
+     */
+    SysUserVO B2V(SysUserBO sysUserBO);
+
 }

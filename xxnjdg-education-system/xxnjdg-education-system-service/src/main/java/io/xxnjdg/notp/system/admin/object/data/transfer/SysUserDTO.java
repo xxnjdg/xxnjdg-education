@@ -1,8 +1,7 @@
 package io.xxnjdg.notp.system.admin.object.data.transfer;
 
 import io.xxnjdg.notp.utils.constant.ValidationMessage;
-import io.xxnjdg.notp.utils.validator.group.Insert;
-import io.xxnjdg.notp.utils.validator.group.Page;
+import io.xxnjdg.notp.utils.validator.group.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -42,7 +41,8 @@ public class SysUserDTO implements Serializable {
     /**
      * 手机
      */
-    @Length(max = 11,message = ValidationMessage.PARAMETER_TOO_LONG,groups = {Page.class,Insert.class})
+    @Length(max = 11,message = ValidationMessage.PARAMETER_TOO_LONG,groups = {Page.class,Insert.class, Update.class})
+    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Delete.class,Get.class})
     private String mobile;
 
     /**
@@ -50,28 +50,44 @@ public class SysUserDTO implements Serializable {
      */
     @NotNull(message = ValidationMessage.PARAMETER_NULL,groups = {Insert.class})
     @Range(message = ValidationMessage.PARAMETER_OUT_OF_SCOPE,groups = {Insert.class})
-    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Page.class})
+    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Page.class,Delete.class, Update.class,Get.class})
     private Long userNo;
 
     /**
      * 真实姓名
      */
-    @Length(max = 49,message = ValidationMessage.PARAMETER_TOO_LONG,groups = {Insert.class})
-    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Page.class})
+    @Length(max = 49,message = ValidationMessage.PARAMETER_TOO_LONG,groups = {Insert.class, Update.class})
+    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Page.class,Delete.class,Get.class})
     private String realName;
 
     /**
      * 备注
      */
-    @Length(max = 254,message = ValidationMessage.PARAMETER_TOO_LONG,groups = {Insert.class})
-    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Page.class})
+    @Length(max = 254,message = ValidationMessage.PARAMETER_TOO_LONG,groups = {Insert.class, Update.class})
+    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Page.class,Delete.class,Get.class})
     private String remark;
 
     /**
      * 主键
      */
-    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Page.class})
+    @NotNull(message = ValidationMessage.PARAMETER_NULL,groups = {Delete.class,Update.class,Get.class})
+    @Range(message = ValidationMessage.PARAMETER_OUT_OF_SCOPE,groups = {Delete.class,Update.class,Get.class})
+    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Page.class,Insert.class})
     private Long id;
+
+    /**
+     * 状态(1:正常，0:禁用)
+     */
+    @Range(max = 1,message = ValidationMessage.PARAMETER_OUT_OF_SCOPE,groups = {Update.class})
+    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Page.class,Insert.class,Delete.class,Get.class})
+    private Integer statusId;
+
+    /**
+     * 排序
+     */
+    @Range(min = 1,max = Integer.MAX_VALUE, message = ValidationMessage.PARAMETER_OUT_OF_SCOPE,groups = {Update.class})
+    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Page.class,Insert.class,Delete.class,Get.class})
+    private Integer sort;
 
     /**
      * 创建时间
@@ -84,18 +100,4 @@ public class SysUserDTO implements Serializable {
      */
     @Null(message = ValidationMessage.PARAMETER_ERROR)
     private LocalDateTime gmtModified;
-
-    /**
-     * 状态(1:正常，0:禁用)
-     */
-    @Null(message = ValidationMessage.PARAMETER_ERROR)
-    private Integer statusId;
-
-    /**
-     * 排序
-     */
-    @Null(message = ValidationMessage.PARAMETER_ERROR)
-    private Integer sort;
-
-
 }

@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Import;
 @SpringBootApplication
 @MapperScan(basePackages = {"io.xxnjdg.notp.system.mapper"})
 @Import({GeneralSwaggerConfig.class,HandlerException.class, SnowFlakeId.class})
-@EnableFeignClients
+@EnableFeignClients(basePackages = "io.xxnjdg.notp.*")
 @EnableEurekaClient
 public class SystemServiceApplication {
     public static void main(String[] args) {

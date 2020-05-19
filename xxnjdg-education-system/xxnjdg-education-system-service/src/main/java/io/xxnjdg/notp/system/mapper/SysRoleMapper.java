@@ -2,6 +2,9 @@ package io.xxnjdg.notp.system.mapper;
 
 import io.xxnjdg.notp.system.object.persistent.SysRole;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,17 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface SysRoleMapper extends BaseMapper<SysRole> {
 
+    /**
+     * 分页查询SysRole列表
+     * @param roleName
+     * @param statusId
+     * @param offset
+     * @param size
+     * @return
+     */
+    List<SysRole> listSysRoleByPage(
+            @Param("roleName") String roleName,
+            @Param("statusId") Integer statusId,
+            @Param("offset") Integer offset,
+            @Param("size") Integer size);
 }

@@ -25,81 +25,81 @@ import java.time.LocalDateTime;
 @Accessors(chain = true)
 public class MsgDTO implements Serializable {
 
-    private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
 
     /**
      * 当前页
      */
-    @Pattern(regexp = "^[1-9]\\d*$",message = ValidationMessage.PARAMETER_ERROR)
+    @Pattern(regexp = "^[1-9]\\d*$", message = ValidationMessage.PARAMETER_ERROR)
     private String pageCurrent;
 
     /**
      * 每页记录数
      */
-    @Pattern(regexp = "(^[1][0-9]$)|(^[2][0]$)|(^[1-9]$)",message = ValidationMessage.PARAMETER_ERROR)
+    @Pattern(regexp = "(^[1][0-9]$)|(^[2][0]$)|(^[1-9]$)", message = ValidationMessage.PARAMETER_ERROR)
     private String pageSize;
 
     /**
      * 状态(1有效, 0无效)
      */
-    @Range(max = 1,message = ValidationMessage.PARAMETER_OUT_OF_SCOPE,groups = {Insert.class,Page.class})
-    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Delete.class,Update.class,Get.class})
+    @Range(max = 1, message = ValidationMessage.PARAMETER_OUT_OF_SCOPE, groups = {Insert.class, Page.class})
+    @Null(message = ValidationMessage.PARAMETER_ERROR, groups = {Delete.class, Update.class, Get.class})
     private Integer statusId;
 
     /**
      * 短信标题
      */
-    @NotBlank(message = ValidationMessage.PARAMETER_NULL,groups = {Insert.class,Update.class})
-    @Length(max = 254,message = ValidationMessage.PARAMETER_TOO_LONG,groups = {Insert.class,Page.class,Update.class})
-    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Delete.class,Get.class})
+    @NotBlank(message = ValidationMessage.PARAMETER_NULL, groups = {Insert.class, Update.class})
+    @Length(max = 254, message = ValidationMessage.PARAMETER_TOO_LONG, groups = {Insert.class, Page.class, Update.class})
+    @Null(message = ValidationMessage.PARAMETER_ERROR, groups = {Delete.class, Get.class})
     private String msgTitle;
 
     /**
      * 是否已发送(1是;0否)
      */
-    @Range(max = 1,message = ValidationMessage.PARAMETER_OUT_OF_SCOPE,groups = {Insert.class,Page.class})
-    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Delete.class,Update.class,Get.class})
+    @Range(max = 1, message = ValidationMessage.PARAMETER_OUT_OF_SCOPE, groups = {Insert.class, Page.class})
+    @Null(message = ValidationMessage.PARAMETER_ERROR, groups = {Delete.class, Update.class, Get.class})
     private Integer isSend;
 
     /**
      * 是否置顶(1是;0否)
      */
-     @Range(max = 1,message = ValidationMessage.PARAMETER_OUT_OF_SCOPE,groups = {Insert.class,Page.class,Update.class})
-    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Delete.class,Get.class})
+    @Range(max = 1, message = ValidationMessage.PARAMETER_OUT_OF_SCOPE, groups = {Insert.class, Page.class, Update.class})
+    @Null(message = ValidationMessage.PARAMETER_ERROR, groups = {Delete.class, Get.class})
     private Integer isTop;
 
     /**
      * 短信类型(1系统消息,2其他)
      */
-    @Range(min = 1, max = 2,message = ValidationMessage.PARAMETER_OUT_OF_SCOPE,groups = {Insert.class})
-    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Page.class,Delete.class,Update.class,Get.class})
+    @Range(min = 1, max = 2, message = ValidationMessage.PARAMETER_OUT_OF_SCOPE, groups = {Insert.class})
+    @Null(message = ValidationMessage.PARAMETER_ERROR, groups = {Page.class, Delete.class, Update.class, Get.class})
     private Integer msgType;
 
     /**
      * 发送时间
      */
-    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Page.class,Delete.class,Update.class,Get.class})
+    @Null(message = ValidationMessage.PARAMETER_ERROR, groups = {Page.class, Delete.class, Update.class, Get.class})
     private LocalDateTime sendTime;
 
     /**
      * 短信内容
      */
-    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Page.class,Delete.class,Get.class})
+    @Null(message = ValidationMessage.PARAMETER_ERROR, groups = {Page.class, Delete.class, Get.class})
     private String msgText;
 
     /**
      * 是否定时发送（1是，0否）
      */
-    @Range(max = 1,message = ValidationMessage.PARAMETER_OUT_OF_SCOPE,groups = {Insert.class})
-    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Page.class,Delete.class,Update.class,Get.class})
+    @Range(max = 1, message = ValidationMessage.PARAMETER_OUT_OF_SCOPE, groups = {Insert.class})
+    @Null(message = ValidationMessage.PARAMETER_ERROR, groups = {Page.class, Delete.class, Update.class, Get.class})
     private Integer isTimeSend;
 
     /**
      * 主键
      */
-    @NotNull(message = ValidationMessage.PARAMETER_NULL,groups = {Delete.class, Update.class, Get.class})
-    @Range(message = ValidationMessage.PARAMETER_OUT_OF_SCOPE,groups = {Delete.class, Update.class,Get.class})
-    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Page.class,Insert.class})
+    @NotNull(message = ValidationMessage.PARAMETER_NULL, groups = {Delete.class, Update.class, Get.class})
+    @Range(message = ValidationMessage.PARAMETER_OUT_OF_SCOPE, groups = {Delete.class, Update.class, Get.class})
+    @Null(message = ValidationMessage.PARAMETER_ERROR, groups = {Page.class, Insert.class})
     private Long id;
 
     /**

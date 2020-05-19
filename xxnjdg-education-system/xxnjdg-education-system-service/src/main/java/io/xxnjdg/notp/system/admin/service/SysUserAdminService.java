@@ -25,4 +25,25 @@ public interface SysUserAdminService extends IService<SysUser> {
      * @return
      */
     Boolean saveSysUser(SysUserDTO sysUserDTO);
+
+    /**
+     * 删除SysUser
+     * @param sysUserDTO
+     * @return
+     */
+    Boolean deleteSysUserById(SysUserDTO sysUserDTO);
+
+    /**
+     * 更新
+     * @param sysUserDTO
+     * @return
+     */
+    Boolean updateSysUserById(SysUserDTO sysUserDTO);
+
+    /**
+     * 查询
+     * @param sysUserDTO
+     * @return
+     */
+    SysUserBO getSysUserById(SysUserDTO sysUserDTO);
 }

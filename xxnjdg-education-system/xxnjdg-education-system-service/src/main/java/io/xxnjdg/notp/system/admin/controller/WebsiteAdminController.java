@@ -30,7 +30,7 @@ public class WebsiteAdminController {
     }
 
     // TODO: 2020/5/18 没写校验
-    @PostMapping("/system/pc/website/view")
+    @PostMapping("/system/pc/website/update")
     public ResponseResult updateWebsiteById(@RequestBody WebsiteDTO websiteDTO){
         Boolean result = websiteAdminService.updateWebsiteById(websiteDTO);
         return ResponseResult.success(result);
