@@ -23,5 +23,20 @@
     <sql id="Base_Column_List">
         id, gmt_create, gmt_modified, status_id, sort, adv_title, adv_img, adv_url, adv_target, adv_location, begin_time, end_time, plat_show
     </sql>
+    <select id="listAdvByPage" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"></include> from adv where
+        (select id from adv
+        <where>
+            <if test="advTitle != null">and adv_title like CONCAT('%', #{advTitle}, '%') </if>
+            <if test="statusId != null">and status_id = #{statusId}</if>
+            <if test="platShow != null">and plat_show = #{platShow}</if>
+        </where>
+        order by id desc limit #{offset},1
+        ) >= id
+        <if test="advTitle != null">and adv_title like CONCAT('%', #{advTitle}, '%') </if>
+        <if test="statusId != null">and status_id = #{statusId}</if>
+        <if test="platShow != null">and plat_show = #{platShow}</if>
+        order by id desc limit #{size}
+    </select>
 
 </mapper>

@@ -29,4 +29,24 @@ public interface CourseAuditMapper extends BaseMapper<CourseAudit> {
             @Param("auditStatus") Integer auditStatus,
             @Param("offset") Integer offset,
             @Param("size")Integer size);
+
+    /**
+     * 分页查询CourseAudit列表
+     * @param statusId
+     * @param isPutaway
+     * @param auditStatus
+     * @param isFree
+     * @param courseName
+     * @param offset
+     * @param size
+     * @return
+     */
+    List<CourseAudit> listCourseAuditAdminByPage(
+            @Param("statusId") Integer statusId,
+            @Param("isPutaway") Integer isPutaway,
+            @Param("auditStatus") Integer auditStatus,
+            @Param("isFree") Integer isFree,
+            @Param("courseName") String courseName,
+            @Param("offset") Integer offset,
+            @Param("size") Integer size);
 }

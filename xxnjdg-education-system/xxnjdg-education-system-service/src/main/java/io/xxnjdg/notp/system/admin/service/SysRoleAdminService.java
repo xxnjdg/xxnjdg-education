@@ -48,4 +48,11 @@ public interface SysRoleAdminService extends IService<SysRole> {
      * @return
      */
     List<SysRoleBO> listSysRoleByUserId(SysRoleDTO sysRoleDTO);
+
+    /**
+     * 删除
+     * @param sysRoleDTO
+     * @return
+     */
+    Boolean deleteSysRoleById(SysRoleDTO sysRoleDTO);
 }

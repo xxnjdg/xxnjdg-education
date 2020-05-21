@@ -2,6 +2,10 @@ package io.xxnjdg.notp.course.mapper;
 
 import io.xxnjdg.notp.course.object.persistent.ZoneCourse;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +17,17 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface ZoneCourseMapper extends BaseMapper<ZoneCourse> {
 
+    /**
+     * 分页查询列表
+     * @param zoneId
+     * @param courseIds
+     * @param offset
+     * @param size
+     * @return
+     */
+    List<ZoneCourse> listZoneCourseByPage(
+            @Param("zoneId") Long zoneId,
+            @Param("courseIds") List<Long> courseIds,
+            @Param("offset") Integer offset,
+            @Param("size") Integer size);
 }

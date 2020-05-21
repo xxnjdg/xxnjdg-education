@@ -4,19 +4,44 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="io.xxnjdg.notp.course.object.persistent.ZoneCourse">
-        <id column="id" property="id" />
-        <result column="gmt_create" property="gmtCreate" />
-        <result column="gmt_modified" property="gmtModified" />
-        <result column="status_id" property="statusId" />
-        <result column="sort" property="sort" />
-        <result column="zone_id" property="zoneId" />
-        <result column="zone_location" property="zoneLocation" />
-        <result column="course_id" property="courseId" />
+        <id column="id" property="id"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modified" property="gmtModified"/>
+        <result column="status_id" property="statusId"/>
+        <result column="sort" property="sort"/>
+        <result column="zone_id" property="zoneId"/>
+        <result column="zone_location" property="zoneLocation"/>
+        <result column="course_id" property="courseId"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id, gmt_create, gmt_modified, status_id, sort, zone_id, zone_location, course_id
     </sql>
+    <select id="listZoneCourseByPage" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"></include> from zone_course where
+        (select id from zone_course
+        <where>
+            <if test="zoneId != null">and zone_id = #{zoneId}</if>
+            <if test="courseIds != null">
+                and course_id in
+                <foreach item="item" index="index" collection="courseIds"
+                         open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+        order by id desc limit #{offset},1
+        ) >= id
+        <if test="zoneId != null">and zone_id = #{zoneId}</if>
+        <if test="courseIds != null">
+            and course_id in
+            <foreach item="item" index="index" collection="courseIds"
+                     open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        order by id desc limit #{size}
+    </select>
 
 </mapper>

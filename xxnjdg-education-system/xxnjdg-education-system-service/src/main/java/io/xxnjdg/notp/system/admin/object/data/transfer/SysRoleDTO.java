@@ -31,7 +31,7 @@ public class SysRoleDTO implements Serializable {
      */
     @Range(message = ValidationMessage.PARAMETER_OUT_OF_SCOPE,groups = {ListGroup.class})
     @NotBlank(message = ValidationMessage.PARAMETER_NULL, groups = {ListGroup.class})
-    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Insert.class, Get.class,Page.class,Update.class})
+    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Insert.class, Get.class,Page.class,Update.class,Delete.class})
     private Long userId;
 
     /**
@@ -50,7 +50,7 @@ public class SysRoleDTO implements Serializable {
      * 状态(1:正常，0:禁用)
      */
     @Range(max = 1,message = ValidationMessage.PARAMETER_OUT_OF_SCOPE,groups = {Page.class,Update.class})
-    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Insert.class, Get.class,ListGroup.class})
+    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Insert.class, Get.class,ListGroup.class,Delete.class})
     private Integer statusId;
 
     /**
@@ -58,7 +58,7 @@ public class SysRoleDTO implements Serializable {
      */
     @NotBlank(message = ValidationMessage.PARAMETER_NULL, groups = {Insert.class})
     @Length(max = 49,message = ValidationMessage.PARAMETER_TOO_LONG,groups = {Page.class,Insert.class,Update.class})
-    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Get.class,ListGroup.class})
+    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Get.class,ListGroup.class,Delete.class})
     private String roleName;
 
     /**
@@ -66,14 +66,14 @@ public class SysRoleDTO implements Serializable {
      */
     @NotBlank(message = ValidationMessage.PARAMETER_NULL, groups = {Insert.class})
     @Length(max = 254,message = ValidationMessage.PARAMETER_TOO_LONG,groups = {Insert.class,Update.class})
-    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Page.class,Get.class,ListGroup.class})
+    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Page.class,Get.class,ListGroup.class,Delete.class})
     private String remark;
 
     /**
      * 主键
      */
-    @Range(message = ValidationMessage.PARAMETER_OUT_OF_SCOPE,groups = {Update.class,Get.class})
-    @NotBlank(message = ValidationMessage.PARAMETER_NULL, groups = {Update.class,Get.class})
+    @Range(message = ValidationMessage.PARAMETER_OUT_OF_SCOPE,groups = {Update.class,Get.class,Delete.class})
+    @NotBlank(message = ValidationMessage.PARAMETER_NULL, groups = {Update.class,Get.class,Delete.class})
     @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Page.class,Insert.class,ListGroup.class})
     private Long id;
 
@@ -81,7 +81,7 @@ public class SysRoleDTO implements Serializable {
      * 排序
      */
     @Range(min = 1, max = Integer.MAX_VALUE, message = ValidationMessage.PARAMETER_OUT_OF_SCOPE,groups = {Update.class})
-    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Page.class,Insert.class,Get.class,ListGroup.class})
+    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Page.class,Insert.class,Get.class,ListGroup.class,Delete.class})
     private Integer sort;
 
     /**

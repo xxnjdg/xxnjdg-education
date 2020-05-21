@@ -8,9 +8,11 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.xxnjdg.notp.system.admin.object.business.SysRoleBO;
 import io.xxnjdg.notp.system.admin.object.business.SysRoleUserBO;
 import io.xxnjdg.notp.system.admin.object.convert.SysRoleMapStruct;
+import io.xxnjdg.notp.system.admin.object.data.transfer.SysMenuRoleDTO;
 import io.xxnjdg.notp.system.admin.object.data.transfer.SysRoleDTO;
 import io.xxnjdg.notp.system.admin.object.data.transfer.SysRoleUserDTO;
 import io.xxnjdg.notp.system.admin.object.error.SysRoleEnum;
+import io.xxnjdg.notp.system.admin.service.SysMenuRoleAdminService;
 import io.xxnjdg.notp.system.admin.service.SysRoleAdminService;
 import io.xxnjdg.notp.system.admin.service.SysRoleUserAdminService;
 import io.xxnjdg.notp.system.mapper.SysRoleMapper;
@@ -19,9 +21,13 @@ import io.xxnjdg.notp.utils.custom.utils.PageObjectUtil;
 import io.xxnjdg.notp.utils.exception.BaseException;
 import io.xxnjdg.notp.utils.objects.PageObject;
 import io.xxnjdg.notp.utils.response.PageResult;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Null;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +41,9 @@ public class SysRoleAdminServiceImpl extends ServiceImpl<SysRoleMapper, SysRole>
 
     @Autowired
     private SysRoleUserAdminService sysRoleUserAdminService;
+
+    @Autowired
+    private SysMenuRoleAdminService sysMenuRoleAdminService;
 
     @Override
     public PageResult<SysRoleBO> listSysRoleByPage(SysRoleDTO sysRoleDTO) {
@@ -121,5 +130,20 @@ public class SysRoleAdminServiceImpl extends ServiceImpl<SysRoleMapper, SysRole>
             });
         }
         return list;
+    }
+
+    @Override
+    @Transactional
+    public Boolean deleteSysRoleById(SysRoleDTO sysRoleDTO) {
+        Long id = sysRoleDTO.getId();
+
+        sysMenuRoleAdminService.deleteSysMenuRoleByRoleId(
+                new SysMenuRoleDTO().setRoleId(id));
+
+        boolean remove = this.removeById(id);
+        if (!remove) {
+            throw new BaseException(SysRoleEnum.DELETE_ERROR);
+        }
+        return null;
     }
 }

@@ -34,5 +34,26 @@
         (select id from course_audit where lecturer_user_no = #{lecturerUserNo} and <if test="auditStatus == null">audit_status >= 0</if> <if test="auditStatus != null">audit_status = #{auditStatus}</if> and status_id = 1
         order by id desc limit #{offset},1) >= id order by id desc limit #{size}
     </select>
+    <select id="listCourseAuditAdminByPage" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"></include> from adv where
+        (select id from adv
+        <where>
+            <if test="courseName != null">and course_name like CONCAT('%', #{courseName}, '%') </if>
+            <if test="statusId != null">and status_id = #{statusId}</if>
+            <if test="isPutaway != null">and is_putaway = #{isPutaway}</if>
+            <if test="isFree != null">and is_free = #{isFree}</if>
+            <if test="auditStatus != null">and audit_status = #{auditStatus}</if>
+            <if test="auditStatus == null">and audit_status != 1</if>
+        </where>
+        order by id desc limit #{offset},1
+        ) >= id
+        <if test="courseName != null">and course_name like CONCAT('%', #{courseName}, '%') </if>
+        <if test="statusId != null">and status_id = #{statusId}</if>
+        <if test="isPutaway != null">and is_putaway = #{isPutaway}</if>
+        <if test="isFree != null">and is_free = #{isFree}</if>
+        <if test="auditStatus != null">and audit_status = #{auditStatus}</if>
+        <if test="auditStatus == null">and audit_status != 1</if>
+        order by id desc limit #{size}
+    </select>
 
 </mapper>

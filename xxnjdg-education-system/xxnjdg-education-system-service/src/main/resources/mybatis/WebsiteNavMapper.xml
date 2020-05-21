@@ -45,5 +45,20 @@
     <select id="getWebsiteNavLevelListByStatusId" resultMap="WebsiteNavLevelResultMap">
         select  website_nav.*,<include refid="getWebsiteNavLevelListByStatusId_column"></include> from website_nav join website_nav wn on website_nav.id = wn.parent_id where website_nav.status_id = '1' and wn.status_id = '1' and website_nav.parent_id = '0' order by website_nav.sort desc
     </select>
+    <select id="listWebsiteNavByPage" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"></include> from website_nav where
+        (select id from website_nav
+        <where>
+            <if test="navName != null">and nav_name like CONCAT('%', #{navName}, '%') </if>
+            <if test="statusId != null">and status_id = #{statusId}</if>
+            <if test="parentId != null">and parent_id = #{parentId}</if>
+        </where>
+        order by id desc limit #{offset},1
+        ) >= id
+        <if test="navName != null">and nav_name like CONCAT('%', #{navName}, '%') </if>
+        <if test="statusId != null">and status_id = #{statusId}</if>
+        <if test="parentId != null">and parent_id = #{parentId}</if>
+        order by id desc limit #{size}
+    </select>
 
 </mapper>

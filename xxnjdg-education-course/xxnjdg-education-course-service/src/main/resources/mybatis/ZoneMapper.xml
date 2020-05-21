@@ -38,5 +38,20 @@
     <select id="postZoneCourseList" resultMap="ZoneVO" >
         select zone.id zid, zone.zone_name zname ,zone.zone_desc zdesc,course.* from zone join zone_course on zone.id = zone_course.zone_id join course on zone_course.course_id = course.id where zone.zone_location = #{zoneLocation} and zone.status_id = 1 and course.status_id = 1 and zone_course.status_id = 1 order by zone.sort desc,zone_course.sort desc
     </select>
+    <select id="listZoneByPage" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"></include> from zone where
+        (select id from zone
+        <where>
+            <if test="zoneName != null">and zone_name like CONCAT('%', #{zoneName}, '%') </if>
+            <if test="statusId != null">and status_id = #{statusId}</if>
+            <if test="zoneLocation != null">and zone_location = #{zoneLocation}</if>
+        </where>
+        order by id desc limit #{offset},1
+        ) >= id
+        <if test="zoneName != null">and zone_name like CONCAT('%', #{zoneName}, '%') </if>
+        <if test="statusId != null">and status_id = #{statusId}</if>
+        <if test="zoneLocation != null">and zone_location = #{zoneLocation}</if>
+        order by id desc limit #{size}
+    </select>
 
 </mapper>

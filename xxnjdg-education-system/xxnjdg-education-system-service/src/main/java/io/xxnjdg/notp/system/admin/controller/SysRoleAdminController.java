@@ -46,6 +46,11 @@ public class SysRoleAdminController {
         SysRoleBO sysRoleBO = sysRoleAdminService.getSysRoleById(sysRoleDTO);
         return ResponseResult.success(SysRoleMapStruct.INSTANCE.B2V(sysRoleBO));
     }
+    @PostMapping("/system/pc/sys/role/delete")
+    public ResponseResult deleteSysRoleById(@RequestBody @Validated(Delete.class) SysRoleDTO sysRoleDTO ){
+        Boolean result = sysRoleAdminService.deleteSysRoleById(sysRoleDTO);
+        return ResponseResult.success(result);
+    }
 
     @PostMapping("/system/pc/sys/role/user/list")
     public ResponseResult listSysRoleByUserId(@RequestBody @Validated(ListGroup.class) SysRoleDTO sysRoleDTO ){

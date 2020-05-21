@@ -24,17 +24,22 @@ public class ListToTreeUtil {
     private static final String PRIMARY_KEY_NAME = ObjectField.PRIMARY_KEY_NAME;
     private static final String SORT_NAME = ObjectField.SORT_NAME;
     private static final Boolean IS_SORT = true;
+    private static final Boolean REMOVE_LIST = true;
 
     public static <T,E> List<T> getTree(List<T> originalList,E customParentId) throws Exception{
-        return getTree(originalList,PRIMARY_KEY_NAME,PARENT_FIELD_NAME,CHILDREN_FIELD_NAME,customParentId,IS_SORT,SORT_NAME);
+        return getTree(originalList,PRIMARY_KEY_NAME,PARENT_FIELD_NAME,CHILDREN_FIELD_NAME,customParentId,IS_SORT,SORT_NAME,REMOVE_LIST);
     }
 
     public static <T,E> List<T> getTree(List<T> originalList,E customParentId,Boolean isSort) throws Exception{
-        return getTree(originalList,PRIMARY_KEY_NAME,PARENT_FIELD_NAME,CHILDREN_FIELD_NAME,customParentId,isSort,SORT_NAME);
+        return getTree(originalList,PRIMARY_KEY_NAME,PARENT_FIELD_NAME,CHILDREN_FIELD_NAME,customParentId,isSort,SORT_NAME,REMOVE_LIST);
     }
 
     public static <T,E> void fillTree(List<T> parentList, List<T> originalList,E customParentId) throws Exception {
-        fillTree(parentList,originalList,PRIMARY_KEY_NAME,PARENT_FIELD_NAME,CHILDREN_FIELD_NAME,customParentId,IS_SORT,SORT_NAME);
+        fillTree(parentList,originalList,PRIMARY_KEY_NAME,PARENT_FIELD_NAME,CHILDREN_FIELD_NAME,customParentId,IS_SORT,SORT_NAME,REMOVE_LIST);
+    }
+
+    public static <T,E> void fillTree(List<T> parentList, List<T> originalList,E customParentId,Boolean removeList) throws Exception {
+        fillTree(parentList,originalList,PRIMARY_KEY_NAME,PARENT_FIELD_NAME,CHILDREN_FIELD_NAME,customParentId,IS_SORT,SORT_NAME,removeList);
     }
 
     /**
@@ -44,7 +49,7 @@ public class ListToTreeUtil {
      * @param keyName 作为唯一标示的字段名称
      * @return 组装后的集合
      */
-    private static <T,E> List<T> getTree(List<T> originalList, String keyName,String parentFieldName,String childrenFieldName,E customParentId,Boolean isSort,String sortName) throws Exception {
+    private static <T,E> List<T> getTree(List<T> originalList, String keyName,String parentFieldName,String childrenFieldName,E customParentId,Boolean isSort,String sortName,Boolean removeList) throws Exception {
 
         if (originalList == null || customParentId == null){
             return null;
@@ -69,7 +74,7 @@ public class ListToTreeUtil {
         }
 
         // 递归封装树
-        fillTree(topList, originalList, keyName, parentFieldName, childrenFieldName,customParentId,isSort,sortName);
+        fillTree(topList, originalList, keyName, parentFieldName, childrenFieldName,customParentId,isSort,sortName,removeList);
 
         return topList;
     }
@@ -83,7 +88,7 @@ public class ListToTreeUtil {
      * @param parentFieldName 模型中作为parent字段名称
      * @param childrenFieldName 模型中作为children的字段名称
      */
-    private static <T,E> void fillTree(List<T> parentList, List<T> originalList, String keyName, String parentFieldName, String childrenFieldName,E customParentId,Boolean isSort,String sortName) throws Exception {
+    private static <T,E> void fillTree(List<T> parentList, List<T> originalList, String keyName, String parentFieldName, String childrenFieldName,E customParentId,Boolean isSort,String sortName,Boolean removeList) throws Exception {
         if (parentList == null || originalList == null || customParentId == null){
             return;
         }
@@ -93,8 +98,12 @@ public class ListToTreeUtil {
             if (children.isEmpty()) {
                 continue;
             }
-            originalList.removeAll(children);
-            fillTree(children, originalList, keyName, parentFieldName, childrenFieldName,customParentId,isSort,sortName);
+
+            if (removeList){
+                originalList.removeAll(children);
+            }
+
+            fillTree(children, originalList, keyName, parentFieldName, childrenFieldName,customParentId,isSort,sortName,removeList);
         }
     }
 

@@ -18,5 +18,18 @@
     <sql id="Base_Column_List">
         id, gmt_create, gmt_modified, status_id, sort, link_name, link_url, link_target
     </sql>
+    <select id="listWebsiteLinkByPage" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"></include> from website_link where
+        (select id from website_link
+        <where>
+            <if test="linkName != null">and link_name like CONCAT('%', #{linkName}, '%') </if>
+            <if test="statusId != null">and status_id = #{statusId}</if>
+        </where>
+        order by id desc limit #{offset},1
+        ) >= id
+        <if test="linkName != null">and link_name like CONCAT('%', #{linkName}, '%') </if>
+        <if test="statusId != null">and status_id = #{statusId}</if>
+        order by id desc limit #{size}
+    </select>
 
 </mapper>

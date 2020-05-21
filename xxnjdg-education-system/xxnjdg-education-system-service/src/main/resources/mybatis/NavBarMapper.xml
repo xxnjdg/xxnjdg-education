@@ -18,5 +18,18 @@
     <sql id="Base_Column_List">
         id, gmt_create, gmt_modified, status_id, sort, nav_title, nav_url, target
     </sql>
+    <select id="listNavBarByPage" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"></include> from nav_bar where
+        (select id from nav_bar
+        <where>
+            <if test="navTitle != null">and nav_title like CONCAT('%', #{navTitle}, '%') </if>
+            <if test="statusId != null">and status_id = #{statusId}</if>
+        </where>
+        order by id desc limit #{offset},1
+        ) >= id
+        <if test="navTitle != null">and nav_title like CONCAT('%', #{navTitle}, '%') </if>
+        <if test="statusId != null">and status_id = #{statusId}</if>
+        order by id desc limit #{size}
+    </select>
 
 </mapper>
