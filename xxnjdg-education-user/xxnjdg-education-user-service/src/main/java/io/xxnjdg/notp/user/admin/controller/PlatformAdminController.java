@@ -51,7 +51,7 @@ public class PlatformAdminController {
         return ResponseResult.success(result);
     }
 
-    @PostMapping("/user/pc/platform/delete")
+    @PostMapping("/user/pc/platform/get")
     public ResponseResult getPlatformById(@RequestBody @Validated(Delete.class) PlatformDTO platformDTO ){
         PlatformBO result = platformAdminService.getPlatformById(platformDTO);
         return ResponseResult.success(PlatformMapStruct.INSTANCE.B2V(result));

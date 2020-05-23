@@ -52,5 +52,24 @@
     <select id="queryCourseAndCourseIntroduceByCourseId" resultMap="queryCourseAndCourseIntroduceByCourseIdResultMap" >
         select <include refid="queryCourseAndCourseIntroduceByCourseIdList"></include> ,course_introduce.introduce cintroduce from course join course_introduce on course.introduce_id = course_introduce.id where status_id = 1 and is_putaway = 1 and  course.id = #{courseId}
     </select>
+    <select id="listCourseByPage" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"></include> from course where
+        (select id from course
+        <where>
+            <if test="courseName != null">and course_name like CONCAT('%', #{courseName}, '%') </if>
+            <if test="statusId != null">and status_id = #{statusId}</if>
+            <if test="isPutaway != null">and is_putaway = #{isPutaway}</if>
+            <if test="isFree != null">and is_free = #{isFree}</if>
+            <if test="categoryId1 != null">and category_id1 = #{categoryId1}</if>
+        </where>
+        order by id desc limit #{offset},1
+        ) >= id
+        <if test="courseName != null">and course_name like CONCAT('%', #{courseName}, '%') </if>
+        <if test="statusId != null">and status_id = #{statusId}</if>
+        <if test="isPutaway != null">and is_putaway = #{isPutaway}</if>
+        <if test="isFree != null">and is_free = #{isFree}</if>
+        <if test="categoryId1 != null">and category_id1 = #{categoryId1}</if>
+        order by id desc limit #{size}
+    </select>
 
 </mapper>

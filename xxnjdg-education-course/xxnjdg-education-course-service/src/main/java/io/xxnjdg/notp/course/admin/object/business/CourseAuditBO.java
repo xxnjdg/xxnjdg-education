@@ -7,6 +7,7 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @author xxnjdg
@@ -123,4 +124,17 @@ public class CourseAuditBO implements Serializable {
      */
     private String categoryName3;
 
+    /**
+     * 讲师名称
+     */
+    private String lecturerName;
+
+    /**
+     * 课程介绍
+     */
+    private String introduce;
+    /**
+     * 章节集合
+     */
+    private List<CourseChapterAuditBO> courseChapterAuditList;
 }

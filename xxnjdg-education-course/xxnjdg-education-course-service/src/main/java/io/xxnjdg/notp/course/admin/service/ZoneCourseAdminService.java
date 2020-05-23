@@ -6,6 +6,9 @@ import io.xxnjdg.notp.course.admin.object.data.transfer.ZoneCourseDTO;
 import io.xxnjdg.notp.course.object.persistent.ZoneCourse;
 import io.xxnjdg.notp.utils.response.PageResult;
 
+import java.util.Collection;
+import java.util.List;
+
 /**
  * @author xxnjdg
  * @version 1.0
@@ -39,4 +42,12 @@ public interface ZoneCourseAdminService extends IService<ZoneCourse> {
      * @return
      */
     Boolean deleteZoneCourseById(ZoneCourseDTO zoneCourseDTO);
+
+    /**
+     * 查询
+     * @param zoneId
+     * @param courseId
+     * @return
+     */
+    List<ZoneCourse> listZoneCourseByCourseIdsAndZoneId(Long zoneId, Collection<Long> courseIds);
 }

@@ -7,6 +7,7 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @author xxnjdg
@@ -121,4 +122,35 @@ public class CourseBO implements Serializable {
     private Integer periodTotal;
 
 
+    /**
+     * 一级分类名
+     */
+    private String categoryName1;
+    /**
+     * 二级分类名
+     */
+    private String categoryName2;
+    /**
+     * 三级分类名
+     */
+    private String categoryName3;
+
+    /**
+     * 讲师名称
+     */
+    private String lecturerName;
+    /**
+     * 是否已添加专区课程(1:存在，0:不存在)
+     */
+    private Integer isAddZoneCourse;
+
+    /**
+     * 章节集合
+     */
+    private List<CourseChapterBO> courseChapterList;
+
+    /**
+     * 课程介绍
+     */
+    private String introduce;
 }

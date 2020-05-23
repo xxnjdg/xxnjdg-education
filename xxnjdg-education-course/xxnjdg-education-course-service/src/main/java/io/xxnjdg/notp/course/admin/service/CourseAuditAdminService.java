@@ -18,4 +18,40 @@ public interface CourseAuditAdminService extends IService<CourseAudit> {
      * @return
      */
     PageResult<CourseAuditBO> listCourseAuditByPage(CourseAuditDTO courseAuditDTO);
+
+    /**
+     * 更新
+     * @param courseAuditDTO
+     * @return
+     */
+    Boolean updateCourseAudit(CourseAuditDTO courseAuditDTO);
+
+    /**
+     * 更新
+     * @param courseAuditDTO
+     * @return
+     */
+    Boolean updateCourseAuditById(CourseAuditDTO courseAuditDTO);
+
+    /**
+     * 查询
+     * @param courseAuditDTO
+     * @return
+     */
+    CourseAuditBO getCourseAuditById(CourseAuditDTO courseAuditDTO);
+
+
+    /**
+     * 查询
+     * @param id
+     * @return
+     */
+    CourseAudit getCourseAuditById(Long id);
+
+    /**
+     * 审核
+     * @param courseAuditDTO
+     * @return
+     */
+    Boolean auditCourseAudit(CourseAuditDTO courseAuditDTO);
 }

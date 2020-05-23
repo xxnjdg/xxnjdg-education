@@ -1,7 +1,9 @@
 package io.xxnjdg.notp.course.admin.object.convert;
 
 import io.xxnjdg.notp.course.admin.object.business.CourseAuditBO;
+import io.xxnjdg.notp.course.admin.object.data.transfer.CourseAuditDTO;
 import io.xxnjdg.notp.course.admin.object.view.CourseAuditPageVO;
+import io.xxnjdg.notp.course.object.persistent.Course;
 import io.xxnjdg.notp.course.object.persistent.CourseAudit;
 import io.xxnjdg.notp.utils.response.PageResult;
 import org.mapstruct.Mapper;
@@ -19,26 +21,33 @@ public interface CourseAuditMapStruct {
     CourseAuditMapStruct INSTANCE = Mappers.getMapper(CourseAuditMapStruct.class);
 
     /**
-     * P2B
-     * @param advDTO
+     * CA2C
+     * @param courseAudit
      * @return
      */
-//    Adv DTO2P(AdvDTO advDTO);
+    Course CA2C(CourseAudit courseAudit);
 
     /**
      * P2B
-     * @param courseCategory
+     * @param courseAuditDTO
      * @return
      */
-    CourseAuditBO P2B(CourseAudit courseCategory);
+    CourseAudit DT2P(CourseAuditDTO courseAuditDTO);
+
+    /**
+     * P2B
+     * @param courseAudit
+     * @return
+     */
+    CourseAuditBO P2B(CourseAudit courseAudit);
 
 
     /**
      * P2B
-     * @param courseCategoryList
+     * @param courseAuditList
      * @return
      */
-    List<CourseAuditBO> P2B(List<CourseAudit> courseCategoryList);
+    List<CourseAuditBO> P2B(List<CourseAudit> courseAuditList);
 
     /**
      * B2V

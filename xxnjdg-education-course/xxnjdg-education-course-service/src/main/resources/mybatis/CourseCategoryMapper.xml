@@ -20,5 +20,24 @@
     <sql id="Base_Column_List">
         id, gmt_create, gmt_modified, status_id, sort, parent_id, category_type, category_name, floor, remark
     </sql>
+    <select id="listCourseCategoryByPage" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"></include> from course_category where
+        (select id from course_category
+        <where>
+            <if test="courseName != null">and category_name like CONCAT('%', #{categoryName}, '%') </if>
+            <if test="statusId != null">and status_id = #{statusId}</if>
+            <if test="floor != null">and floor = #{floor}</if>
+            <if test="categoryType != null">and category_type = #{categoryType}</if>
+            <if test="parentId != null">and parent_id = #{parentId}</if>
+        </where>
+        order by id desc limit #{offset},1
+        ) >= id
+        <if test="courseName != null">and category_name like CONCAT('%', #{categoryName}, '%') </if>
+        <if test="statusId != null">and status_id = #{statusId}</if>
+        <if test="floor != null">and floor = #{floor}</if>
+        <if test="categoryType != null">and category_type = #{categoryType}</if>
+        <if test="parentId != null">and parent_id = #{parentId}</if>
+        order by id desc limit #{size}
+    </select>
 
 </mapper>

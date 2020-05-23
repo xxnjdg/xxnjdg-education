@@ -2,8 +2,13 @@ package io.xxnjdg.notp.course.admin.object.convert;
 
 import io.xxnjdg.notp.course.admin.object.business.CourseBO;
 import io.xxnjdg.notp.course.admin.object.data.transfer.CourseDTO;
+import io.xxnjdg.notp.course.admin.object.view.CourseGetVO;
+import io.xxnjdg.notp.course.admin.object.view.CoursePageVO;
+import io.xxnjdg.notp.course.admin.object.view.CourseViewVO;
 import io.xxnjdg.notp.course.object.persistent.Adv;
 import io.xxnjdg.notp.course.object.persistent.Course;
+import io.xxnjdg.notp.course.object.persistent.CourseAudit;
+import io.xxnjdg.notp.utils.response.PageResult;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -17,6 +22,13 @@ import java.util.List;
 @Mapper
 public interface CourseMapStruct {
     CourseMapStruct INSTANCE = Mappers.getMapper(CourseMapStruct.class);
+
+    /**
+     * P2B
+     * @param course
+     * @return
+     */
+    CourseAudit NATA(Course course);
 
     /**
      * P2B
@@ -42,29 +54,36 @@ public interface CourseMapStruct {
 
     /**
      * B2V
-     * @param advBO
+     * @param courseBO
      * @return
      */
-//    AdvPageVO B2PV(AdvBO advBO);
+    CoursePageVO B2PV(CourseBO courseBO);
+
+    /**
+     * B2GV
+     * @param courseBO
+     * @return
+     */
+    CourseGetVO B2GV(CourseBO courseBO);
+
+    /**
+     * B2VV
+     * @param courseBO
+     * @return
+     */
+    CourseViewVO B2VV(CourseBO courseBO);
 
     /**
      * B2V
-     * @param advBO
+     * @param courseBOList
      * @return
      */
-//    AdvVO B2V(AdvBO advBO);
-
-    /**
-     * B2V
-     * @param advBOList
-     * @return
-     */
-//    List<AdvPageVO> B2PV(List<AdvBO> advBOList);
+    List<CoursePageVO> B2PV(List<CourseBO> courseBOList);
 
     /**
      * B2V
      * @param result
      * @return
      */
-//    PageResult<AdvPageVO> B2PV(PageResult<AdvBO> result);
+    PageResult<CoursePageVO> B2PV(PageResult<CourseBO> result);
 }

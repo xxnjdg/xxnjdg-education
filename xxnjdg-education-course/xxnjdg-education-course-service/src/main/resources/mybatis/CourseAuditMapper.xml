@@ -35,8 +35,8 @@
         order by id desc limit #{offset},1) >= id order by id desc limit #{size}
     </select>
     <select id="listCourseAuditAdminByPage" resultMap="BaseResultMap">
-        select <include refid="Base_Column_List"></include> from adv where
-        (select id from adv
+        select <include refid="Base_Column_List"></include> from course_audit where
+        (select id from course_audit
         <where>
             <if test="courseName != null">and course_name like CONCAT('%', #{courseName}, '%') </if>
             <if test="statusId != null">and status_id = #{statusId}</if>

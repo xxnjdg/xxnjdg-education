@@ -70,4 +70,8 @@ public class CourseCategoryBO implements Serializable {
      */
     private String remark;
 
+    /**
+     * 课程分类集合
+     */
+    private List<CourseCategoryBO> children;
 }

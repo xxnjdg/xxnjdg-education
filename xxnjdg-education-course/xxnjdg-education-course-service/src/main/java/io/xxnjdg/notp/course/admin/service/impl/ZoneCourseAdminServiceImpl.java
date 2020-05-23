@@ -35,6 +35,7 @@ import org.springframework.stereotype.Service;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -186,6 +187,16 @@ public class ZoneCourseAdminServiceImpl extends ServiceImpl<ZoneCourseMapper, Zo
             throw new BaseException(ZoneCourseEnum.DELETE_ERROR);
         }
         return true;
+    }
+
+    @Override
+    public List<ZoneCourse> listZoneCourseByCourseIdsAndZoneId(Long zoneId, Collection<Long> courseIds) {
+        LambdaQueryWrapper<ZoneCourse> wrapper = new QueryWrapper<ZoneCourse>()
+                .lambda()
+                .eq(ZoneCourse::getZoneId, zoneId)
+                .in(ZoneCourse::getCourseId, courseIds);
+
+        return this.list(wrapper);
     }
 
     private String getCategoryName(List<CourseCategoryBO> courseCategoryBOList, Long categoryId) {
