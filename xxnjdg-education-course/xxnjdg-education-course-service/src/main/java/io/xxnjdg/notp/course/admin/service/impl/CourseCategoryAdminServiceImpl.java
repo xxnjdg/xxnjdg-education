@@ -1,5 +1,6 @@
 package io.xxnjdg.notp.course.admin.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Snowflake;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.ObjectUtil;
@@ -134,6 +135,9 @@ public class CourseCategoryAdminServiceImpl extends ServiceImpl<CourseCategoryMa
                     .setFloor(category.getFloor()+1);
         }
 
+        getByParentIdAndCategoryName(courseCategoryDTO.getParentId(),
+                courseCategoryDTO.getCategoryName());
+
         //生成主键id
         Snowflake snowflake = IdUtil.createSnowflake(snowFlakeId.getWorkerId(), snowFlakeId.getDataCenterId());
         long id = snowflake.nextId();
@@ -145,5 +149,65 @@ public class CourseCategoryAdminServiceImpl extends ServiceImpl<CourseCategoryMa
         }
 
         return true;
+    }
+
+    @Override
+    public Boolean updateCourseCategory(CourseCategoryDTO courseCategoryDTO) {
+        CourseCategory courseCategory = this.getById(courseCategoryDTO.getId());
+        if (courseCategory == null){
+            throw new BaseException(CourseCategoryEnum.UPDATE_ERROR);
+        }
+
+        getByParentIdAndCategoryName(courseCategory.getParentId(),
+                courseCategoryDTO.getCategoryName());
+
+        CourseCategory newCourseCategory = CourseCategoryMapStruct.INSTANCE
+                .DT2P(courseCategoryDTO);
+
+        boolean update = this.updateById(newCourseCategory);
+        if (!update){
+            throw new BaseException(CourseCategoryEnum.UPDATE_ERROR);
+        }
+
+        return true;
+    }
+
+    @Override
+    public Boolean deleteCourseCategory(CourseCategoryDTO courseCategoryDTO) {
+        LambdaQueryWrapper<CourseCategory> wrapper = new QueryWrapper<CourseCategory>()
+                .lambda()
+                .eq(CourseCategory::getParentId, courseCategoryDTO.getId());
+
+        List<CourseCategory> list = this.list(wrapper);
+        if(CollUtil.isNotEmpty(list)){
+            throw new BaseException(CourseCategoryEnum.DELETE_ERROR);
+        }
+
+        boolean remove = this.removeById(courseCategoryDTO.getId());
+        if (!remove){
+            throw new BaseException(CourseCategoryEnum.DELETE_ERROR);
+        }
+        return true;
+    }
+
+    @Override
+    public CourseCategoryBO getCourseCategory(CourseCategoryDTO courseCategoryDTO) {
+        CourseCategory courseCategory = this.getById(courseCategoryDTO.getId());
+        if (courseCategory == null){
+            throw new BaseException(CourseCategoryEnum.GET_ERROR);
+        }
+        return CourseCategoryMapStruct.INSTANCE.P2B(courseCategory);
+    }
+
+    private void getByParentIdAndCategoryName(Long parentId,String categoryName) {
+        LambdaQueryWrapper<CourseCategory> wrapper = new QueryWrapper<CourseCategory>()
+                .lambda()
+                .eq(CourseCategory::getParentId, parentId)
+                .eq(CourseCategory::getCategoryName, categoryName);
+
+        CourseCategory one = this.getOne(wrapper);
+        if (one != null){
+            throw new BaseException(CourseCategoryEnum.SAVE_ERROR);
+        }
     }
 }

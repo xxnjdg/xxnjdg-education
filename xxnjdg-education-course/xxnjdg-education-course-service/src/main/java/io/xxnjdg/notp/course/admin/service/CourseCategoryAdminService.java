@@ -34,4 +34,25 @@ public interface CourseCategoryAdminService extends IService<CourseCategory> {
      * @return
      */
     Boolean saveCourseCategory(CourseCategoryDTO courseCategoryDTO);
+
+    /**
+     * 更新
+     * @param courseCategoryDTO
+     * @return
+     */
+    Boolean updateCourseCategory(CourseCategoryDTO courseCategoryDTO);
+
+    /**
+     * 删除
+     * @param courseCategoryDTO
+     * @return
+     */
+    Boolean deleteCourseCategory(CourseCategoryDTO courseCategoryDTO);
+
+    /**
+     * 查询
+     * @param courseCategoryDTO
+     * @return
+     */
+    CourseCategoryBO getCourseCategory(CourseCategoryDTO courseCategoryDTO);
 }

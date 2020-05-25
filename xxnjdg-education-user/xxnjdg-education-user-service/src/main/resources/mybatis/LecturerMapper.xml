@@ -66,5 +66,20 @@
     <select id="getLecturerByLecturerUserNo" resultMap="getLecturerByLecturerUserNoResultMap">
         select <include refid="getLecturerByLecturerUserNoSql"></include>,<include refid="getLecturerExtByLecturerUserNoSql"></include> from lecturer join lecturer_ext on lecturer.lecturer_user_no = lecturer_ext.lecturer_user_no where lecturer.lecturer_user_no = #{lecturerUserNo} and lecturer.status_id = 1 and lecturer_ext.status_id = 1
     </select>
+    <select id="listLecturerByPage" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"></include> from lecturer where
+        (select id from lecturer
+        <where>
+            <if test="lecturerMobile != null">and lecturer_mobile like CONCAT('%', #{lecturerMobile}, '%') </if>
+            <if test="lecturerName != null">and lecturer_name like CONCAT('%', #{lecturerName}, '%') </if>
+            <if test="statusId != null">and status_id = #{statusId}</if>
+        </where>
+        order by id desc limit #{offset},1
+        ) >= id
+        <if test="lecturerMobile != null">and lecturer_mobile like CONCAT('%', #{lecturerMobile}, '%') </if>
+        <if test="lecturerName != null">and lecturer_name like CONCAT('%', #{lecturerName}, '%') </if>
+        <if test="statusId != null">and status_id = #{statusId}</if>
+        order by id desc limit #{size}
+    </select>
 
 </mapper>

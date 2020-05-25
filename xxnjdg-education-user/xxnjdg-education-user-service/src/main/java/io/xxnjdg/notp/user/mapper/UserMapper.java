@@ -2,6 +2,9 @@ package io.xxnjdg.notp.user.mapper;
 
 import io.xxnjdg.notp.user.object.persistent.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,15 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface UserMapper extends BaseMapper<User> {
 
+    /**
+     * 分页查询列表
+     * @param mobile
+     * @param offset
+     * @param size
+     * @return
+     */
+    List<User> listUserByPage(
+            @Param("mobile") String mobile,
+            @Param("offset") Integer offset,
+            @Param("size") Integer size);
 }

@@ -22,5 +22,34 @@
     <sql id="Base_Column_List">
         id, gmt_create, lecturer_user_no, bank_card_no, bank_name, bank_branch_name, bank_user_name, bank_id_card_no, lecturer_profit, platform_profit, profit_status, remark
     </sql>
+    <select id="listLecturerProfitByPage" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"></include> from lecturer_profit where
+        (select id from lecturer_profit
+        <where>
+            <if test="profitStatus != null">and profit_status like CONCAT('%', #{profitStatus}, '%') </if>
+            <if test="beginDate != null">and gmt_create >= #{beginDate}</if>
+            <if test="endDate != null">and #{endDate} >= gmt_create </if>
+            <if test="userNoList != null">
+                and lecturer_user_no in
+                <foreach item="item" index="index" collection="userNoList"
+                         open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+        order by id desc limit #{offset},1
+        ) >= id
+        <if test="profitStatus != null">and profit_status like CONCAT('%', #{profitStatus}, '%') </if>
+        <if test="beginDate != null">and gmt_create >= #{beginDate}</if>
+        <if test="endDate != null">and #{endDate} >= gmt_create </if>
+        <if test="userNoList != null">
+            and lecturer_user_no in
+            <foreach item="item" index="index" collection="userNoList"
+                     open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        order by id desc limit #{size}
+    </select>
 
 </mapper>

@@ -3,6 +3,7 @@ package io.xxnjdg.notp.course.admin.object.convert;
 import io.xxnjdg.notp.course.admin.object.business.CourseCategoryBO;
 import io.xxnjdg.notp.course.admin.object.data.transfer.CourseCategoryDTO;
 import io.xxnjdg.notp.course.admin.object.view.CourseCategoryPageVO;
+import io.xxnjdg.notp.course.admin.object.view.CourseCategoryVO;
 import io.xxnjdg.notp.course.object.persistent.CourseCategory;
 import io.xxnjdg.notp.utils.response.PageResult;
 import org.mapstruct.Mapper;
@@ -53,7 +54,7 @@ public interface CourseCategoryMapStruct {
      * @param CourseCategoryBO
      * @return
      */
-//    AdvVO B2V(CourseCategoryBO CourseCategoryBO);
+    CourseCategoryVO B2V(CourseCategoryBO CourseCategoryBO);
 
     /**
      * B2V

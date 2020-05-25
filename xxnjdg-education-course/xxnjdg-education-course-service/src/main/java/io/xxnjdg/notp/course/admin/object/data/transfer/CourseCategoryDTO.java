@@ -42,8 +42,8 @@ public class CourseCategoryDTO implements Serializable {
     /**
      * 状态(1:正常，0:禁用)
      */
-    @Range(max = 1,message = ValidationMessage.PARAMETER_OUT_OF_SCOPE,groups = {Page.class, Update.class})
-    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Get.class, View.class,Insert.class})
+    @Range(max = 1,message = ValidationMessage.PARAMETER_OUT_OF_SCOPE,groups = {Page.class})
+    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Get.class, Delete.class,Insert.class, Update.class})
     private Integer statusId;
 
     /**
@@ -51,43 +51,54 @@ public class CourseCategoryDTO implements Serializable {
      */
     @NotNull(message = ValidationMessage.PARAMETER_NULL,groups = {Insert.class})
     @Range(message = ValidationMessage.PARAMETER_OUT_OF_SCOPE,groups = { Page.class,Insert.class})
+    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Get.class, Delete.class,Update.class})
     private Long parentId;
 
     /**
      * 分类类型(1课程，2资源)
      */
     @NotNull(message = ValidationMessage.PARAMETER_NULL,groups = {Insert.class})
-    @Range(min=1,max = 2,message = ValidationMessage.PARAMETER_OUT_OF_SCOPE,groups = {Page.class,Insert.class, Update.class})
-    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Get.class,View.class})
+    @Range(min=1,max = 2,message = ValidationMessage.PARAMETER_OUT_OF_SCOPE,groups = {Page.class,Insert.class})
+    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Get.class, Delete.class,Update.class})
     private Integer categoryType;
 
     /**
      * 分类名称
      */
-    @NotBlank(message = ValidationMessage.PARAMETER_NULL,groups = {Insert.class})
-    @Length(max = 49,message = ValidationMessage.PARAMETER_TOO_LONG,groups = {Page.class,Insert.class})
+    @NotBlank(message = ValidationMessage.PARAMETER_NULL,groups = {Insert.class,Update.class})
+    @Length(max = 49,message = ValidationMessage.PARAMETER_TOO_LONG,groups = {Page.class,Insert.class,Update.class})
+    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Get.class, Delete.class})
     private String categoryName;
 
     /**
      * 层级
      */
     @NotNull(message = ValidationMessage.PARAMETER_NULL,groups = {Insert.class})
-    @Range(min = 1,message = ValidationMessage.PARAMETER_OUT_OF_SCOPE,groups = {Page.class, Update.class,Insert.class})
-    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Get.class, View.class})
+    @Range(min = 1,message = ValidationMessage.PARAMETER_OUT_OF_SCOPE,groups = {Page.class, Insert.class})
+    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Get.class, Delete.class,Update.class})
     private Integer floor;
 
     /**
      * 备注
      */
-    @Length(max = 254,message = ValidationMessage.PARAMETER_TOO_LONG,groups = {Insert.class})
-    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Page.class})
+    @Length(max = 254,message = ValidationMessage.PARAMETER_TOO_LONG,groups = {Insert.class,Update.class})
+    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Page.class,Get.class, Delete.class})
     private String remark;
 
     /**
      * 主键
      */
-    @Null(message = ValidationMessage.PARAMETER_ERROR)
+    @NotNull(message = ValidationMessage.PARAMETER_NULL,groups = {Update.class,Get.class, Delete.class})
+    @Range(message = ValidationMessage.PARAMETER_OUT_OF_SCOPE,groups = {Update.class,Get.class, Delete.class})
+    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Insert.class,Page.class})
     private Long id;
+
+    /**
+     * 排序
+     */
+    @Range(min = 1,max=Integer.MAX_VALUE, message = ValidationMessage.PARAMETER_OUT_OF_SCOPE,groups = {Update.class})
+    @Null(message = ValidationMessage.PARAMETER_ERROR,groups = {Insert.class,Page.class,Get.class, Delete.class})
+    private Integer sort;
 
     /**
      * 创建时间
@@ -100,11 +111,5 @@ public class CourseCategoryDTO implements Serializable {
      */
     @Null(message = ValidationMessage.PARAMETER_ERROR)
     private LocalDateTime gmtModified;
-
-    /**
-     * 排序
-     */
-    @Null(message = ValidationMessage.PARAMETER_ERROR)
-    private Integer sort;
 
 }

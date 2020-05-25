@@ -6,8 +6,7 @@ import io.xxnjdg.notp.course.admin.object.data.transfer.CourseCategoryDTO;
 import io.xxnjdg.notp.course.admin.service.CourseCategoryAdminService;
 import io.xxnjdg.notp.utils.response.PageResult;
 import io.xxnjdg.notp.utils.response.ResponseResult;
-import io.xxnjdg.notp.utils.validator.group.Insert;
-import io.xxnjdg.notp.utils.validator.group.Page;
+import io.xxnjdg.notp.utils.validator.group.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,9 +29,27 @@ public class CourseCategoryAdminController {
         return ResponseResult.success(CourseCategoryMapStruct.INSTANCE.B2PV(result));
     }
 
-    @PostMapping("/course/pc/course/category/list")
+    @PostMapping("/course/pc/course/category/save")
     public ResponseResult saveCourseCategory(@RequestBody @Validated(Insert.class) CourseCategoryDTO courseCategoryDTO ){
         Boolean result = courseCategoryAdminService.saveCourseCategory(courseCategoryDTO);
         return ResponseResult.success(result);
+    }
+
+    @PostMapping("/course/pc/course/category/update")
+    public ResponseResult updateCourseCategory(@RequestBody @Validated(Update.class) CourseCategoryDTO courseCategoryDTO ){
+        Boolean result = courseCategoryAdminService.updateCourseCategory(courseCategoryDTO);
+        return ResponseResult.success(result);
+    }
+
+    @PostMapping("/course/pc/course/category/delete")
+    public ResponseResult deleteCourseCategory(@RequestBody @Validated(Delete.class) CourseCategoryDTO courseCategoryDTO ){
+        Boolean result = courseCategoryAdminService.deleteCourseCategory(courseCategoryDTO);
+        return ResponseResult.success(result);
+    }
+
+    @PostMapping("/course/pc/course/category/update")
+    public ResponseResult getCourseCategory(@RequestBody @Validated(Get.class) CourseCategoryDTO courseCategoryDTO ){
+        CourseCategoryBO result = courseCategoryAdminService.getCourseCategory(courseCategoryDTO);
+        return ResponseResult.success(CourseCategoryMapStruct.INSTANCE.B2V(result));
     }
 }
