@@ -26,4 +26,9 @@ public interface ValidationMessage {
      * 参数不在范围
      */
     String PARAMETER_OUT_OF_SCOPE = "参数不在范围";
+
+    /**
+     * 参数不能有值
+     */
+    String PARAMETER_CANNOT_HAVE_VALUE = "参数不能有值";
 }

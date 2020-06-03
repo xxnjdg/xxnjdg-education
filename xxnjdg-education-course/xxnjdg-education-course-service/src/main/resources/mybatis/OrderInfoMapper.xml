@@ -60,5 +60,76 @@
         order by id desc limit #{offset},1) >= id limit #{size}) order1
         on course.id = order1.course_id;
     </select>
+    <select id="listOrderInfoByPage" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"></include> from order_info where
+        (select id from order_info
+        <where>
+            <if test="lecturerName != null">and lecturer_name like CONCAT('%', #{lecturerName}, '%') </if>
+            <if test="mobile != null">and mobile like CONCAT('%', #{mobile}, '%') </if>
+            <if test="courseName != null">and course_name like CONCAT('%', #{courseName}, '%') </if>
+            <if test="remark != null">and remark like CONCAT('%', #{remark}, '%') </if>
+            <if test="lecturerUserNo != null">and lecturer_user_no = #{lecturerUserNo}</if>
+            <if test="orderNo != null">and order_no = #{orderNo}</if>
+            <if test="courseId != null">and course_id = #{courseId}</if>
+            <if test="tradeType != null">and trade_type = #{tradeType}</if>
+            <if test="payType != null">and pay_type = #{payType}</if>
+            <if test="channelType != null">and channel_type = #{channelType}</if>
+            <if test="orderStatus != null">and order_status = #{orderStatus}</if>
+            <if test="beginPayTime != null">and pay_time >= #{beginPayTime}</if>
+            <if test="endPayTime != null">and #{endPayTime} >= pay_time </if>
+        </where>
+        order by id desc limit #{offset},1
+        ) >= id
+        <if test="lecturerName != null">and lecturer_name like CONCAT('%', #{lecturerName}, '%') </if>
+        <if test="mobile != null">and mobile like CONCAT('%', #{mobile}, '%') </if>
+        <if test="courseName != null">and course_name like CONCAT('%', #{courseName}, '%') </if>
+        <if test="remark != null">and remark like CONCAT('%', #{remark}, '%') </if>
+        <if test="lecturerUserNo != null">and lecturer_user_no = #{lecturerUserNo}</if>
+        <if test="orderNo != null">and order_no = #{orderNo}</if>
+        <if test="courseId != null">and course_id = #{courseId}</if>
+        <if test="tradeType != null">and trade_type = #{tradeType}</if>
+        <if test="payType != null">and pay_type = #{payType}</if>
+        <if test="channelType != null">and channel_type = #{channelType}</if>
+        <if test="orderStatus != null">and order_status = #{orderStatus}</if>
+        <if test="beginPayTime != null">and pay_time >= #{beginPayTime}</if>
+        <if test="endPayTime != null">and #{endPayTime} >= pay_time </if>
+        order by id desc limit #{size}
+    </select>
+    <select id="getStatisticalOrderInfo" resultType="io.xxnjdg.notp.course.object.persistent.OrderInfo">
+        select sum(price_paid) pricePaid, sum(lecturer_profit) as lecturerProfit, sum(platform_profit) as platformProfit from order_info
+        <where>
+            <if test="remark != null">and remark like CONCAT('%', #{remark}, '%') </if>
+            <if test="id != null">and id = #{id}</if>
+            <if test="orderNo != null">and order_no = #{orderNo}</if>
+            <if test="courseName != null">and course_name like CONCAT('%', #{courseName}, '%') </if>
+            <if test="courseId != null">and course_id = #{courseId}</if>
+            <if test="mobile != null">and mobile like CONCAT('%', #{mobile}, '%') </if>
+            <if test="beginPayTime != null">and pay_time >= #{beginPayTime}</if>
+            <if test="endPayTime != null">and #{endPayTime} >= pay_time </if>
+            <if test="lecturerUserNo != null">and lecturer_user_no = #{lecturerUserNo}</if>
+            <if test="tradeType != null">and trade_type = #{tradeType}</if>
+            <if test="channelType != null">and channel_type = #{channelType}</if>
+            <if test="lecturerName != null">and lecturer_name like CONCAT('%', #{lecturerName}, '%') </if>
+            <if test="beginPaidPrice != null">and price_paid >= #{beginPaidPrice}</if>
+            <if test="endPaidPrice != null">and #{endPaidPrice} >= price_paid </if>
+            <if test="orderStatus != null">and order_status = #{orderStatus}</if>
+            <if test="orderStatus == null">and order_status = 2</if>
+        </where>
+    </select>
+    <select id="listOrderInfoPortalByPage" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"></include> from order_info where
+        (select id from order_info
+        <where>
+            <if test="userNo != null">and user_no = #{userNo}</if>
+            <if test="orderStatus != null">and order_status = #{orderStatus}</if>
+            and is_show_user = 1
+        </where>
+        order by id desc limit #{offset},1
+        ) >= id
+        <if test="userNo != null">and user_no = #{userNo}</if>
+        <if test="orderStatus != null">and order_status = #{orderStatus}</if>
+        and is_show_user = 1
+        order by id desc limit #{size}
+    </select>
 
 </mapper>

@@ -40,7 +40,7 @@ public class CourseAuditController {
     @Autowired
     private CourseAuditService courseAuditService;
 
-    @PostMapping("/course/auth/course/audit/list")
+//    @PostMapping("/course/auth/course/audit/list")
     public ResponseResult listCourseAuditByPage(
             @RequestBody @Validated ListCourseAuditBTO listCourseAuditBTO ){
         PageResult<CourseAuditBO> boPageResult = courseAuditService.listCourseAuditByPage(listCourseAuditBTO);
@@ -53,7 +53,7 @@ public class CourseAuditController {
                 .setCurrentListSize(boPageResult.getCurrentListSize()));
     }
 
-    @PostMapping("/course/auth/course/audit/view")
+//    @PostMapping("/course/auth/course/audit/view")
     public ResponseResult getCourseAudit(
             @RequestBody @Validated(View.class) CourseAuditDTO courseAuditDTO){
         CourseAuditBO courseAuditBO = courseAuditService.getCourseAudit(courseAuditDTO);
@@ -61,7 +61,7 @@ public class CourseAuditController {
         return ResponseResult.success(courseAuditVO);
     }
 
-    @PostMapping("/course/auth/course/audit/save")
+//    @PostMapping("/course/auth/course/audit/save")
     public ResponseResult insertCourseAudit(
             @RequestBody @Validated(Insert.class) CourseAuditDTO courseAuditDTO,
             @RequestHeader("userNo") @NotNull(message = ValidationMessage.PARAMETER_NULL) Long userNo){
@@ -70,7 +70,7 @@ public class CourseAuditController {
         return ResponseResult.success(insertCourseAuditVO);
     }
 
-    @PostMapping("/course/auth/course/audit/update")
+//    @PostMapping("/course/auth/course/audit/update")
     public ResponseResult updateCourseAudit(
             @RequestBody @Validated(Update.class) CourseAuditDTO courseAuditDTO,
             @RequestHeader("userNo") @NotNull(message = ValidationMessage.PARAMETER_NULL) Long userNo){
@@ -78,7 +78,7 @@ public class CourseAuditController {
         return ResponseResult.success();
     }
 
-    @PostMapping("/course/auth/course/audit/stand")
+//    @PostMapping("/course/auth/course/audit/stand")
     public ResponseResult updateCourseAuditByPutaway(
             @RequestBody @Validated(UpdatePutaway.class) CourseAuditDTO courseAuditDTO,
             @RequestHeader("userNo") @NotNull(message = ValidationMessage.PARAMETER_NULL) Long userNo){

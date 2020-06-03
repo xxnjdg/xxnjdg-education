@@ -25,7 +25,7 @@ public class CourseCategoryController {
     @Autowired
     private CourseCategoryService courseCategoryService;
 
-    @PostMapping("/course/api/course/category/list")
+//    @PostMapping("/course/api/course/category/list")
     public ResponseResult postCourseCategoryList(){
         List<CourseCategoryLevelVO> courseCategoryLevelVos = courseCategoryService.postCourseCategoryList();
         return ResponseResult.success(courseCategoryLevelVos);

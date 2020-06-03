@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @version 1.0
  * @date 2020/5/19 12:50
  */
-@RestController
+@RestController("New-UserAdminController")
 public class UserAdminController implements UserAdminControllerApi {
     @Autowired
     private UserAdminService userAdminService;

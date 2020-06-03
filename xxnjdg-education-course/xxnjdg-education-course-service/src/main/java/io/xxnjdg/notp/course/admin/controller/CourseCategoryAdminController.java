@@ -47,7 +47,7 @@ public class CourseCategoryAdminController {
         return ResponseResult.success(result);
     }
 
-    @PostMapping("/course/pc/course/category/update")
+    @PostMapping("/course/pc/course/category/view")
     public ResponseResult getCourseCategory(@RequestBody @Validated(Get.class) CourseCategoryDTO courseCategoryDTO ){
         CourseCategoryBO result = courseCategoryAdminService.getCourseCategory(courseCategoryDTO);
         return ResponseResult.success(CourseCategoryMapStruct.INSTANCE.B2V(result));

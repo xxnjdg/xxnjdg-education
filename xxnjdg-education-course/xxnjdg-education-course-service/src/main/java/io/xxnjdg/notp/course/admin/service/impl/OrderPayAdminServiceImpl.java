@@ -61,4 +61,12 @@ public class OrderPayAdminServiceImpl extends ServiceImpl<OrderPayMapper, OrderP
                 .setCurrentPage(pageObject.getCurrentPage())
                 .setCurrentListSize((long) orderPayList.size());
     }
+
+    @Override
+    public OrderPay getOrderPayByOrderNo(Long orderNo) {
+        LambdaQueryWrapper<OrderPay> wrapper = new QueryWrapper<OrderPay>()
+                .lambda()
+                .eq(OrderPay::getOrderNo, orderNo);
+        return this.getOne(wrapper);
+    }
 }

@@ -32,7 +32,7 @@ public class OrderInfoController {
     @Autowired
     private OrderInfoService orderInfoService;
 
-    @PostMapping("/course/auth/order/info/list")
+//    @PostMapping("/course/auth/order/info/list")
     public ResponseResult postOrderInfoListByPage(
             @RequestBody @Validated OrderInfoListDTO orderInfoListDTO,
             @RequestHeader("userNo") @NotNull(message = ValidationMessage.PARAMETER_NULL) Long userNo ){

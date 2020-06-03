@@ -34,7 +34,7 @@ public class CourseChapterPeriodAuditController {
     @Autowired
     private CourseChapterPeriodAuditService courseChapterPeriodAuditService;
 
-    @PostMapping("/course/auth/course/chapter/period/audit/list")
+//    @PostMapping("/course/auth/course/chapter/period/audit/list")
     public ResponseResult listCourseChapterPeriodAudit(
             @RequestBody @Validated ListCourseChapterPeriodAuditBTO listCourseChapterPeriodAuditBTO){
         List<CourseChapterPeriodAuditBO> courseChapterPeriodAuditBOS =
@@ -46,7 +46,7 @@ public class CourseChapterPeriodAuditController {
         return ResponseResult.success(listCourseChapterPeriodAuditVOS);
     }
 
-    @PostMapping("/course/auth/course/chapter/period/audit/save")
+//    @PostMapping("/course/auth/course/chapter/period/audit/save")
     public ResponseResult insertCourseChapterPeriodAudit(
             @RequestBody @Validated(Insert.class) CourseChapterPeriodAuditBTO courseChapterPeriodAuditBTO,
             @RequestHeader("userNo") @NotNull(message = ValidationMessage.PARAMETER_NULL) Long userNo ){
@@ -57,7 +57,7 @@ public class CourseChapterPeriodAuditController {
         return ResponseResult.success();
     }
 
-    @PostMapping("/course/auth/course/chapter/period/audit/update")
+//    @PostMapping("/course/auth/course/chapter/period/audit/update")
     public ResponseResult updateCourseChapterPeriodAudit(
             @RequestBody @Validated(Update.class) CourseChapterPeriodAuditBTO courseChapterPeriodAuditBTO,
             @RequestHeader("userNo") @NotNull(message = ValidationMessage.PARAMETER_NULL) Long userNo ){

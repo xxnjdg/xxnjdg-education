@@ -19,4 +19,11 @@ public interface OrderPayAdminService extends IService<OrderPay> {
      * @return
      */
     PageResult<OrderPayBO> listOrderPayByPage(OrderPayDTO orderPayDTO);
+
+    /**
+     * 查询
+     * @param orderNo
+     * @return
+     */
+    OrderPay getOrderPayByOrderNo(Long orderNo);
 }

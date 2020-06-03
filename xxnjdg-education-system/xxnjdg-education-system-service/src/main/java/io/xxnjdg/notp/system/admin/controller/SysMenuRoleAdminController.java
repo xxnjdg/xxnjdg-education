@@ -26,13 +26,13 @@ public class SysMenuRoleAdminController {
     @Autowired
     private SysMenuRoleAdminService sysMenuRoleAdminService;
 
-    @PostMapping("/system/pc/sys/role/list")
+    @PostMapping("/system/pc/menu/role/list")
     public ResponseResult listSysMenuRole(@RequestBody @Validated(ListGroup.class) SysMenuRoleDTO sysMenuRoleDTO ){
         SysMenuRoleBO result = sysMenuRoleAdminService.listSysMenuRole(sysMenuRoleDTO);
         return ResponseResult.success(SysMenuRoleMapStruct.INSTANCE.B2LV(result));
     }
 
-    @PostMapping("/system/pc/sys/role/save")
+    @PostMapping("/system/pc/menu/role/save")
     public ResponseResult saveSysMenuRole(@RequestBody @Validated(Insert.class) SysMenuRoleDTO sysMenuRoleDTO ){
         Boolean result = sysMenuRoleAdminService.saveSysMenuRole(sysMenuRoleDTO);
         return ResponseResult.success(result);

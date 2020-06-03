@@ -33,4 +33,11 @@ public interface WebsiteNavArticleAdminService extends IService<WebsiteNavArticl
      * @return
      */
     Boolean updateWebsiteNavArticleById(WebsiteNavArticleDTO websiteNavArticleDTO);
+
+    /**
+     * 插入
+     * @param websiteNavArticleDTO
+     * @return
+     */
+    Boolean saveWebsiteNavArticle(WebsiteNavArticleDTO websiteNavArticleDTO);
 }

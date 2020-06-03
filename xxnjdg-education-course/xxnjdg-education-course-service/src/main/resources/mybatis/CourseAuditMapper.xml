@@ -4,24 +4,24 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="io.xxnjdg.notp.course.object.persistent.CourseAudit">
-        <id column="id" property="id" />
-        <result column="gmt_create" property="gmtCreate" />
-        <result column="gmt_modified" property="gmtModified" />
-        <result column="status_id" property="statusId" />
-        <result column="sort" property="sort" />
-        <result column="audit_status" property="auditStatus" />
-        <result column="audit_opinion" property="auditOpinion" />
-        <result column="lecturer_user_no" property="lecturerUserNo" />
-        <result column="category_id1" property="categoryId1" />
-        <result column="category_id2" property="categoryId2" />
-        <result column="category_id3" property="categoryId3" />
-        <result column="course_name" property="courseName" />
-        <result column="course_logo" property="courseLogo" />
-        <result column="introduce_id" property="introduceId" />
-        <result column="is_free" property="isFree" />
-        <result column="course_original" property="courseOriginal" />
-        <result column="course_discount" property="courseDiscount" />
-        <result column="is_putaway" property="isPutaway" />
+        <id column="id" property="id"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modified" property="gmtModified"/>
+        <result column="status_id" property="statusId"/>
+        <result column="sort" property="sort"/>
+        <result column="audit_status" property="auditStatus"/>
+        <result column="audit_opinion" property="auditOpinion"/>
+        <result column="lecturer_user_no" property="lecturerUserNo"/>
+        <result column="category_id1" property="categoryId1"/>
+        <result column="category_id2" property="categoryId2"/>
+        <result column="category_id3" property="categoryId3"/>
+        <result column="course_name" property="courseName"/>
+        <result column="course_logo" property="courseLogo"/>
+        <result column="introduce_id" property="introduceId"/>
+        <result column="is_free" property="isFree"/>
+        <result column="course_original" property="courseOriginal"/>
+        <result column="course_discount" property="courseDiscount"/>
+        <result column="is_putaway" property="isPutaway"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
@@ -30,15 +30,23 @@
     </sql>
     <select id="listCourseAuditByPage" resultMap="BaseResultMap">
         select <include refid="Base_Column_List"></include> from course_audit
-        where lecturer_user_no = #{lecturerUserNo} and <if test="auditStatus == null">audit_status >= 0</if> <if test="auditStatus != null">audit_status = #{auditStatus}</if> and status_id = 1 and
-        (select id from course_audit where lecturer_user_no = #{lecturerUserNo} and <if test="auditStatus == null">audit_status >= 0</if> <if test="auditStatus != null">audit_status = #{auditStatus}</if> and status_id = 1
+        where lecturer_user_no = #{lecturerUserNo} and
+        <if test="auditStatus == null">audit_status >= 0</if>
+        <if test="auditStatus != null">audit_status = #{auditStatus}</if>
+        and status_id = 1 and
+        (select id from course_audit where lecturer_user_no = #{lecturerUserNo} and
+        <if test="auditStatus == null">
+            audit_status >= 0
+        </if>
+        <if test="auditStatus != null">audit_status = #{auditStatus}</if>
+        and status_id = 1
         order by id desc limit #{offset},1) >= id order by id desc limit #{size}
     </select>
     <select id="listCourseAuditAdminByPage" resultMap="BaseResultMap">
         select <include refid="Base_Column_List"></include> from course_audit where
         (select id from course_audit
         <where>
-            <if test="courseName != null">and course_name like CONCAT('%', #{courseName}, '%') </if>
+            <if test="courseName != null">and course_name like CONCAT('%', #{courseName}, '%')</if>
             <if test="statusId != null">and status_id = #{statusId}</if>
             <if test="isPutaway != null">and is_putaway = #{isPutaway}</if>
             <if test="isFree != null">and is_free = #{isFree}</if>
@@ -47,12 +55,30 @@
         </where>
         order by id desc limit #{offset},1
         ) >= id
-        <if test="courseName != null">and course_name like CONCAT('%', #{courseName}, '%') </if>
+        <if test="courseName != null">and course_name like CONCAT('%', #{courseName}, '%')</if>
         <if test="statusId != null">and status_id = #{statusId}</if>
         <if test="isPutaway != null">and is_putaway = #{isPutaway}</if>
         <if test="isFree != null">and is_free = #{isFree}</if>
         <if test="auditStatus != null">and audit_status = #{auditStatus}</if>
         <if test="auditStatus == null">and audit_status != 1</if>
+        order by id desc limit #{size}
+    </select>
+    <select id="listCourseAuditPortalByPage" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"></include> from course_audit
+        <where>
+            (select id from course_audit
+            <where>
+                <if test="auditStatus != null">and audit_status = #{auditStatus}</if>
+                <if test="auditStatus == null">and audit_status >= 0</if>
+                <if test="lecturerUserNo != null">and lecturer_user_no = #{lecturerUserNo}</if>
+                and status_id = 1
+            </where>
+            order by id desc limit #{offset},1) >= id
+            <if test="auditStatus != null">and audit_status = #{auditStatus}</if>
+            <if test="auditStatus == null">and audit_status >= 0</if>
+            <if test="lecturerUserNo != null">and lecturer_user_no = #{lecturerUserNo}</if>
+            and status_id = 1
+        </where>
         order by id desc limit #{size}
     </select>
 

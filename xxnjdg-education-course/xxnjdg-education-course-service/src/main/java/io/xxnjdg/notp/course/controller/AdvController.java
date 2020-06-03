@@ -25,7 +25,7 @@ public class AdvController {
     @Autowired
     private AdvService advService;
 
-    @PostMapping("/course/api/adv/list")
+//    @PostMapping("/course/api/adv/list")
     public ResponseResult postAdvList(@RequestBody @Validated AdvDTO advDto){
         List<AdvVO> advVoList = advService.postAdvList(advDto);
         return ResponseResult.success(advVoList);

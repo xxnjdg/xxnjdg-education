@@ -34,7 +34,7 @@ public class CourseChapterAuditController {
     @Autowired
     private CourseChapterAuditService courseChapterAuditService;
 
-    @PostMapping("/course/auth/course/chapter/audit/list")
+//    @PostMapping("/course/auth/course/chapter/audit/list")
     public ResponseResult listCourseChapterAudit(
             @RequestBody @Validated ListCourseChapterAuditDTO listCourseChapterAuditDTO){
         List<CourseChapterAuditBO> courseChapterAuditBOS =
@@ -44,7 +44,7 @@ public class CourseChapterAuditController {
         return ResponseResult.success(listCourseChapterAuditVOS);
     }
 
-    @PostMapping("/course/auth/course/chapter/audit/save")
+//    @PostMapping("/course/auth/course/chapter/audit/save")
     public ResponseResult insertCourseChapterAudit(
             @RequestBody @Validated(Insert.class) CourseChapterAuditDTO courseChapterAuditDTO,
             @RequestHeader("userNo") @NotNull(message = ValidationMessage.PARAMETER_NULL) Long userNo ){
@@ -58,7 +58,7 @@ public class CourseChapterAuditController {
         return ResponseResult.success(insertCourseChapterAuditVO);
     }
 
-    @PostMapping("/course/auth/course/chapter/audit/update")
+//    @PostMapping("/course/auth/course/chapter/audit/update")
     public ResponseResult updateCourseChapterAudit(
             @RequestBody @Validated(Update.class) CourseChapterAuditDTO courseChapterAuditDTO,
             @RequestHeader("userNo") @NotNull(message = ValidationMessage.PARAMETER_NULL) Long userNo ){
